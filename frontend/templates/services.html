@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="product-item">
+            <div class="product-item-title d-flex">
+                <div class="bg-faded p-5 d-flex ml-auto rounded">
+                    <h2 class="section-heading mb-0">
+                        <span class="section-heading-upper">Tutoring</span>
+                        <span class="section-heading-lower">One-on-one Sessions</span>
+                    </h2>
+                </div>
+            </div>
+            <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/products-01.jpg' %}" alt="">
+            <div class="product-item-description d-flex mr-auto">
+                <div class="bg-faded p-5 rounded">
+                    <p class="mb-0">
+                        Every time we work with you in a one-on-one tutoring session, not only
+                        will you feel better about your career path, but you will have a plan
+                        of action that will help improve your score.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% comment %}
+<section class="page-section">
+    <div class="container">
+        <div class="product-item">
+            <div class="product-item-title d-flex">
+                <div class="bg-faded p-5 d-flex mr-auto rounded">
+                    <h2 class="section-heading mb-0">
+                        <span class="section-heading-upper">Lectures</span>
+                        <span class="section-heading-lower">Group Learning Session</span>
+                    </h2>
+                </div>
+            </div>
+            <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/products-02.jpg' %}" alt="">
+            <div class="product-item-description d-flex ml-auto">
+                <div class="bg-faded p-5 rounded">
+                    <p class="mb-0">
+                        Lectures give you the opportunity to learn material in a more formal fashion.
+                        Each lecture is chock-full of information that will not only help you
+                        succeed in passing your exam, but they will improve your knowledge for use
+                        in the field.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="page-section">
+    <div class="container">
+        <div class="product-item">
+            <div class="product-item-title d-flex">
+                <div class="bg-faded p-5 d-flex ml-auto rounded">
+                    <h2 class="section-heading mb-0">
+                        <span class="section-heading-upper">Question Bank</span>
+                        <span class="section-heading-lower">Self-study</span>
+                    </h2>
+                </div>
+            </div>
+            <img class="product-item-img mx-auto d-flex rounded img-fluid mb-3 mb-lg-0" src="{% static 'img/products-03.jpg' %}" alt="">
+            <div class="product-item-description d-flex mr-auto">
+                <div class="bg-faded p-5 rounded">
+                    <p class="mb-0">
+                        By utilizing our question bank, you have the opportunity to
+                        experience the test without actually taking the test.  Experience
+                        is the best teacher.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endcomment %}
+{% endblock content %}
