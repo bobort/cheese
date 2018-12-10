@@ -2,6 +2,9 @@
   <dictionary name="matthew">
     <words>
       <w>comlex</w>
+      <w>phonenumber</w>
+      <w>postgresql</w>
+      <w>qbank</w>
       <w>usmle</w>
     </words>
   </dictionary>

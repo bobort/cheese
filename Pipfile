@@ -6,8 +6,12 @@ name = "pypi"
 [packages]
 django = "*"
 django-tinymce = "*"
+djangorestframework = "*"
+django-phonenumber-field = "*"
+phonenumbers = "*"
 
 [dev-packages]
+coverage = "*"
 
 [requires]
 python_version = "3.7"

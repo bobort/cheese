@@ -16,5 +16,5 @@ class ServicesView(TemplateView):
     template_name = "services.html"
 
 
-class PricingView(TemplateView):
-    template_name = "pricing.html"
+class ScheduleView(TemplateView):
+    template_name = "schedule.html"
