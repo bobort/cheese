@@ -6,19 +6,15 @@ from django.db import models
 from phonenumber_field.modelfields import PhoneNumberField
 
 
-class ExamChoices(object):
-    STEP1, STEP2CK, STEP2CS, STEP3, SPECIALTY, OTHER = range(0, 6)
-    
-    @classmethod
-    def __call__(cls, *args, **kwargs):
-        return (
-            (cls.STEP1, "USMLE Step 1"),
-            (cls.STEP2CK, "USMLE Step 2CK"),
-            (cls.STEP2CS, "USMLE Step 2CS"),
-            (cls.STEP3, "USMLE Step 3"),
-            (cls.SPECIALTY, "USMLE Specialty Board Certification"),
-            (cls.OTHER, "Other"),
-        )
+STEP1, STEP2CK, STEP2CS, STEP3, SPECIALTY, OTHER = range(0, 6)
+EXAM_CHOICES = (
+    (STEP1, "USMLE Step 1"),
+    (STEP2CK, "USMLE Step 2CK"),
+    (STEP2CS, "USMLE Step 2CS"),
+    (STEP3, "USMLE Step 3"),
+    (SPECIALTY, "USMLE Specialty Board Certification"),
+    (OTHER, "Other"),
+)
 
 
 class Student(models.Model):
@@ -28,18 +24,16 @@ class Student(models.Model):
         (DO, "D.O."),
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    f_name = models.CharField()
-    l_name = models.CharField()
     graduation_year = models.IntegerField(
         help_text="Enter all 4 digits. If you haven't graduated yet, enter the year you expect to graduate.",
         validators=(
-            MinLengthValidator(4),
-            MaxLengthValidator(4)
+            MinValueValidator(1900),
+            MaxValueValidator(2050)
         )
     )
-    degree = models.IntegerField(choices=DEGREE_CHOICES)
+    degree = models.IntegerField(choices=DEGREE_CHOICES, help_text="M.D. or D.O.")
     exam = models.IntegerField(
-        choices=ExamChoices(),
+        choices=EXAM_CHOICES,
         help_text="Choose the exam you are preparing for."
     )
     test_date = models.DateField(
@@ -47,7 +41,7 @@ class Student(models.Model):
         null=True,
         help_text="Enter the date that you need to complete the test by or the date you are scheduled to take it."
     )
-    phone_number = PhoneNumberField()
+    phone_number = models.CharField(max_length=31)
 
     @property
     def exam_count(self):
@@ -56,7 +50,7 @@ class Student(models.Model):
 
 class ExamScore(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam = models.IntegerField(choices=ExamChoices())
+    exam = models.IntegerField(choices=EXAM_CHOICES)
     score = models.IntegerField(
         validators=(
             MinValueValidator(1),

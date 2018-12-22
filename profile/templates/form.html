@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Registration{% endblock title %}
+{% block content %}
+<div class="container">
+    <div class="col-12 col-lg-10 ml-lg-auto mr-lg-auto mt-4 card">
+        <form method="post" novalidate class="card-body" {% if debug %}autocomplete="off"{% endif %}>
+            {% crispy form %}
+            <input type="submit" class="btn btn-primary" value="Save">
+        </form>
+    </div>
+</div>
+{% endblock content %}

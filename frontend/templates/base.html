@@ -1,4 +1,4 @@
-{% load static %}
+{% load static compress %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,16 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>{% block title %}USMLE/Comlex Tutoring - Oceans Ink{% endblock %}</title>
-    <!-- Bootstrap core CSS -->
-    <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
-    <!-- Custom fonts for this template -->
-    <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="{% static 'css/business-casual.min.css' %}" rel="stylesheet">
+    <title>{% block title %}USMLE/Comlex Studying - Oceans Ink{% endblock %}</title>
+    {% compress css %}
+      <!-- Bootstrap core CSS -->
+      <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+      <!-- Custom fonts for this template -->
+      <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+      <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
+      <!-- Custom styles for this template -->
+      <link href="{% static 'css/business-casual.min.css' %}" rel="stylesheet">
+      {% block extracss %}{% endblock extracss %}
+    {% endcompress css %}
     <!-- JavaScript Files -->
-    <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+    {% compress js %}
+      <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+      {% block extrajs %}{% endblock extrajs %}
+    {% endcompress js %}
   </head>
   <body>
     <h1 class="site-heading text-center text-white d-none d-lg-block">
@@ -25,30 +31,35 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
       <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">USMLE/Comlex Tutoring</a>
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">USMLE/Comlex Studying</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav mx-auto">
             <li class="nav-item{% if request.resolver_match.url_name == 'index' %} active{% endif %} px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'index' %}">Home
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:index' %}">Home
                 {% if request.resolver_match.url_name == 'index' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'about' %} active{% endif %}  px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'about' %}">About
+            <li class="nav-item{% if request.resolver_match.url_name == 'about' %} active{% endif %} px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:about' %}">About
                 {% if request.resolver_match.url_name == 'about' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'services' %} active{% endif %}  px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'services' %}">Services
+            <li class="nav-item{% if request.resolver_match.url_name == 'services' %} active{% endif %} px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:services' %}">Services
                 {% if request.resolver_match.url_name == 'services' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'schedule' %} active{% endif %}  px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'schedule' %}">Schedule
+            <li class="nav-item{% if request.resolver_match.url_name == 'schedule' %} active{% endif %} px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:schedule' %}">Schedule
                 {% if request.resolver_match.url_name == 'schedule' %}<span class="sr-only">(current)</span>{% endif %}
+              </a>
+            </li>
+            <li class="nav-item{% if request.resolver_match.url_name == 'register' %} active{% endif %} px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:register' %}">Register
+                {% if request.resolver_match.url_name == 'register' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
           </ul>
@@ -70,7 +81,7 @@
                 We are planning to expand our program to include lectures among other things in the future.
               </p>
               <div class="intro-button mx-auto">
-                <a class="btn btn-primary btn-xl" href="#">Work With Us Today!</a>
+                <a class="btn btn-primary btn-xl" href="{% url 'profile:register' %}">Work With Us Today!</a>
               </div>
             </div>
           </div>
@@ -96,11 +107,13 @@
     {% endblock content %}
     <footer class="footer text-faded text-center py-5">
       <div class="container">
-        <p class="m-0 small">Copyright &copy; Oceans Ink 2018</p>
+        <p class="m-0 small">Copyright &copy; Oceans Ink, Inc. 2018</p>
       </div>
     </footer>
-    <!-- Bootstrap core JavaScript -->
-    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
-    <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    {% compress js %}
+      <!-- Bootstrap core JavaScript -->
+      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+    {% endcompress js %}
   </body>
 </html>
