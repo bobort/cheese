@@ -2,71 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="1d33e2c0-a175-4d6f-9a16-4277296e1fb4" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profile/forms.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profile/templates/form.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/profile/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/qbank/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/views.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Pipfile.lock" beforeDir="false" afterPath="$PROJECT_DIR$/Pipfile.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheese/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheese/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheese/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/cheese/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cheese/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/cheese/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/css/business-casual.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/css/business-casual.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/css/business-casual.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/css/business-casual.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/gulpfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_about.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_about.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_bootstrap-overrides.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_bootstrap-overrides.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_buttons.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_buttons.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_cta.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_cta.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_footer.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_footer.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_global.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_global.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_intro.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_intro.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_mixins.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_mixins.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_navbar.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_navbar.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_products.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_products.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_store.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_store.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/_variables.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/_variables.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/scss/business-casual.scss" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/scss/business-casual.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.min.css.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/css/bootstrap.min.css.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.bundle.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.min.js.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/bootstrap/js/bootstrap.min.js.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.slim.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.slim.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.slim.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.slim.min.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.slim.min.map" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/static/vendor/jquery/jquery.slim.min.map" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/templates/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/templates/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/templates/base.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/templates/base.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/templates/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/templates/schedule.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/templates/schedule.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/templates/services.html" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/templates/services.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/manage.py" beforeDir="false" afterPath="$PROJECT_DIR$/manage.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/profile/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/profile/models.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/profile/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/profile/views.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qbank/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/qbank/admin.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/qbank/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/qbank/models.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -97,7 +34,7 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/profile/views.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="374">
@@ -105,6 +42,15 @@
               <folding>
                 <element signature="e#2#45#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="34">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -246,6 +192,7 @@
         <option value="$PROJECT_DIR$/profile/urls.py" />
         <option value="$PROJECT_DIR$/profile/forms.py" />
         <option value="$PROJECT_DIR$/profile/views.py" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -405,7 +352,7 @@
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3286119" />
       <window_info anchor="bottom" id="Version Control" order="7" />
-      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4987453" weight="0.32719547" />
+      <window_info anchor="bottom" id="Terminal" order="8" sideWeight="0.4987453" visible="true" weight="0.32719547" />
       <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5018821" side_tool="true" weight="0.39977974" />
       <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -429,9 +376,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/frontend/static/img/products-03.jpg">
-      <provider selected="true" editor-type-id="images" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/frontend/static/img/products-02.jpg">
       <provider selected="true" editor-type-id="images" />
     </entry>
@@ -749,6 +693,13 @@
           <folding>
             <element signature="e#2#45#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="34">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
         </state>
       </provider>
     </entry>
