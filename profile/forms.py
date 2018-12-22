@@ -44,13 +44,11 @@ class UserForm(CrispyFormMixin, UserCreationForm):
         Div(Div(Field('password2'), css_class="col"), css_class="row"),
     )
 
-    def clean(self):
-        super().clean()
-        self.cleaned_data['email'] = self.cleaned_data.get('username')
-        return self.cleaned_data
-
-    # def save(self, commit=True):
-    #     user = super().save(commit)
-    #     if commit:
-    #         user.set_password(self.cleaned_data.get('password'))
-    #     return user
+    def save(self, commit=True):
+        user = super().save(commit)
+        user.email = self.cleaned_data.get('username')
+        user.first_name = self.cleaned_data.get('first_name')
+        user.last_name = self.cleaned_data.get('last_name')
+        if commit:
+            user.save()
+        return user

@@ -47,6 +47,9 @@ class Student(models.Model):
     def exam_count(self):
         return self.examscore_set.filter(exam=self.exam).count()
 
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
 
 class ExamScore(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
@@ -57,4 +60,7 @@ class ExamScore(models.Model):
             MaxValueValidator(300),
         )
     )
+
+    def __str__(self):
+        return f"{self.student} {self.get_exam_display()}: {self.score}"
 
