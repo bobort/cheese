@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>{% block title %}USMLE/Comlex Studying - Oceans Ink{% endblock %}</title>
+    <title>{% block title %}USMLE/Comlex Resources - Oceans Ink{% endblock %}</title>
     {% compress css %}
       <!-- Bootstrap core CSS -->
       <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -26,12 +26,12 @@
   <body>
     <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper text-primary mb-3">Oceans Ink</span>
-      <span class="site-heading-lower">USMLE/Comlex<br>Tutoring</span>
+      <span class="site-heading-lower">USMLE/Comlex<br>Resources</span>
     </h1>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
       <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">USMLE/Comlex Studying</a>
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">USMLE/Comlex Resources</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -57,9 +57,9 @@
                 {% if request.resolver_match.url_name == 'schedule' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'register' %} active{% endif %} px-lg-4">
+            <li class="nav-item{% if request.resolver_match.url_name == 'register' or request.resolver_match.url_name == 'create' %} active{% endif %} px-lg-4">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:register' %}">Register
-                {% if request.resolver_match.url_name == 'register' %}<span class="sr-only">(current)</span>{% endif %}
+                {% if request.resolver_match.url_name == 'register' or request.resolver_match.url_name == 'create' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
           </ul>
@@ -78,7 +78,6 @@
               </h2>
               <p class="mb-3">
                 We will work with you to help you develop a study plan and provide one-on-one tutoring.
-                We are planning to expand our program to include lectures among other things in the future.
               </p>
               <div class="intro-button mx-auto">
                 <a class="btn btn-primary btn-xl" href="{% url 'profile:register' %}">Work With Us Today!</a>

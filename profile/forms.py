@@ -14,6 +14,9 @@ class StudentForm(CrispyFormMixin, forms.ModelForm):
             Div(Field('phone_number'), css_class="col"),
             Div(Field('graduation_year'), css_class="col"),
             Div(Field('degree'), css_class="col"),
+            css_class="row",
+        ),
+        Div(
             Div(Field('exam'), css_class="col"),
             Div(Field('test_date'), css_class="col"),
             css_class="row"
