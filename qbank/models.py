@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.utils.safestring import mark_safe
 
@@ -29,4 +29,4 @@ class UserQuestion(models.Model):
     time_start = models.DateTimeField(auto_now_add=True)
     time_end = models.DateTimeField()
     chosen_answer = models.ForeignKey(Answer, on_delete=models.DO_NOTHING)
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

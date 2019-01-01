@@ -1,15 +1,21 @@
 from crispy_forms.layout import Layout, Field, Div
+from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
-from phonenumber_field.formfields import PhoneNumberField
 
-from profile.models import Student
+from profile.models import Student, Payment
 from utils.views import CrispyFormMixin
 
 
-class StudentForm(CrispyFormMixin, forms.ModelForm):
+class StudentCreationForm(CrispyFormMixin, UserCreationForm):
     layout = Layout(
+        Div(Div(Field('email'), css_class="col"), css_class="row"),
+        Div(Div(Field('password1'), css_class="col"), css_class="row"),
+        Div(Div(Field('password2'), css_class="col"), css_class="row"),
+        Div(
+            Div(Field('first_name'), css_class="col"),
+            Div(Field('last_name'), css_class="col"),
+            css_class="row"
+        ),
         Div(
             Div(Field('phone_number'), css_class="col"),
             Div(Field('graduation_year'), css_class="col"),
@@ -25,33 +31,73 @@ class StudentForm(CrispyFormMixin, forms.ModelForm):
 
     class Meta:
         model = Student
-        fields = ('phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        fields = ('email', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        field_classes = {'email': forms.EmailField}
 
 
-class UserForm(CrispyFormMixin, UserCreationForm):
-    """
-    https://docs.djangoproject.com/en/2.1/ref/contrib/auth/#fields
-    """
-    username = forms.EmailField(label="Email address")
-    first_name = forms.CharField(max_length=30)
-    last_name = forms.CharField(max_length=150)
-
+class StudentChangeForm(UserChangeForm):
     layout = Layout(
+        Div(Div(Field('email'), css_class="col"), css_class="row"),
         Div(
             Div(Field('first_name'), css_class="col"),
             Div(Field('last_name'), css_class="col"),
             css_class="row"
         ),
-        Div(Div(Field('username'), css_class="col"), css_class="row"),
-        Div(Div(Field('password1'), css_class="col"), css_class="row"),
-        Div(Div(Field('password2'), css_class="col"), css_class="row"),
+        Div(
+            Div(Field('phone_number'), css_class="col"),
+            Div(Field('graduation_year'), css_class="col"),
+            Div(Field('degree'), css_class="col"),
+            css_class="row",
+        ),
+        Div(
+            Div(Field('exam'), css_class="col"),
+            Div(Field('test_date'), css_class="col"),
+            css_class="row"
+        ),
     )
 
+    class Meta:
+        model = Student
+        fields = ('email', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        field_classes = {'email': forms.EmailField}
+
+
+class PaymentForm(CrispyFormMixin, forms.ModelForm):
+    in_person_charge = forms.DecimalField(initial=60, decimal_places=2, disabled=True, label="In person charge (USD)")
+    remote_charge = forms.DecimalField(initial=75, decimal_places=2, disabled=True, label="Remote charge (USD)")
+
+    class Meta:
+        model = Payment
+        fields = ('in_person_appt_qty', 'remote_appt_qty')
+
+    layout = Layout(
+        Div(
+            Div(Field('in_person_appt_qty'), css_class="col"),
+            Div(Field('in_person_charge'), css_class="col"),
+            css_class="row"
+        ),
+        Div(
+            Div(Field('remote_appt_qty'), css_class="col"),
+            Div(Field('remote_charge'), css_class="col"),
+            css_class="row"
+        )
+    )
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
+    @property
+    def total(self):
+        return (
+            self.cleaned_data.get('in_person_appt_qty') * self.cleaned_data.get('in_person_charge') +
+            self.cleaned_data.get('remote_appt_qty') * self.cleaned_data.get('remote_charge')
+        )
+
     def save(self, commit=True):
-        user = super().save(commit)
-        user.email = self.cleaned_data.get('username')
-        user.first_name = self.cleaned_data.get('first_name')
-        user.last_name = self.cleaned_data.get('last_name')
+        instance = super().save(commit=False)
+        instance.student = self.user
+        instance.total = self.total
         if commit:
-            user.save()
-        return user
+            instance.save()
+        return instance
