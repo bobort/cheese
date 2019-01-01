@@ -9,10 +9,10 @@ django-tinymce = "*"
 djangorestframework = "*"
 django-phonenumber-field = "*"
 phonenumbers = "*"
-"psycopg2" = "*"
 "psycopg2-binary" = "*"
 django-crispy-forms = "*"
 django-compressor = "*"
+gunicorn = "*"
 
 [dev-packages]
 coverage = "*"
