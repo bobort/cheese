@@ -1,10 +1,9 @@
 from django.urls import path
 
-from profile.views import CreateRegistration, CreateProfile
+from profile import views
 
 app_name = 'profile'
 
 urlpatterns = [
-    path('register', CreateRegistration.as_view(), name="register"),
-    path('create/<int:user>', CreateProfile.as_view(), name="create"),
+    path('pay', views.process_payment, name='pay'),
 ]

@@ -15,3 +15,19 @@ class ServicesView(TemplateView):
 
 class ScheduleView(TemplateView):
     template_name = "schedule.html"
+
+
+class PrivacyPolicyView(TemplateView):
+    template_name = "legal/privacy_policy.html"
+
+
+class TermsView(TemplateView):
+    template_name = "legal/terms.html"
+
+
+class DisclaimerView(TemplateView):
+    template_name = "legal/disclaimer.html"
+
+
+class ReturnPolicyView(TemplateView):
+    template_name = "legal/return_policy.html"

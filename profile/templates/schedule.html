@@ -6,14 +6,25 @@
         <div class="row">
             <div class="col-xl-9 mx-auto">
                 <div class="cta-inner text-center rounded">
+                    {% if user.is_authenticated %}
+                        {% with user.appointment_set.upcoming as upcoming %}
+                            {% if upcoming %}
+                                You have the following appointments scheduled:
+                                <ul>
+                                    {% for appt in upcoming %}
+                                        <li>{{ appt.get_type_display }}: {{ appt.dt|date:"SHORT_DATE_FORMAT" }} for {{ appt.duration }}</li>
+                                    {% endfor %}
+                                </ul>
+                            {% endif %}
+                        {% endwith %}
+                    {% endif %}
                     <h2 class="section-heading mb-5">
-                        <span class="section-heading-upper">General Schedule in Central Time Zone</span>
-                        <span class="section-heading-lower">We're Open</span>
+                        <span class="section-heading-upper">Call us to schedule an appointment at (760) 672-1049.  All times are Central.</span>
                     </h2>
                     <ul class="list-unstyled list-hours mb-5 text-left mx-auto">
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Sunday
-                            <span class="ml-auto">Closed</span>
+                            <span class="ml-auto">5:00 AM to 8:00 PM</span>
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Monday
@@ -46,13 +57,6 @@
                             <br>
                             Champaign, Illinois
                         </em>
-                    </p>
-                    <p class="mb-0">
-                        <small>
-                            <em>Call Anytime</em>
-                        </small>
-                        <br>
-                        (760) 672-1049
                     </p>
                 </div>
             </div>

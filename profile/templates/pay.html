@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-9 mx-auto card">
+                <h1>Payment</h1>
+                <p>Pay for your appointments here.  You can then schedule them within one month's time.
+                    Once an appointment is made, it cannot be rescheduled.  No refunds are available.
+                    For your security, we do not store credit card information on this website.</p>
+                <form method="post" id="payment-form" novalidate class="card-body">
+                    {% crispy form %}
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label class="col-form-label requiredField">&nbsp;</label>
+                                <div class="">&nbsp;</div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div id="div_id_grand_total" class="form-group">
+                                <label for="id_grand_total" class="col-form-label  requiredField">Grand total (USD)</label>
+                                <div class=""> <input type="number" name="grand_total" value="" class="numberinput form-control" disabled id="id_grand_total"> </div>
+                            </div>
+                        </div>
+                    </div>
+                    <label for="card-element">Credit or debit card</label>
+                    <div id="card-element" class="form-control" style="height:2.4em; padding-top:.7em">
+                    </div>
+                    <div id="card-errors" role="alert"></div>
+                    <input type="submit" class="btn btn-primary" value="Save">
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+{% block final_js %}
+        (function() {
+            var style = {
+                base: {
+                    fontFamily: "Raleway,apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,'Helvetica Neue',Arial,sans-serif",
+                }
+            };
+            var stripe = Stripe("{{ STRIPE_API_KEY }}");
+            var elements = stripe.elements({
+                fonts: [
+                    {
+                        cssSrc: "https://fonts.googleapis.com/css?family=Raleway",
+                    },
+                ],
+                locale: "auto"
+            });
+
+            var card = elements.create("card", {style: style});
+            card.mount("#card-element");
+
+            card.addEventListener("change", function(event) {
+            var displayError = document.getElementById("card-errors");
+                if (event.error) {
+                    displayError.textContent = event.error.message;
+                } else {
+                    displayError.textContent = "";
+                }
+            });
+
+            // Create a token or display an error when the form is submitted.
+            var form = document.getElementById("payment-form");
+            form.addEventListener("submit", function(event) {
+                event.preventDefault();
+                stripe.createToken(card).then(function(result) {
+                    if (result.error) {
+                        // Inform the customer that there was an error.
+                        var errorElement = document.getElementById("card-errors");
+                        errorElement.textContent = result.error.message;
+                    } else {
+                        // Send the token to your server.
+                        stripeTokenHandler(result.token);
+                    }
+                });
+            });
+
+            function stripeTokenHandler(token) {
+                // Insert the token ID into the form so it gets submitted to the server
+                var form = document.getElementById('payment-form');
+                var hiddenInput = document.createElement('input');
+                hiddenInput.setAttribute('type', 'hidden');
+                hiddenInput.setAttribute('name', 'stripeToken');
+                hiddenInput.setAttribute('value', token.id);
+                form.appendChild(hiddenInput);
+
+                // Submit the form
+                form.submit();
+            }
+        })();
+
+        // calculation grand total
+        (function() {
+            var apptInPerson = $("#id_in_person_appt_qty");
+            var apptRemote = $("#id_remote_appt_qty");
+            var inPersonCharge = $("#id_in_person_charge");
+            var remoteCharge = $("#id_remote_charge");
+            var grandTotal = $("#id_grand_total");
+            function calculateGrandTotal(event) {
+                grandTotal.val(apptInPerson.val() * inPersonCharge.val() + apptRemote.val() * remoteCharge.val());
+            }
+            apptInPerson.change(calculateGrandTotal).change();
+            apptRemote.change(calculateGrandTotal).change();
+        })();
+{% endblock final_js %}

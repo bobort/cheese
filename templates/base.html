@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>{% block title %}USMLE/Comlex Resources - Oceans Ink{% endblock %}</title>
+    <title>{% block title %}USMLE/Comlex Resources - Ocean Ink{% endblock %}</title>
     <!-- Custom fonts for this template -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
@@ -20,12 +20,13 @@
     <!-- JavaScript Files -->
     {% compress js %}
       <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+      <script src="https://js.stripe.com/v3/"></script>
       {% block extrajs %}{% endblock extrajs %}
     {% endcompress js %}
   </head>
   <body>
     <h1 class="site-heading text-center text-white d-none d-lg-block">
-      <span class="site-heading-upper text-primary mb-3">Oceans Ink</span>
+      <span class="site-heading-upper text-primary mb-3">Ocean Ink</span>
       <span class="site-heading-lower">USMLE/Comlex<br>Resources</span>
     </h1>
     <!-- Navigation -->
@@ -57,11 +58,34 @@
                 {% if request.resolver_match.url_name == 'schedule' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'register' or request.resolver_match.url_name == 'create' %} active{% endif %} px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:register' %}">Register
-                {% if request.resolver_match.url_name == 'register' or request.resolver_match.url_name == 'create' %}<span class="sr-only">(current)</span>{% endif %}
+            <li class="nav-item{% if request.resolver_match.url_name == 'pay' %} active{% endif %} px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:pay' %}">Pay
+                {% if request.resolver_match.url_name == 'pay' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
+            {% if user.is_authenticated %}
+              <li class="nav-item px-lg-4">
+                <span class="nav-link text-uppercase text-expanded">
+                  Hi, {{ user.first_name }}!
+                </span>
+              </li>
+              <li class="nav-item{% if request.resolver_match.url_name == 'account_logout' %} active{% endif %} px-lg-4">
+                <a class="nav-link text-uppercase text-expanded" href="{% url 'account_logout' %}">Sign Out
+                  {% if request.resolver_match.url_name == 'account_logout' %}<span class="sr-only">(current)</span>{% endif %}
+                </a>
+              </li>
+            {% else %}
+              <li class="nav-item{% if request.resolver_match.url_name == 'account_signup' %} active{% endif %} px-lg-4">
+                <a class="nav-link text-uppercase text-expanded" href="{% url 'account_signup' %}">Register
+                  {% if request.resolver_match.url_name == 'account_signup' %}<span class="sr-only">(current)</span>{% endif %}
+                </a>
+              </li>
+              <li class="nav-item{% if request.resolver_match.url_name == 'account_login' %} active{% endif %} px-lg-4">
+                <a class="nav-link text-uppercase text-expanded" href="{% url 'account_login' %}">Sign In
+                  {% if request.resolver_match.url_name == 'account_login' %}<span class="sr-only">(current)</span>{% endif %}
+                </a>
+              </li>
+            {% endif %}
           </ul>
         </div>
       </div>
@@ -73,14 +97,14 @@
             <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'img/intro.jpg' %}" alt="">
             <div class="intro-text left-0 text-center bg-faded p-5 rounded">
               <h2 class="section-heading mb-4">
-                <span class="section-heading-upper">Oceans Ink USMLE/Comlex Resources</span>
+                <span class="section-heading-upper">Ocean Ink USMLE/Comlex Resources</span>
                 <span class="section-heading-lower">We Help You Study</span>
               </h2>
               <p class="mb-3">
                 We will work with you to help you develop a study plan and provide one-on-one tutoring.
               </p>
               <div class="intro-button mx-auto">
-                <a class="btn btn-primary btn-xl" href="{% url 'profile:register' %}">Work With Us Today!</a>
+                <a class="btn btn-primary btn-xl" href="{% if user.is_authenticated %}{% url 'frontend:schedule' %}{% else %}{% url 'account_signup' %}{% endif %}">Work With Us Today!</a>
               </div>
             </div>
           </div>
@@ -106,7 +130,7 @@
     {% endblock content %}
     <footer class="footer text-faded text-center py-5">
       <div class="container">
-        <p class="m-0 small">Copyright &copy; Oceans Ink, Inc. 2018</p>
+        <p class="m-0 small">Copyright &copy; Ocean Ink, Inc. 2019 | <a href="{% url 'frontend:privacy-policy' %}">Privacy Policy</a> | <a href="{% url 'frontend:terms' %}">Terms of Use</a> | <a href="{% url 'frontend:disclaimer' %}">Disclaimer</a> | <a href="{% url 'frontend:return-policy' %}">Return Policy</a></p>
       </div>
     </footer>
     {% compress js %}
@@ -114,5 +138,6 @@
       <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
       <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     {% endcompress js %}
+    <script>{% block final_js %}{% endblock final_js %}</script>
   </body>
 </html>

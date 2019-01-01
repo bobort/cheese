@@ -13,6 +13,9 @@ phonenumbers = "*"
 "psycopg2-binary" = "*"
 django-crispy-forms = "*"
 django-compressor = "*"
+django-allauth = "*"
+django-bootstrap-form = "*"
+stripe = "*"
 
 [dev-packages]
 coverage = "*"
