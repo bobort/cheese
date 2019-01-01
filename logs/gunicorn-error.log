@@ -1,12 +1,690 @@
 /home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
   """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Not Found: /favicon.ico
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+Not Found: /favicon.ico
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Not Found: /favicon.ico
+/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
 /home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
   """)
 /home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
   """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
 /home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
   """)
+Not Found: /favicon.ico
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+Invalid HTTP_HOST header: 'usmlecomlexstudy.com'. You may need to add 'usmlecomlexstudy.com' to ALLOWED_HOSTS.
+Bad Request: /robots.txt
+Invalid HTTP_HOST header: 'usmlecomlexstudy.com'. You may need to add 'usmlecomlexstudy.com' to ALLOWED_HOSTS.
+Bad Request: /about
 /home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
   """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+Invalid HTTP_HOST header: 'usmlecomlexstudy.com'. You may need to add 'usmlecomlexstudy.com' to ALLOWED_HOSTS.
+Bad Request: /about
+Invalid HTTP_HOST header: 'usmlecomlexstudy.com'. You may need to add 'usmlecomlexstudy.com' to ALLOWED_HOSTS.
+Bad Request: /favicon.ico
+Not Found: //wp-includes/wlwmanifest.xml
+Not Found: //xmlrpc.php
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+Not Found: //blog/wp-includes/wlwmanifest.xml
+Not Found: //wordpress/wp-includes/wlwmanifest.xml
+Not Found: //wp/wp-includes/wlwmanifest.xml
+Not Found: //site/wp-includes/wlwmanifest.xml
+Not Found: //cms/wp-includes/wlwmanifest.xml
+Not Found: /robots.txt
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
 /home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
   """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Not Found: /favicon.ico
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/psycopg2/__init__.py:144: UserWarning: The psycopg2 wheel package will be renamed from release 2.8; in order to keep installing from binary please use "pip install psycopg2-binary" instead. For details see: <http://initd.org/psycopg/docs/install.html#binary-install-from-pypi>.
+  """)
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 156, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/core/handlers/base.py", line 154, in _get_response
+    response = response.render()
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 106, in render
+    self.content = self.rendered_content
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/response.py", line 83, in rendered_content
+    content = template.render(context, self._request)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/backends/django.py", line 61, in render
+    return self.template.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 171, in render
+    return self._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/loader_tags.py", line 150, in render
+    return compiled_parent._render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 163, in _render
+    return self.nodelist.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 937, in render
+    bit = node.render_annotated(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/template/base.py", line 904, in render_annotated
+    return self.render(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 131, in render
+    return self.render_compressed(context, self.kind, self.mode, forced=forced)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 90, in render_compressed
+    return self.render_offline(context)
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/compressor/templatetags/compress.py", line 75, in render_offline
+    'is the original content:\n\n%s' % (key, original_content))
+compressor.exceptions.OfflineGenerationError: You have offline compression enabled but key "2bcb6d04f2128842c4eb01460159efb97eb0e1931ac3d262959a3febaffc5cc1" is missing from offline manifest. You may need to run "python manage.py compress". Here is the original content:
+
+
+      <script src="/static/js/jquery-3.3.1.min.js"></script>
+      <script src="https://js.stripe.com/v3/"></script>
+      
+    

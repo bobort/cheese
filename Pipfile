@@ -1,0 +1,23 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+django = "*"
+django-tinymce = "*"
+djangorestframework = "*"
+"psycopg2" = "*"
+"psycopg2-binary" = "*"
+django-crispy-forms = "*"
+django-compressor = "*"
+django-allauth = "*"
+django-bootstrap-form = "*"
+stripe = "*"
+
+[dev-packages]
+coverage = "*"
+
+[requires]
+python_version = "3.7"
+
