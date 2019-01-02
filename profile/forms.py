@@ -7,6 +7,8 @@ from utils.views import CrispyFormMixin
 
 
 class StudentCreationForm(CrispyFormMixin, UserCreationForm):
+    agree_to_terms = forms.BooleanField(label="I agree to the <a href='/legal/terms' target='_blank'>terms of use</a>.")
+
     layout = Layout(
         Div(Div(Field('email'), css_class="col"), css_class="row"),
         Div(Div(Field('password1'), css_class="col"), css_class="row"),
@@ -27,12 +29,21 @@ class StudentCreationForm(CrispyFormMixin, UserCreationForm):
             Div(Field('test_date'), css_class="col"),
             css_class="row"
         ),
+        Div(
+            Div(Field('agree_to_terms'), css_class="col"),
+            css_class="row"
+        )
     )
 
     class Meta:
         model = Student
         fields = ('email', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
         field_classes = {'email': forms.EmailField}
+
+    def clean_agree_to_terms(self):
+        if not self.cleaned_data.get('agree_to_terms'):
+            return forms.ValidationError('You must agree to the terms of use before registering.')
+        return True
 
 
 class StudentChangeForm(UserChangeForm):
