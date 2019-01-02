@@ -1233,3 +1233,37 @@ Not Found: /robots.txt
 WARNING:django.request:Not Found: /robots.txt
 Not Found: /favicon.ico
 WARNING:django.request:Not Found: /favicon.ico
+Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+Not Found: /favicon.ico
+WARNING:django.request:Not Found: /favicon.ico
+WARNING:root:Could not resolve form field 'first_name'.
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/forms/forms.py", line 163, in __getitem__
+    field = self.fields[name]
+KeyError: 'first_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/crispy_forms/utils.py", line 81, in render_field
+    bound_field = form[field]
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/forms/forms.py", line 169, in __getitem__
+    ', '.join(sorted(f for f in self.fields)),
+KeyError: "Key 'first_name' not found in 'StudentCreationForm'. Choices are: degree, email, exam, graduation_year, password1, password2, phone_number, test_date."
+WARNING:root:Could not resolve form field 'last_name'.
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/forms/forms.py", line 163, in __getitem__
+    field = self.fields[name]
+KeyError: 'last_name'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/crispy_forms/utils.py", line 81, in render_field
+    bound_field = form[field]
+  File "/home/mouser/.local/share/virtualenvs/cheese-akH0yNvL/lib/python3.7/site-packages/django/forms/forms.py", line 169, in __getitem__
+    ', '.join(sorted(f for f in self.fields)),
+KeyError: "Key 'last_name' not found in 'StudentCreationForm'. Choices are: degree, email, exam, graduation_year, password1, password2, phone_number, test_date."
