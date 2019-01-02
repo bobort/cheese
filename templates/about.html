@@ -2,4 +2,38 @@
 {% load static %}
 {% block content %}
     {% include 'section_about.html' %}
+    <section class="page-section clearfix">
+        <div class="container">
+            <div class="about-heading-content">
+                <div class="row">
+                    <div class="col-xl-9 col-lg-10 mx-auto">
+                        <div class="bg-faded rounded p-5">
+                            <h2 class="section-heading mb-4">
+                                <span class="section-heading-upper">Our Staff</span>
+                                <span class="section-heading-lower">We're Here to Help</span>
+                            </h2>
+                            <div class="row mb-2">
+                                <p class="col-2">
+                                    <img src="{% static 'img/staff/mklepava.jpg' %}" alt="">
+                                </p>
+                                <p class="col">
+                                    MK Le Pava, M.D.<br>
+                                    Founder
+                                </p>
+                            </div>
+                            <div class="row">
+                                <p class="col-2">
+                                    <img src="{% static 'img/staff/matthewpava.jpg' %}" alt="">
+                                </p>
+                                <p class="col">
+                                    Matthew Pava<br>
+                                    CEO
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}
