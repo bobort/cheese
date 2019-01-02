@@ -3,3 +3,5 @@ static/
 .idea/
 __pycache__/
 cheese/settings.py
+logs/
+*.log
