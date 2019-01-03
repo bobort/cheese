@@ -2,17 +2,25 @@ from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 from django.db.models import Sum
+from django.urls import reverse
 from django.utils import timezone
 
 from profile.managers import StudentManager
 
-STEP1, STEP2CK, STEP2CS, STEP3, SPECIALTY, OTHER = range(0, 6)
+USMLE_STEP1, USMLE_STEP2CK, USMLE_STEP2CS, USMLE_STEP3, COMLEX_LEVEL1, COMLEX_LEVEL2, COMLEX_LEVEL3, \
+SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER = range(0, 11)
+
 EXAM_CHOICES = (
-    (STEP1, "USMLE Step 1"),
-    (STEP2CK, "USMLE Step 2CK"),
-    (STEP2CS, "USMLE Step 2CS"),
-    (STEP3, "USMLE Step 3"),
-    (SPECIALTY, "USMLE Specialty Board Certification"),
+    (COMLEX_LEVEL1, "COMLEX Level 1"),
+    (COMLEX_LEVEL2, "COMLEX Level 2"),
+    (COMLEX_LEVEL3, "COMLEX Level 3"),
+    (MED_COACH_A, "Medical School Year 1 & 2 Coaching"),
+    (MED_COACH_B, "Medical School Year 3 & 4 Coaching"),
+    (SPECIALTY, "Specialty Board Certification"),
+    (USMLE_STEP1, "USMLE Step 1"),
+    (USMLE_STEP2CK, "USMLE Step 2CK"),
+    (USMLE_STEP2CS, "USMLE Step 2CS"),
+    (USMLE_STEP3, "USMLE Step 3"),
     (OTHER, "Other"),
 )
 
@@ -122,6 +130,21 @@ class Payment(models.Model):
     total = models.DecimalField(max_digits=6, decimal_places=2)
     in_person_appt_qty = models.PositiveSmallIntegerField(default=0, verbose_name="Appointments In Person")
     remote_appt_qty = models.PositiveSmallIntegerField(default=0, verbose_name="Appointments Remotely")
+    order_number = models.CharField(max_length=7)
 
     def __str__(self):
         return f"{self.student} ({self.date_paid}): Paid ${self.total}"
+
+    def get_absolute_url(self):
+        return reverse('profile:receipt', kwargs={'pk': self.pk})
+
+    @classmethod
+    def get_next_order_number(cls):
+        current_year = timezone.now().year
+        orders_this_year = cls.objects.filter(date_paid__year=current_year).count() or 0
+        return f"{str(current_year)[2:]}-{(orders_this_year + 1):04d}"
+
+    def save(self, *args, **kwargs):
+        if not self.order_number:
+            self.order_number = Payment.get_next_order_number()
+        return super().save(*args, **kwargs)

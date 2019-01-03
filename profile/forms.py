@@ -37,7 +37,7 @@ class StudentCreationForm(CrispyFormMixin, UserCreationForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
         field_classes = {'email': forms.EmailField}
 
     def clean_agree_to_terms(self):
@@ -46,7 +46,7 @@ class StudentCreationForm(CrispyFormMixin, UserCreationForm):
         return True
 
 
-class StudentChangeForm(UserChangeForm):
+class StudentChangeForm(CrispyFormMixin, UserChangeForm):
     layout = Layout(
         Div(Div(Field('email'), css_class="col"), css_class="row"),
         Div(
@@ -69,7 +69,7 @@ class StudentChangeForm(UserChangeForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
         field_classes = {'email': forms.EmailField}
 
 

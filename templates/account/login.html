@@ -5,9 +5,9 @@
 {% block content %}
 <section class="page-section clearfix">
   <div class="container">
-    <div class="col-12 col-lg-10 ml-lg-auto mr-lg-auto mt-4 card">
+    <div class="card">
+      <h1 class="card-header">{% trans "Sign In" %}</h1>
       <div class="card-body">
-      <h1>{% trans "Sign In" %}</h1>
       {% get_providers as socialaccount_providers %}
       {% if socialaccount_providers %}
         <p>{% blocktrans with site.name as site_name %}Please sign in with one
@@ -30,9 +30,9 @@
         {% if redirect_field_value %}
           <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
         {% endif %}
-        <div class="form-actions">
+        <div class="form-actions btn-group">
           <button class="btn btn-primary" type="submit">{% trans "Sign In" %}</button>
-          <a class="btn" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
+          <a class="btn btn-warning" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a>
         </div>
       </form>
       </div>

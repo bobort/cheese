@@ -5,9 +5,9 @@
 <section class="page-section clearfix">
     <div class="container">
         <div class="col-12 col-lg-10 ml-lg-auto mr-lg-auto mt-4 card">
-            <div class="card-body">
-                <h1>{% trans "Email Addresses" %}</h1>
-                {% if user.emailaddress_set.all %}
+            <h1 class="card-header">{% trans "Email Addresses" %}</h1>
+               <div class="card-body">
+{% if user.emailaddress_set.all %}
                     <p>{% trans 'The following email addresses are associated with your account:' %}</p>
                     <form action="{% url 'account_email' %}" class="email_list uniForm" method="post">
                         {% csrf_token %}

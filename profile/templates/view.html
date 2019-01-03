@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+{% load static utils %}
+{% block content %}
+<section class="page-section cta">
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">
+                <span class="section-heading-upper">Profile for {{ student }}</span>
+            </h2>
+                <table class="table table-striped">
+                    <tbody>
+                        <tr>
+                            <th class="col-2">Email:</th>
+                            <td class="col-10">{{ student.email }}</td>
+                        </tr>
+                        <tr>
+                            <th>Phone number:</th>
+                            <td>{{ student.phone_number }}</td>
+                        </tr>
+                        <tr>
+                            <th>Date joined:</th>
+                            <td>{{ student.date_joined|date:"SHORT_DATE_FORMAT" }}</td>
+                        </tr>
+                        <tr>
+                            <th>Last login:</th>
+                            <td>{{ student.last_login|date:"SHORT_DATE_FORMAT" }}</td>
+                        </tr>
+                        <tr>
+                            <th>Graduation year:</th>
+                            <td>{{ student.graduation_year }}</td>
+                        </tr>
+                        <tr>
+                            <th>Degree:</th>
+                            <td>{{ student.get_degree_display }}</td>
+                        </tr>
+                        <tr>
+                            <th>Exam:</th>
+                            <td>{{ student.get_exam_display }}</td>
+                        </tr>
+                        <tr>
+                            <th>Test date:</th>
+                            <td>{{ student.test_date|date:"SHORT_DATE_FORMAT" }}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                {% if student.payment_set.exists %}
+                    <h2 class="card-header">Receipts</h2>
+                    <table class="table table-striped table-hover table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-2">Date</th>
+                                <th class="col-8">Receipt Number</th>
+                                <th class="col-2">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for payment in student.payment_set.all %}
+                                <tr>
+                                    <td>{{ payment.date_paid|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td><a href="{{ payment.get_absolute_url }}">{{ payment.order_number }}</a></td>
+                                    <td>{{ payment.total|currency }}</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+                <div class="form-actions ml-2 mb-2">
+                    <a class="btn btn-primary" href="{% url 'profile:update' student.pk %}">Update</a>
+                </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
