@@ -1,7 +1,7 @@
 *.pyc
-static/
-.idea/
+/static/
+/.idea/
 __pycache__/
-cheese/settings.py
-logs/
+/cheese/settings.py
+/logs/
 *.log
