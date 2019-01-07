@@ -128,8 +128,8 @@ class Payment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date_paid = models.DateTimeField(default=timezone.now)
     total = models.DecimalField(max_digits=6, decimal_places=2)
-    in_person_appt_qty = models.PositiveSmallIntegerField(default=0, verbose_name="Appointments In Person")
-    remote_appt_qty = models.PositiveSmallIntegerField(default=0, verbose_name="Appointments Remotely")
+    in_person_appt_qty = models.SmallIntegerField(default=0, verbose_name="Appointments In Person")
+    remote_appt_qty = models.SmallIntegerField(default=0, verbose_name="Appointments Remotely")
     order_number = models.CharField(max_length=7)
 
     def __str__(self):
