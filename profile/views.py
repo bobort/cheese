@@ -28,6 +28,7 @@ def process_payment(request):
                     currency='usd',
                     description='Ocean Ink',
                     source=token,
+                    metadata={'student_id': request.user.pk},
                 )
                 if charge.paid:
                     return redirect(reverse('profile:receipt', kwargs={'pk': form.save().pk}))
