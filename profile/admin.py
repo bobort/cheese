@@ -11,7 +11,7 @@ class StudentAdmin(UserAdmin):
     add_form = StudentCreationForm
     form = StudentChangeForm
     search_fields = ('first_name', 'last_name', 'email')
-    ordering = ('email', 'last_name', 'first_name')
+    ordering = ('-last_login',)
     fieldsets = (
         (None, {'fields': ('email', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'phone_number')}),
@@ -26,7 +26,7 @@ class StudentAdmin(UserAdmin):
             'fields': ('email', 'password1', 'password2'),
         }),
     )
-    list_display = ('email', 'first_name', 'last_name', 'is_staff')
+    list_display = ('last_login', 'email', 'first_name', 'last_name', 'exam', 'is_staff')
 
 
 admin.site.register(Student, StudentAdmin)

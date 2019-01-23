@@ -7,42 +7,7 @@
             <h2 class="card-header">
                 <span class="section-heading-upper">Profile for {{ student }}</span>
             </h2>
-                <table class="table table-striped">
-                    <tbody>
-                        <tr>
-                            <th class="col-2">Email:</th>
-                            <td class="col-10">{{ student.email }}</td>
-                        </tr>
-                        <tr>
-                            <th>Phone number:</th>
-                            <td>{{ student.phone_number }}</td>
-                        </tr>
-                        <tr>
-                            <th>Date joined:</th>
-                            <td>{{ student.date_joined|date:"SHORT_DATE_FORMAT" }}</td>
-                        </tr>
-                        <tr>
-                            <th>Last login:</th>
-                            <td>{{ student.last_login|date:"SHORT_DATE_FORMAT" }}</td>
-                        </tr>
-                        <tr>
-                            <th>Graduation year:</th>
-                            <td>{{ student.graduation_year }}</td>
-                        </tr>
-                        <tr>
-                            <th>Degree:</th>
-                            <td>{{ student.get_degree_display }}</td>
-                        </tr>
-                        <tr>
-                            <th>Exam:</th>
-                            <td>{{ student.get_exam_display }}</td>
-                        </tr>
-                        <tr>
-                            <th>Test date:</th>
-                            <td>{{ student.test_date|date:"SHORT_DATE_FORMAT" }}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                {% include 'basic.html' %}
                 <br>
                 {% if student.payment_set.exists %}
                     <h2 class="card-header">Receipts</h2>

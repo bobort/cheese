@@ -1,0 +1,19 @@
+{% load utils %}
+<section class="page-section cta">
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">
+                <span class="section-heading-upper">Receipt {{ payment.order_number }}</span>
+            </h2>
+            <div class="card-body">
+                <ul>
+                    <li>Student: {{ user }}</li>
+                    <li>Payment Date: {{ payment.date_paid|date:"SHORT_DATE_FORMAT" }}</li>
+                    <li>Total Paid: {{ payment.total|currency }}</li>
+                    <li>In Person Appointments: {{ payment.in_person_appt_qty }}</li>
+                    <li>Remote Appointments: {{ payment.remote_appt_qty }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
