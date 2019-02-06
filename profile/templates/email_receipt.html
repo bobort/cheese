@@ -7,7 +7,7 @@
             </h2>
             <div class="card-body">
                 <ul>
-                    <li>Student: {{ user }}</li>
+                    <li>Student: {{ payment.student }}</li>
                     <li>Payment Date: {{ payment.date_paid|date:"SHORT_DATE_FORMAT" }}</li>
                     <li>Total Paid: {{ payment.total|currency }}</li>
                     <li>In Person Appointments: {{ payment.in_person_appt_qty }}</li>
