@@ -8,7 +8,7 @@ from django.utils import timezone
 from profile.managers import StudentManager
 
 USMLE_STEP1, USMLE_STEP2CK, USMLE_STEP2CS, USMLE_STEP3, COMLEX_LEVEL1, COMLEX_LEVEL2, COMLEX_LEVEL3, \
-SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER = range(0, 11)
+SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER, ALL = range(0, 12)
 
 EXAM_CHOICES = (
     (COMLEX_LEVEL1, "COMLEX Level 1"),
@@ -22,14 +22,15 @@ EXAM_CHOICES = (
     (USMLE_STEP2CS, "USMLE Step 2CS"),
     (USMLE_STEP3, "USMLE Step 3"),
     (OTHER, "Other"),
+    (ALL, "All"),
 )
 
 
 class Student(AbstractUser):
     MD, DO = range(0, 2)
     DEGREE_CHOICES = (
-        (MD, "M.D."),
-        (DO, "D.O."),
+        (MD, "MD"),
+        (DO, "DO"),
     )
     username = None
     first_name = models.CharField(max_length=30)
@@ -49,7 +50,7 @@ class Student(AbstractUser):
             MaxValueValidator(2050)
         )
     )
-    degree = models.IntegerField(choices=DEGREE_CHOICES, blank=False, null=True, help_text="M.D. or D.O.")
+    degree = models.IntegerField(choices=DEGREE_CHOICES, blank=False, null=True, help_text="MD or DO")
     exam = models.IntegerField(
         blank=False,
         null=True,
@@ -107,23 +108,18 @@ class ExamScore(models.Model):
 
 
 class Appointment(models.Model):
-    IN_PERSON, REMOTE = range(0, 2)
-    TYPE_CHOICES = (
-        (IN_PERSON, "In Person"),
-        (REMOTE, "Remote Video Conference"),
-    )
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     dt = models.DateTimeField()
     duration = models.DurationField()
-    charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this appointment cost the student
     location = models.CharField(max_length=255, blank=True, null=True)
-    type = models.IntegerField(choices=TYPE_CHOICES)
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
     date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student}: {self.dt} for {self.duration} charged ${self.charge}"
+        return f"{self.student}: {self.dt} for {self.duration} ({self.product})charged ${self.product.charge}"
 
 
+# TODO: rename this Order; add OrderLineItems model
 class Payment(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date_paid = models.DateTimeField(default=timezone.now)
@@ -148,3 +144,17 @@ class Payment(models.Model):
         if not self.order_number:
             self.order_number = Payment.get_next_order_number()
         return super().save(*args, **kwargs)
+
+
+class Product(models.Model):
+    name = models.CharField(max_length=255)
+    notes = models.TextField()
+    # The exam that the product is designed for
+    #   Even if you are not taking that exam, the list can be filtered to show every product available.
+    exam = models.IntegerField(
+        blank=False,
+        null=True,
+        choices=EXAM_CHOICES
+    )
+    charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this product costs
+

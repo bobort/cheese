@@ -192,4 +192,8 @@ section a:hover, .footer a:hover {
   font-weight: bold;
   border-bottom: 2px solid black; }
 
+.page-section {
+  margin-top: 1rem;
+  margin-bottom: 1rem; }
+
 /*# sourceMappingURL=business-casual.css.map */
