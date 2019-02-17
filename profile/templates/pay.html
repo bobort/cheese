@@ -6,11 +6,19 @@
         <div class="card">
             <h1 class="card-header">Payment</h1>
             <div class="card-body">
-                <p class="card-title">You can schedule your appointments within one month's
+                <p class="card-title">
+                    You can schedule your appointments within one month's
                     time. Once an appointment is made, it cannot be rescheduled. No refunds are available.
-                    For your security, we do not store credit or debit card information on this website.</p>
+                    For your security, we do not store credit or debit card information on this website.
+                    We may refuse service to you at any time, but you will likely receive a
+                    refund (less processing fees) under such circumstances.
+                </p>
                 <form method="post" id="payment-form" novalidate class="card-text">
                     {% crispy form %}
+                    {{ form.formset.management_form|crispy }}
+                    {% for f in form.formset %}
+                        {% crispy f %}
+                    {% endfor %}
                     <div class="row">
                         <div class="col">
                             <div class="form-group">
@@ -72,6 +80,8 @@
         var form = document.getElementById("payment-form");
         form.addEventListener("submit", function(event) {
             event.preventDefault();
+            // so that disabled fields get POSTed; there is server-side validation
+            $(".readonly").prop("disabled", false);
             stripe.createToken(card).then(function(result) {
                 if (result.error) {
                     // Inform the customer that there was an error.
@@ -96,17 +106,31 @@
         }
     })();
 
-    // calculate grand total
     (function() {
-        var apptInPerson = $("#id_in_person_appt_qty");
-        var apptRemote = $("#id_remote_appt_qty");
-        var inPersonCharge = $("#id_in_person_charge");
-        var remoteCharge = $("#id_remote_charge");
+        // calculate grand total
         var grandTotal = $("#id_grand_total");
-        function calculateGrandTotal(event) {
-            grandTotal.val(apptInPerson.val() * inPersonCharge.val() + apptRemote.val() * remoteCharge.val());
+        $(".field-qty input").change(function(event) {
+            var formsetItems = $(".formset-item");
+            var total = 0;
+            var qty = 0;
+            var money = 0;
+            for(var i = 0, len = formsetItems.length; i < len; ++i) {
+                qty = parseFloat($(formsetItems[i]).find(".field-qty input").val());
+                money = parseFloat($(formsetItems[i]).find(".field-money input").val());
+                total += (money * qty);
+            }
+            grandTotal.val(total);
+        }).change();
+
+        // correct form components
+        var products = $(".field-product");
+        for(var i = 0, len = products.length; i < len; ++i) {
+            var name = $(products[i]).find("select option:selected").text().replace("\n", "<br>");
+            $(products[i]).append("<p>" + name + "</p>");
+            // remove headings for row > 0
+            if(i > 0) {
+                $(products[i]).parent().find("label").remove();
+            }
         }
-        apptInPerson.change(calculateGrandTotal).change();
-        apptRemote.change(calculateGrandTotal).change();
     })();
 {% endblock final_js %}

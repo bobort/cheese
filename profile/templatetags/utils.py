@@ -13,4 +13,4 @@ def currency(value):
         locale.setlocale(locale.LC_ALL, 'EN_US')  # Default us english on Darwin
     else:  # system isn't Darwin
         locale.setlocale(locale.LC_ALL, '')  # this works for Windows and Debian
-    return locale.currency(value, grouping=True)
+    return locale.currency(value or 0, grouping=True)

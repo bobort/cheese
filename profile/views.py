@@ -6,13 +6,13 @@ from django.shortcuts import render, redirect
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, UpdateView
 
-from profile.forms import PaymentForm, StudentChangeForm
-from profile.models import Payment, Student
+from profile.forms import OrderForm, StudentChangeForm
+from profile.models import Order, Student
 
 
 @login_required
 def process_payment(request):
-    form = PaymentForm(request.POST or None, user=request.user)
+    form = OrderForm(request.POST or None, user=request.user)
     if request.POST:
         # Set your secret key: remember to change this to your live secret key in production
         # See your keys here: https://dashboard.stripe.com/account/apikeys
@@ -23,15 +23,16 @@ def process_payment(request):
 
         try:
             if token and form.is_valid():
+                order = form.save()
                 charge = stripe.Charge.create(
-                    amount=form.total * 100,  # stripe amounts are in pennies
+                    amount=int(order.grand_total * 100),  # stripe amounts are in pennies
                     currency='usd',
                     description='Ocean Ink',
                     source=token,
                     metadata={'student_id': request.user.pk},
                 )
                 if charge.paid:
-                    return redirect(reverse('profile:receipt', kwargs={'pk': form.save().pk}))
+                    return redirect(reverse('profile:receipt', kwargs={'pk': order.pk}))
                 else:
                     print("User: %s" % request.user)
                     print("Stripe charge not paid. %s" % charge)
@@ -75,7 +76,7 @@ def process_payment(request):
 
 
 class Receipt(LoginRequiredMixin, UserPassesTestMixin, DetailView):
-    model = Payment
+    model = Order
     template_name = "receipt.html"
 
     def test_func(self):

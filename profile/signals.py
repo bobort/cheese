@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.loader import get_template
 
-from profile.models import Student, Payment
+from profile.models import Student, Order
 
 
 @receiver(post_save, sender=Student)
@@ -17,7 +17,7 @@ def post_save_student(sender, instance, created, **kwargs):
         )
 
 
-@receiver(post_save, sender=Payment)
+@receiver(post_save, sender=Order)
 def post_save_payment(sender, instance, **kwargs):
     message = get_template('email_receipt.html').render({'payment': instance})
     send_mail(

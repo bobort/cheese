@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Sum
+from django.db.models import Sum, F
 from django.urls import reverse
 from django.utils import timezone
 
@@ -119,14 +119,17 @@ class Appointment(models.Model):
         return f"{self.student}: {self.dt} for {self.duration} ({self.product})charged ${self.product.charge}"
 
 
-# TODO: rename this Order; add OrderLineItems model
-class Payment(models.Model):
+class Order(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date_paid = models.DateTimeField(default=timezone.now)
-    total = models.DecimalField(max_digits=6, decimal_places=2)
-    in_person_appt_qty = models.SmallIntegerField(default=0, verbose_name="Appointments In Person")
-    remote_appt_qty = models.SmallIntegerField(default=0, verbose_name="Appointments Remotely")
     order_number = models.CharField(max_length=7)
+
+    # TODO Remove total, in_person_appt_qty, and remote_appt_qty
+    total = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
+    in_person_appt_qty = models.SmallIntegerField(
+        default=0, verbose_name="Appointments In Person", blank=True, null=True
+    )
+    remote_appt_qty = models.SmallIntegerField(default=0, verbose_name="Appointments Remotely", blank=True, null=True)
 
     def __str__(self):
         return f"{self.student} ({self.date_paid}): Paid ${self.total}"
@@ -140,21 +143,35 @@ class Payment(models.Model):
         orders_this_year = cls.objects.filter(date_paid__year=current_year).count() or 0
         return f"{str(current_year)[2:]}-{(orders_this_year + 1):04d}"
 
+    @property
+    def grand_total(self):
+        return self.orderlineitem_set.aggregate(s=Sum(F('charge') * F('qty'), output_field=models.FloatField()))['s']
+
     def save(self, *args, **kwargs):
         if not self.order_number:
-            self.order_number = Payment.get_next_order_number()
+            self.order_number = Order.get_next_order_number()
         return super().save(*args, **kwargs)
+
+
+class OrderLineItem(models.Model):
+    product = models.ForeignKey('Product', on_delete=models.CASCADE)
+    qty = models.SmallIntegerField()
+    # since charges may change over time, save in Order
+    charge = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Charge (USD)")
+    order = models.ForeignKey(Order, on_delete=models.CASCADE)
 
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
-    notes = models.TextField()
+    notes = models.TextField(blank=True, null=True)
     # The exam that the product is designed for
     #   Even if you are not taking that exam, the list can be filtered to show every product available.
     exam = models.IntegerField(
-        blank=False,
+        blank=True,
         null=True,
         choices=EXAM_CHOICES
     )
     charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this product costs
 
+    def __str__(self):
+        return f"{self.name}\r\n{self.notes}"
