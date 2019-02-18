@@ -148,9 +148,18 @@ class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
                 raise forms.ValidationError({'charge': "Invalid charge for product. Please refresh the page."})
             if qty == 0:
                 self.cleaned_data['DELETE'] = True
+        return self.cleaned_data
 
 
 class OrderLineItemFormSet(forms.BaseInlineFormSet):
     def clean(self):
-        if len(self.deleted_forms) == len(self.forms):
+        result = super().clean()
+        # make sure we have at least one qty filled out in the formset
+        qty_0 = 0
+        for form in self.forms:
+            if (form.cleaned_data.get('qty') or 0) == 0:
+                qty_0 += 1
+        if qty_0 == len(self.forms):
             raise forms.ValidationError("You must have a quantity of at least one on this page.")
+        return result
+

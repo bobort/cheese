@@ -15,6 +15,9 @@
                 </p>
                 <form method="post" id="payment-form" novalidate class="card-text">
                     {% crispy form %}
+                    {% if form.formset.non_form_errors %}
+                        {{ form.formset|as_crispy_errors }}
+                    {% endif %}
                     {{ form.formset.management_form|crispy }}
                     {% for f in form.formset %}
                         {% crispy f %}
