@@ -13,18 +13,7 @@ class Migration(migrations.Migration):
     ]
 
     operations = [
-        migrations.CreateModel(
-            name='Order',
-            fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_paid', models.DateTimeField(default=django.utils.timezone.now)),
-                ('order_number', models.CharField(max_length=7)),
-                ('total', models.DecimalField(blank=True, decimal_places=2, max_digits=6, null=True)),
-                ('in_person_appt_qty', models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Appointments In Person')),
-                ('remote_appt_qty', models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Appointments Remotely')),
-                ('student', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-            ],
-        ),
+        migrations.RenameModel('Payment', 'Order'),
         migrations.CreateModel(
             name='OrderLineItem',
             fields=[
@@ -34,12 +23,5 @@ class Migration(migrations.Migration):
                 ('order', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profile.Order')),
                 ('product', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='profile.Product')),
             ],
-        ),
-        migrations.RemoveField(
-            model_name='payment',
-            name='student',
-        ),
-        migrations.DeleteModel(
-            name='Payment',
         ),
     ]

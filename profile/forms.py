@@ -102,7 +102,7 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
         if not self._formset:
             self._formset = forms.inlineformset_factory(
                 Order, OrderLineItem,
-                form=OrderLineItemForm, extra=len(self.initial_formset_data)
+                form=OrderLineItemForm, formset=OrderLineItemFormSet, extra=len(self.initial_formset_data)
             )(self.data or None, instance=self.instance, initial=self.initial_formset_data)
         return self._formset
 
@@ -148,3 +148,9 @@ class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
                 raise forms.ValidationError({'charge': "Invalid charge for product. Please refresh the page."})
             if qty == 0:
                 self.cleaned_data['DELETE'] = True
+
+
+class OrderLineItemFormSet(forms.BaseInlineFormSet):
+    def clean(self):
+        if len(self.deleted_forms) == len(self.forms):
+            raise forms.ValidationError("You must have a quantity of at least one on this page.")

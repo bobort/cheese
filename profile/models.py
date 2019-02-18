@@ -122,34 +122,32 @@ class Appointment(models.Model):
 class Order(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     date_paid = models.DateTimeField(default=timezone.now)
-    order_number = models.CharField(max_length=7)
-
-    # TODO Remove total, in_person_appt_qty, and remote_appt_qty
-    total = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True)
-    in_person_appt_qty = models.SmallIntegerField(
-        default=0, verbose_name="Appointments In Person", blank=True, null=True
-    )
-    remote_appt_qty = models.SmallIntegerField(default=0, verbose_name="Appointments Remotely", blank=True, null=True)
+    number = models.CharField(max_length=7)
+    total = models.DecimalField(blank=True, decimal_places=2, max_digits=6, null=True)
+    in_person_appt_qty = models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Appointments In Person')
+    remote_appt_qty = models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Appointments Remotely')
 
     def __str__(self):
-        return f"{self.student} ({self.date_paid}): Paid ${self.total}"
+        return f"{self.student} ({self.date_paid}): Paid ${self.grand_total}"
 
     def get_absolute_url(self):
         return reverse('profile:receipt', kwargs={'pk': self.pk})
 
     @classmethod
-    def get_next_order_number(cls):
+    def get_next_number(cls):
         current_year = timezone.now().year
         orders_this_year = cls.objects.filter(date_paid__year=current_year).count() or 0
         return f"{str(current_year)[2:]}-{(orders_this_year + 1):04d}"
 
     @property
     def grand_total(self):
-        return self.orderlineitem_set.aggregate(s=Sum(F('charge') * F('qty'), output_field=models.FloatField()))['s']
+        return self.orderlineitem_set.aggregate(
+            s=Sum(F('charge') * F('qty'), output_field=models.FloatField())
+        )['s'] or 0
 
     def save(self, *args, **kwargs):
-        if not self.order_number:
-            self.order_number = Order.get_next_order_number()
+        if not self.number:
+            self.number = Order.get_next_number()
         return super().save(*args, **kwargs)
 
 

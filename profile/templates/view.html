@@ -7,36 +7,36 @@
             <h2 class="card-header">
                 <span class="section-heading-upper">Profile for {{ student }}</span>
             </h2>
-                {% include 'basic.html' %}
-                <br>
-                {% if student.order_set.exists %}
-                    <h2 class="card-header">Receipts</h2>
-                    <table class="table table-striped table-hover table-bordered">
-                        <thead>
+            {% include 'basic.html' %}
+            <br>
+            {% if student.order_set.exists %}
+                <h2 class="card-header">Receipts</h2>
+                <table class="table table-striped table-hover table-bordered">
+                    <thead>
+                        <tr>
+                            <th class="col-2">Date</th>
+                            <th class="col-8">Receipt Number</th>
+                            <th class="col-2">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in student.order_set.all %}
                             <tr>
-                                <th class="col-2">Date</th>
-                                <th class="col-8">Receipt Number</th>
-                                <th class="col-2">Total</th>
+                                <td>{{ order.date_paid|date:"SHORT_DATE_FORMAT" }}</td>
+                                <td><a href="{{ order.get_absolute_url }}">{{ order.number }}</a></td>
+                                {% if order.total %}
+                                    <td>{{ order.total|currency }}</td>
+                                {% else %}
+                                    <td>{{ order.grand_total|currency }}</td>
+                                {% endif %}
                             </tr>
-                        </thead>
-                        <tbody>
-                            {% for order in student.order_set.all %}
-                                <tr>
-                                    <td>{{ order.date_paid|date:"SHORT_DATE_FORMAT" }}</td>
-                                    <td><a href="{{ order.get_absolute_url }}">{{ order.order_number }}</a></td>
-                                    {% if order.total %}
-                                        <td>{{ order.total|currency }}</td>
-                                    {% else %}
-                                        <td>{{ order.grand_total|currency }}</td>
-                                    {% endif %}
-                                </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                {% endif %}
-                <div class="form-actions ml-2 mb-2">
-                    <a class="btn btn-primary" href="{% url 'profile:update' student.pk %}">Update</a>
-                </div>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
+            <div class="form-actions ml-2 mb-2">
+                <a class="btn btn-primary" href="{% url 'profile:update' student.pk %}">Update</a>
+            </div>
         </div>
     </div>
 </section>
