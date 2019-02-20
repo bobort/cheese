@@ -1,6 +1,8 @@
 from crispy_forms.layout import Layout, Field, Div
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
+from django.core.mail import send_mail
+from django.template.loader import render_to_string
 
 from profile.models import Student, Order, Product, OrderLineItem
 from utils.views import CrispyFormMixin
@@ -113,8 +115,15 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
         instance = super().save(commit=False)
         instance.student = self.user
         if commit:
-            self.instance = instance.save()
+            instance.save()
             self.formset.save()
+            # send email message after everything is saved
+            message = render_to_string('email_receipt.html', {'order': instance})
+            send_mail(
+                "[Ocean Ink] New Payment", message, "mouser@oceanink.net",
+                ["matthew.pava@gmail.com", "drlepava@gmail.com"], True,
+                html_message=message
+            )
         return instance
 
 
