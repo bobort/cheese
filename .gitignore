@@ -5,3 +5,4 @@ __pycache__/
 /cheese/settings.py
 /logs/
 *.log
+/bin/
