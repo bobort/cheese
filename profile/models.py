@@ -173,3 +173,23 @@ class Product(models.Model):
 
     def __str__(self):
         return f"{self.name}\r\n{self.notes}"
+
+
+class Course(models.Model):
+    date_start = models.DateField()
+    duration = models.DurationField()
+    duration_access = models.DurationField()
+
+
+class AgendaItem(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    datetime_start = models.DateTimeField()
+    datetime_end = models.DateTimeField()
+    description = models.TextField()
+
+
+class Staff(Student):
+    description = models.TextField()
+    image_path = models.CharField(max_length=255)
+
+

@@ -10,7 +10,7 @@ class AboutView(TemplateView):
 
 
 class TestimonialsView(TemplateView):
-    template_name = "testimonials.html"
+    template_name = "section_testimonials.html"
 
 
 class ServicesView(TemplateView):
