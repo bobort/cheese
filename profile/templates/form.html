@@ -1,14 +1,19 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-{% block title %}Registration{% endblock title %}
+{% block title %}{{ title }}{% endblock title %}
 {% block content %}
 <section class="page-section clearfix">
     <div class="container">
-        <div class="col-12 col-lg-10 ml-lg-auto mr-lg-auto mt-4 card">
-            <form method="post" novalidate class="card-body" {% if debug %}autocomplete="off"{% endif %}>
-                {% crispy form %}
-                <input type="submit" class="btn btn-primary" value="Save">
-            </form>
+        <div class="card">
+            <h2 class="card-header">{{ title }}</h2>
+            <div class="card-body">
+                <form method="post" novalidate class="card-text" {% if debug %}autocomplete="off"{% endif %}>
+                    {% crispy form %}
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                </form>
+            </div>
         </div>
     </div>
 </section>

@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>{% block title %}USMLE/Comlex Resources - Ocean Ink{% endblock %}</title>
+    <title>{% block title %}USMLE/COMLEX Resources - Ocean Ink{% endblock %}</title>
     <!-- Custom fonts for this template -->
     <link href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Lora:400,400i,700,700i" rel="stylesheet">
@@ -27,12 +27,12 @@
   <body>
     <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper text-primary mb-3">Ocean Ink</span>
-      <span class="site-heading-lower">USMLE/Comlex<br>Resources</span>
+      <span class="site-heading-lower">USMLE/COMLEX<br>Resources</span>
     </h1>
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark py-lg-4" id="mainNav">
       <div class="container">
-        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">USMLE/Comlex Resources</a>
+        <a class="navbar-brand text-uppercase text-expanded font-weight-bold d-lg-none" href="#">Ocean Ink</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -41,11 +41,6 @@
             <li class="nav-item{% if request.resolver_match.url_name == 'index' %} active{% endif %} px-lg-4">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:index' %}">Home
                 {% if request.resolver_match.url_name == 'index' %}<span class="sr-only">(current)</span>{% endif %}
-              </a>
-            </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'about' %} active{% endif %} px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:about' %}">About
-                {% if request.resolver_match.url_name == 'about' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
             <li class="nav-item{% if request.resolver_match.url_name == 'services' %} active{% endif %} px-lg-4">
@@ -59,15 +54,15 @@
               </a>
             </li>
             <li class="nav-item{% if request.resolver_match.url_name == 'pay' %} active{% endif %} px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:pay' %}">Pay
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:pay' %}">Purchase
                 {% if request.resolver_match.url_name == 'pay' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
             {% if user.is_authenticated %}
               <li class="nav-item px-lg-4">
-                <span class="nav-link text-uppercase text-expanded">
-                  Hi, {{ user.first_name }}!
-                </span>
+                <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:view' pk=user.pk %}">Hi, {{ user.first_name }}! &raquo;
+                  {% if request.resolver_match.url_name == 'view' %}<span class="sr-only">(current)</span>{% endif %}
+                </a>
               </li>
               <li class="nav-item{% if request.resolver_match.url_name == 'account_logout' %} active{% endif %} px-lg-4">
                 <a class="nav-link text-uppercase text-expanded" href="{% url 'account_logout' %}">Sign Out
@@ -97,7 +92,7 @@
             <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'img/intro.jpg' %}" alt="">
             <div class="intro-text left-0 text-center bg-faded p-5 rounded">
               <h2 class="section-heading mb-4">
-                <span class="section-heading-upper">Ocean Ink USMLE/Comlex Resources</span>
+                <span class="section-heading-upper">Ocean Ink USMLE/COMLEX Resources</span>
                 <span class="section-heading-lower">We Help You Study</span>
               </h2>
               <p class="mb-3">
@@ -127,10 +122,11 @@
           </div>
         </div>
       </section>
+      {% include 'section_testimonials.html' %}
     {% endblock content %}
     <footer class="footer text-faded text-center py-5">
       <div class="container">
-        <p class="m-0 small">Copyright &copy; Ocean Ink, Inc. 2019 | <a href="{% url 'frontend:privacy-policy' %}">Privacy Policy</a> | <a href="{% url 'frontend:terms' %}">Terms of Use</a> | <a href="{% url 'frontend:disclaimer' %}">Disclaimer</a> | <a href="{% url 'frontend:return-policy' %}">Return Policy</a></p>
+        <p class="m-0 small">Copyright &copy; Ocean Ink LLC 2019 | <a href="{% url 'frontend:about' %}">About Us</a> | <a href="{% url 'frontend:privacy-policy' %}">Privacy Policy</a> | <a href="{% url 'frontend:terms' %}">Terms of Use</a> | <a href="{% url 'frontend:disclaimer' %}">Disclaimer</a> | <a href="{% url 'frontend:return-policy' %}">Return Policy</a></p>
       </div>
     </footer>
     {% compress js %}

@@ -9,6 +9,10 @@ class AboutView(TemplateView):
     template_name = "about.html"
 
 
+class TestimonialsView(TemplateView):
+    template_name = "section_testimonials.html"
+
+
 class ServicesView(TemplateView):
     template_name = "services.html"
 
