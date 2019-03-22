@@ -33,13 +33,13 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='agendaitem',
             name='time_duration',
-            field=models.DurationField(default=datetime.datetime(2019, 3, 20, 7, 21, 41, 551048, tzinfo=utc)),
+            field=models.DurationField(),
             preserve_default=False,
         ),
         migrations.AddField(
             model_name='agendaitem',
             name='time_start',
-            field=models.TimeField(default=datetime.datetime(2019, 3, 20, 7, 21, 48, 97568, tzinfo=utc)),
+            field=models.TimeField(),
             preserve_default=False,
         ),
     ]
