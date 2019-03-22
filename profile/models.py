@@ -181,16 +181,29 @@ class Course(models.Model):
     duration = models.DurationField()
     duration_access = models.DurationField()
 
+    def __str__(self):
+        return str(self.product)
+
+
+class ContentItem(models.Model):
+    course = models.ForeignKey(Course, on_delete=models.CASCADE)
+    date = models.DateField()
+    description = models.TextField()
+
+    def __str__(self):
+        return f"{self.course[:15]} {self.date}: {self.description}"
+
 
 class AgendaItem(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    datetime_start = models.DateTimeField()
-    datetime_end = models.DateTimeField()
+    time_start = models.TimeField()
+    time_duration = models.DurationField()
     description = models.TextField()
+
+    def __str__(self):
+        return f"{self.course[:15]} {self.time_start} for {self.time_duration}: {self.description}"
 
 
 class Staff(Student):
     description = models.TextField()
     image_path = models.CharField(max_length=255)
-
-
