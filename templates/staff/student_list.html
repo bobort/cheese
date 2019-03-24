@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="card">
+            <h1 class="card-header">Student List</h1>
+            <div class="card-body">
+                <table class="table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Exam</th>
+                            <th>Exam Date</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                            <td>{{ student.first_name }} {{ student.last_name }}, {{ student.degree }}</td>
+                            <td>{{ student.exam }}</td>
+                            <td>{{ student.test_date }}</td>
+                            <td>{{ student.phone_number }}</td>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock content %}
+

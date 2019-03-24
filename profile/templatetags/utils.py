@@ -2,6 +2,7 @@ import locale
 import platform
 
 from django import template
+from django.contrib.auth.models import Group
 
 register = template.Library()
 
@@ -14,3 +15,12 @@ def currency(value):
     else:  # system isn't Darwin
         locale.setlocale(locale.LC_ALL, '')  # this works for Windows and Debian
     return locale.currency(value or 0, grouping=True)
+
+
+@register.filter
+def has_group(user, group_name):
+    try:
+        group = Group.objects.get(name=group_name)
+    except Group.DoesNotExist:
+        return False
+    return group in user.groups.all()

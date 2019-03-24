@@ -1,4 +1,4 @@
-{% load static compress %}
+{% load static compress utils %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -69,6 +69,13 @@
                   {% if request.resolver_match.url_name == 'account_logout' %}<span class="sr-only">(current)</span>{% endif %}
                 </a>
               </li>
+              {% if user|has_group:"instructorgroup" or user.is_superuser %}
+                <li class="nav-item{% if request.resolver_match.url_name == 'staff' %} active{% endif %} px-lg-4">
+                  <a class="nav-link text-uppercase text-expanded" href="{% url 'staff:staff-index' %}">Staff
+                    {% if request.resolver_match.url_name == 'staff-index' %}<span class="sr-only">(current)</span>{% endif %}
+                  </a>
+                </li>
+              {% endif %}
             {% else %}
               <li class="nav-item{% if request.resolver_match.url_name == 'account_signup' %} active{% endif %} px-lg-4">
                 <a class="nav-link text-uppercase text-expanded" href="{% url 'account_signup' %}">Register
