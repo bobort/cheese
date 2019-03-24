@@ -7,7 +7,7 @@ from profile.models import Student
 class StudentListView(PermissionRequiredMixin, ListView):
     model = Student
     template = "student_list.html"
-    permission_required = ['instructorgroup']
+    permission_required = ['profile.view_student']
 
     def get_queryset(self):
         return super().get_queryset().filter(is_staff=False)

@@ -14,10 +14,10 @@ django-compressor = "*"
 django-allauth = "*"
 django-bootstrap-form = "*"
 stripe = "*"
+django-debug-permissions = "*"
 
 [dev-packages]
 coverage = "*"
 
 [requires]
 python_version = "3.7"
-
