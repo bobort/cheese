@@ -70,6 +70,7 @@ class Student(AbstractUser):
 
     class Meta:
         verbose_name = "Student"
+        ordering = ('last_name', )
 
     @property
     def exam_count(self):
@@ -91,6 +92,9 @@ class Student(AbstractUser):
 
     def get_full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+    def get_absolute_url(self):
+        return reverse('profile:view', kwargs={'pk': self.pk})
 
 
 class ExamScore(models.Model):
