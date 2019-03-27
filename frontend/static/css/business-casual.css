@@ -196,4 +196,10 @@ section a:hover, .footer a:hover {
   margin-top: 1rem;
   margin-bottom: 1rem; }
 
+.list-hours {
+  width: 80%; }
+
+.cta-inner:before {
+  z-index: -1; }
+
 /*# sourceMappingURL=business-casual.css.map */

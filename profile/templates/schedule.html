@@ -5,7 +5,7 @@
     <div class="container">
         <div class="row">
             <div class="col-xl-9 mx-auto">
-                <div class="cta-inner text-center rounded">
+                <div class="cta-inner rounded">
                     {% if user.is_authenticated %}
                         {% with user.appointment_set.upcoming as upcoming %}
                             {% if upcoming %}
@@ -19,8 +19,31 @@
                         {% endwith %}
                     {% endif %}
                     <h2 class="section-heading mb-5">
-                        <span class="section-heading-upper">Call us to schedule an appointment at (760) 672-1049.  All times are Central.</span>
+                        <span class="section-heading-upper">
+                            Call us to schedule an appointment at (760) 672-1049.  All times are Central.
+                            The following schedule is effective on April 2, 2019. Drilling with Dr. Gill is
+                            effective on April 1, 2019.
+                        </span>
                     </h2>
+                    <p>
+                        Drilling sessions and morning question sessions are free for
+                        <a href="{% url 'account_signup' %}">registered</a> students. Registration
+                        itself is free.
+                    </p>
+                    <p>
+                        Free sessions are held in person at
+                        <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>.
+                        Lodgic does require monthly paid membership to use their facilities.
+                        Please contact <a href="mailto:marissa.siero@lodgic.org">Ms. Marissa Siero</a>
+                        for pricing information. Ocean Ink students do receive a discount for
+                        April 2019.
+                    </p>
+                    <p>
+                        Free sessions are also available via <a href="http://zoom.us">Zoom</a>,
+                        and the participant count is limited to 100. Check
+                        the <a href="https://www.facebook.com/oceanink1">Facebook</a> page
+                        for the Zoom ID prior to the start of the session.
+                    </p>
                     <ul class="list-unstyled list-hours mb-5 text-left mx-auto">
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Sunday
@@ -28,23 +51,42 @@
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Monday
-                            <span class="ml-auto">5:00 AM to 8:00 PM</span>
+                            <span class="ml-auto">
+                                5:00 AM to 8:00 PM<br>
+                                7:00 AM to 8:00 AM: Morning Questions<br>
+                                6:00 PM to 7:00 PM: Drilling with Dr. Gill
+                            </span>
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Tuesday
-                            <span class="ml-auto">5:00 AM to 8:00 PM</span>
+                            <span class="ml-auto">
+                                5:00 AM to 8:00 PM<br>
+                                7:00 AM to 8:00 AM: Morning Questions<br>
+                                6:00 PM to 7:00 PM: Drilling with Dr. Gill
+                            </span>
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Wednesday
-                            <span class="ml-auto">5:00 AM to 8:00 PM</span>
+                            <span class="ml-auto">
+                                5:00 AM to 8:00 PM<br>
+                                7:00 AM to 8:00 AM: Morning Questions<br>
+                                6:00 PM to 7:00 PM: Drilling with Dr. Gill
+                            </span>
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Thursday
-                            <span class="ml-auto">5:00 AM to 8:00 PM</span>
+                            <span class="ml-auto">
+                                5:00 AM to 8:00 PM<br>
+                                7:00 AM to 8:00 AM: Morning Questions<br>
+                                6:00 PM to 7:00 PM: Drilling with Dr. Gill
+                            </span>
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Friday
-                            <span class="ml-auto">5:00 AM to 4:00 PM</span>
+                            <span class="ml-auto">
+                                5:00 AM to 8:00 PM<br>
+                                7:00 AM to 8:00 AM: Morning Questions
+                            </span>
                         </li>
                         <li class="list-unstyled-item list-hours-item d-flex">
                             Saturday
