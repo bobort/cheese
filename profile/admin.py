@@ -3,7 +3,8 @@ from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext_lazy as _
 
 from profile.forms import StudentCreationForm, StudentChangeForm
-from profile.models import Student, ExamScore, Order, Appointment, Product, OrderLineItem, Staff, AgendaItem, Course
+from profile.models import Student, ExamScore, Order, Appointment, Product, OrderLineItem, Staff, AgendaItem, Course, \
+    GroupSession
 
 
 class StudentAdmin(UserAdmin):
@@ -51,3 +52,4 @@ admin.site.register(OrderLineItem)
 admin.site.register(Course)
 admin.site.register(AgendaItem)
 admin.site.register(Staff)
+admin.site.register(GroupSession)

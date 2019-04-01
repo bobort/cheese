@@ -8,7 +8,7 @@
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>
-                        <tr>
+                        <tr class="d-flex">
                             <th class="col-1">ID</th>
                             <th class="col-3">Student</th>
                             <th class="col-2">Exam</th>
@@ -19,7 +19,7 @@
                     </thead>
                     <tbody>
                         {% for student in student_list %}
-                            <tr>
+                            <tr class="d-flex">
                                 <td class="col-1">{{ student.pk }}</td>
                                 <td class="col-3">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.first_name }} {{ student.last_name }}, {{ student.get_degree_display }}{% if user.is_superuser %}</a>{% endif %}</td>
                                 <td class="col-2">{{ student.get_exam_display }}</td>
@@ -32,7 +32,6 @@
                 </table>
             </div>
         </div>
-    </div>
     </div>
 </section>
 {% endblock content %}

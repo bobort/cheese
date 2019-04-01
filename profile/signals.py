@@ -15,3 +15,14 @@ def post_save_student(sender, instance, created, **kwargs):
             ["matthew.pava@gmail.com", "drlepava@gmail.com"], True,
             html_message=message
         )
+
+
+@receiver(post_save, sender=Order)
+def post_save_order(sender, instance, created, **kwargs):
+    if created:
+        message = get_template('email_receipt.html').render({'order': instance})
+        send_mail(
+            "[Ocean Ink] Thank you for your payment.", message, "matthew.pava@gmail.com",
+            [instance.student.email], True,
+            html_message=message
+        )

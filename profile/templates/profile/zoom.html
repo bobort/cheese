@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">Group Session Zoom ID</h2>
+            <div class="card-body">
+                <form method="post" novalidate class="card-text" {% if debug %}autocomplete="off"{% endif %}>
+                    {% crispy form %}
+                    <div class="form-actions">
+                        <input type="submit" class="btn btn-primary" value="Save">
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+

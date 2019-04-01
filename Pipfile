@@ -15,6 +15,7 @@ django-allauth = "*"
 django-bootstrap-form = "*"
 stripe = "*"
 django-debug-permissions = "*"
+django-scheduler = "*"
 
 [dev-packages]
 coverage = "*"

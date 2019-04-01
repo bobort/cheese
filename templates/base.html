@@ -1,4 +1,4 @@
-{% load static compress utils %}
+{% load static compress utils tz %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -92,12 +92,36 @@
         </div>
       </div>
     </nav>
+    {% if occurrences %}
+      {% for occurrence in occurrences %}
+        {% if occurrence.groupsession.zoom_id and occurrence.end > now %}
+          {% if now >= occurrence.start %}
+            {% if user.is_authenticated %}
+              <section class="alert alert-primary text-center">
+                {{ occurrence.title }} is happening now for free at <a href="https://us04web.zoom.us/j/{{ occurrence.groupsession.zoom_id }}">Zoom</a> ({{ occurrence.groupsession.zoom_id }}).  Check it out!
+              </section>
+            {% else %}
+              <section class="alert alert-primary text-center">
+                {{ occurrence.title }} is happening now for all registered students. <a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %}">register</a> now to get the online video session link. Registration is free!
+              </section>
+            {% endif %}
+          {% endif %}
+        {% else %}
+          {% if user.is_authenticated and perms.profile.create_groupsession or user.is_superuser %}
+            <section class="alert alert-primary text-center">
+              Enter Zoom ID for {{ occurrence.title }} ({{ occurrence.start }} - {{ occurrence.end }}):
+              <form action="{% url 'staff:zoom-create' %}" method="post">
+                {% csrf_token %}
+                <input type="hidden" value="{{ occurrence.pk }}" name="occurrence" />
+                <input type="text" name="zoom_id" class="col-4" />
+                <input type="submit" value="Save" name="submit" class="col-2 btn-primary" />
+              </form>
+            </section>
+          {% endif %}
+        {% endif %}
+      {% endfor %}
+    {% endif %}
     {% block content %}
-      <section class="alert alert-primary text-center">
-            We have a new <a href="{% url 'frontend:schedule' %}">schedule</a> effective April 1, 2019.
-            The one and only Dr. Misbah Gill will be leading our afternoon drill sessions.
-            <a href="{% url 'account_signup' %}">Registration</a> is free!
-      </section>
       <section class="page-section clearfix">
         <div class="container">
           <div class="intro">
