@@ -99,6 +99,7 @@
             {% if user.is_authenticated %}
               <section class="alert alert-primary text-center">
                 {{ occurrence.title }} is happening now for free at <a href="https://us04web.zoom.us/j/{{ occurrence.groupsession.zoom_id }}">Zoom</a> ({{ occurrence.groupsession.zoom_id }}).  Check it out!
+                You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>.
               </section>
             {% else %}
               <section class="alert alert-primary text-center">
