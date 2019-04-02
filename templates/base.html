@@ -108,7 +108,7 @@
             {% endif %}
           {% endif %}
         {% else %}
-          {% if user.is_authenticated and perms.profile.create_groupsession or user.is_superuser %}
+          {% if user.is_authenticated and perms.profile.create_groupsession and not occurrence.groupsession or user.is_superuser %}
             <section class="alert alert-primary text-center">
               Enter Zoom ID for {{ occurrence.title }} ({{ occurrence.start }} - {{ occurrence.end }}):
               <form action="{% url 'staff:zoom-create' %}" method="post" class="form-inline">
