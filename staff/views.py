@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import FieldError
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView, CreateView
+from django.views.generic import ListView, CreateView
 
 from profile.models import Student, GroupSession
 from staff.forms import GroupSessionAppointmentForm
