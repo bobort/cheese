@@ -1,4 +1,5 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.core.exceptions import FieldError
 from django.urls import reverse_lazy
 from django.views.generic import ListView, UpdateView, CreateView
 
@@ -12,7 +13,14 @@ class StudentListView(PermissionRequiredMixin, ListView):
     permission_required = ['profile.view_student']
 
     def get_queryset(self):
-        return super().get_queryset().filter(is_staff=False)
+        order_by = self.request.get('ordering')
+        q = super().get_queryset().filter(is_staff=False)
+        if order_by:
+            try:
+                return q.order_by(order_by)
+            except FieldError:  # if ordering isn't an actual field
+                return q
+        return q
 
 
 class ZoomIDCreateView(PermissionRequiredMixin, CreateView):

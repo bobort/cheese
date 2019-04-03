@@ -1,4 +1,4 @@
-{% load static compress utils tz %}
+{% load static compress tz utility_tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -95,7 +95,7 @@
     {% if occurrences %}
       {% for occurrence in occurrences %}
         {% if occurrence.groupsession.zoom_id and occurrence.end > now %}
-          {% if now >= occurrence.start %}
+          {% if now >= occurrence.start|minutes_ago:10 %}
             {% if user.is_authenticated %}
               <section class="alert alert-primary text-center">
                 {{ occurrence.title }} is happening now for free at <a href="https://us04web.zoom.us/j/{{ occurrence.groupsession.zoom_id }}">Zoom</a> ({{ occurrence.groupsession.zoom_id }}).  Check it out!

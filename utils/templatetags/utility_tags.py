@@ -1,10 +1,16 @@
 import locale
 import platform
-
+from datetime import timedelta
 from django import template
 from django.contrib.auth.models import Group
 
 register = template.Library()
+
+
+@register.filter
+def minutes_ago(dt, minutes):
+    """ Returns datetime that is number of minutes before that datetime."""
+    return dt - timedelta(minutes=minutes)
 
 
 @register.filter
