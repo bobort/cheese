@@ -13,7 +13,7 @@ class StudentListView(PermissionRequiredMixin, ListView):
     permission_required = ['profile.view_student']
 
     def get_queryset(self):
-        order_by = self.request.get('ordering')
+        order_by = self.request.GET.get('ordering')
         q = super().get_queryset().filter(is_staff=False)
         if order_by:
             try:
