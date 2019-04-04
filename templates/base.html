@@ -48,6 +48,11 @@
                 {% if request.resolver_match.url_name == 'services' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
+            <li class="nav-item{% if request.resolver_match.url_name == 'resources' %} active{% endif %} px-lg-4">
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:resources' %}">Resources
+                {% if request.resolver_match.url_name == 'resources' %}<span class="sr-only">(current)</span>{% endif %}
+              </a>
+            </li>
             <li class="nav-item{% if request.resolver_match.url_name == 'schedule' %} active{% endif %} px-lg-4">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:schedule' %}">Schedule
                 {% if request.resolver_match.url_name == 'schedule' %}<span class="sr-only">(current)</span>{% endif %}

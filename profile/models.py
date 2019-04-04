@@ -99,29 +99,26 @@ class Student(AbstractUser):
 
 
 class ExamScore(models.Model):
+    FAIL, PASS = range(0, 2)
+    PASS_CHOICES = (
+        (PASS, "Pass"),
+        (FAIL, "Fail"),
+    )
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     exam = models.IntegerField(choices=EXAM_CHOICES)
-    score = models.IntegerField(
-        validators=(
-            MinValueValidator(1),
-            MaxValueValidator(300),
-        )
-    )
+    date = models.DateField(default=timezone.now)
+    score = models.IntegerField(choices=PASS_CHOICES)
 
     def __str__(self):
-        return f"{self.student} {self.get_exam_display()}: {self.score}"
+        return f"{self.student} {self.get_exam_display()} ({self.date}): {self.get_score_display()}"
 
 
 class Appointment(models.Model):
+    occurrence = models.OneToOneField(Occurrence, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, blank=True, null=True, on_delete=models.CASCADE)
-    dt = models.DateTimeField(verbose_name="Appointment Date and Time")
-    duration = models.DurationField()
-    location = models.TextField(blank=True, null=True)
-    product = models.ForeignKey('Product', blank=True, null=True, on_delete=models.CASCADE)
-    date_created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.student}: {self.dt} for {self.duration} ({self.product})charged ${self.product.charge}"
+        return f"{self.student}: {self.occurrence.title}"
 
 
 class GroupSession(models.Model):

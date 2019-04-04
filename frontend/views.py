@@ -5,6 +5,10 @@ class IndexView(TemplateView):
     template_name = "index.html"
 
 
+class ResourcesView(TemplateView):
+    template_name = "resources.html"
+
+
 class AboutView(TemplateView):
     template_name = "about.html"
 

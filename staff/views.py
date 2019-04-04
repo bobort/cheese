@@ -3,7 +3,7 @@ from django.core.exceptions import FieldError
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 
-from profile.models import Student, GroupSession
+from profile.models import Student, GroupSession, Appointment
 from staff.forms import GroupSessionAppointmentForm
 
 
@@ -29,3 +29,10 @@ class ZoomIDCreateView(PermissionRequiredMixin, CreateView):
     permission_required = ["profile.create_groupsession"]
     form_class = GroupSessionAppointmentForm
     success_url = reverse_lazy("frontend:index")
+
+
+class AppointmentCreateView(PermissionRequiredMixin, CreateView):
+    model = Appointment
+    template_name = "appointment.html"
+    permission_required = ["profile.create_appointment"]
+    form_class = None
