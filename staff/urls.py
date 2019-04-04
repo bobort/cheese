@@ -6,6 +6,6 @@ app_name = 'staff'
 
 urlpatterns = [
     path('', views.StudentListView.as_view(), name='staff-index'),
-    path('students', views.StudentListView.as_view(), name='staff-student-list'),
+    path('students', views.StudentListView.as_view(), name='student-list'),
     path('zoom/create', views.ZoomIDCreateView.as_view(), name='zoom-create'),
 ]
