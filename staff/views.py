@@ -1,7 +1,8 @@
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import FieldError
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
+from django.views.generic.base import View, TemplateView
 
 from profile.models import Student, GroupSession, Appointment
 from staff.forms import GroupSessionAppointmentForm
@@ -36,3 +37,12 @@ class AppointmentCreateView(PermissionRequiredMixin, CreateView):
     template_name = "appointment.html"
     permission_required = ["profile.create_appointment"]
     form_class = None
+
+
+class ThrowError(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
+    def test_func(self):
+        user = self.request.user
+        return user.is_superuser
+
+    def get_context_data(self, **kwargs):
+        raise ValueError("Error purposefully generated.")

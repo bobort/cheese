@@ -74,7 +74,7 @@
                   {% if request.resolver_match.url_name == 'account_logout' %}<span class="sr-only">(current)</span>{% endif %}
                 </a>
               </li>
-              {% if user|has_group:"instructorgroup" or user.is_superuser %}
+              {% if perms.profile.view_student or user.is_superuser %}
                 <li class="nav-item{% if request.resolver_match.url_name == 'staff' %} active{% endif %} px-lg-4">
                   <a class="nav-link text-uppercase text-expanded" href="{% url 'staff:staff-index' %}">Staff
                     {% if request.resolver_match.url_name == 'staff-index' %}<span class="sr-only">(current)</span>{% endif %}
@@ -103,7 +103,7 @@
           {% if now >= occurrence.start|minutes_ago:10 %}
             {% if user.is_authenticated %}
               <section class="alert alert-primary text-center">
-                {{ occurrence.title }} is happening now for free at <a href="https://us04web.zoom.us/j/{{ occurrence.groupsession.zoom_id }}">Zoom</a> ({{ occurrence.groupsession.zoom_id }}).  Check it out!
+                {{ occurrence.title }} is happening now for free at <a href="https://zoom.us/j/{{ occurrence.groupsession.zoom_id }}">Zoom</a> ({{ occurrence.groupsession.zoom_id }}).  Check it out!
                 You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>.
               </section>
             {% else %}
