@@ -1,18 +1,23 @@
-from datetime import timedelta
+import datetime
 from django.utils import timezone
 from schedule.models import Event, Occurrence
-from schedule.periods import Day, Period
+from schedule.periods import Day
 
 from profile.models import GroupSession
 
+GROUPSESSION_TITLES = ["Morning Cute", "Drill Session"]
+
 
 def get_event_occurrences_today(request):
-    occurrences_to_save = Day(Event.objects.all(), timezone.now()).get_occurrences()
-    # set the Zoom ID for the Morning Cute event to be the same as the previous one
+    today = timezone.now()
+    occurrences_to_save = Day(Event.objects.all(), today).get_occurrences()
+    # set the Zoom ID for the group session events to be the same as the previous one
     for occurrence in occurrences_to_save:
         occurrence.save()
-        if not GroupSession.objects.filter(occurrence=occurrence).exists() and occurrence.event.title == "Morning Cute":
-            event_occurrences = occurrence.event.get_occurrences(timezone.now() - timedelta(days=7), timezone.now())
+        if not GroupSession.objects.filter(occurrence=occurrence).exists()\
+                and occurrence.event.title in GROUPSESSION_TITLES:
+            # look 7 days into the past to try to find an occurrence of the event
+            event_occurrences = occurrence.event.get_occurrences(today - datetime.timedelta(days=7), today)
             groupsession_occurrences = Occurrence.objects.filter(
                 pk__in=[o.pk for o in event_occurrences], groupsession__isnull=False
             )
@@ -21,5 +26,5 @@ def get_event_occurrences_today(request):
                 GroupSession.objects.create(occurrence=occurrence, zoom_id=last_occurrence.groupsession.zoom_id)
     return {
         'occurrences': occurrences_to_save,
-        'now': timezone.now()
+        'now': today
     }
