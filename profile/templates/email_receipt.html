@@ -12,7 +12,7 @@
                     {% if order.total %} {# change in the future when these fields are converted to OrderLineItem #}
                         <li>Total Paid: {{ order.total|currency }}</li>
                         <li>In Person Appointments: {{ order.in_person_appt_qty }}</li>
-                        <li>Remote Appointments: {{ order.remote_appt_qty }}</li>
+                        <li>Online Appointments: {{ order.remote_appt_qty }}</li>
                     {% else %}
                         <li>Total Paid: {{ order.grand_total|currency }}</li>
                         {% for li in order.orderlineitem_set.all %}

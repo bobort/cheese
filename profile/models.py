@@ -127,8 +127,8 @@ class Order(models.Model):
     date_paid = models.DateTimeField(default=timezone.now)
     number = models.CharField(max_length=7)
     total = models.DecimalField(blank=True, decimal_places=2, max_digits=6, null=True)
-    in_person_appt_qty = models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Appointments In Person')
-    remote_appt_qty = models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Appointments Remotely')
+    in_person_appt_qty = models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='In Person Appointments')
+    remote_appt_qty = models.SmallIntegerField(blank=True, default=0, null=True, verbose_name='Online Appointments')
 
     def __str__(self):
         return f"{self.student} ({self.date_paid}): Paid ${self.grand_total}"
