@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import Sum, F
 from django.urls import reverse
 from django.utils import timezone
-from schedule.models import Occurrence
+from schedule.models import Occurrence, Event
 
 from profile.managers import StudentManager
 
@@ -114,19 +114,12 @@ class ExamScore(models.Model):
 
 
 class Appointment(models.Model):
-    occurrence = models.OneToOneField(Occurrence, on_delete=models.CASCADE)
+    event = models.OneToOneField(Event, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, blank=True, null=True, on_delete=models.CASCADE)
+    zoom_id = models.CharField(max_length=10,  blank=True, null=True, help_text="Just enter the numbers, not the hyphens.")
 
     def __str__(self):
-        return f"{self.student}: {self.occurrence.title}"
-
-
-class GroupSession(models.Model):
-    occurrence = models.OneToOneField(Occurrence, on_delete=models.CASCADE)
-    zoom_id = models.CharField(max_length=10,  help_text="Just enter the numbers, not the hyphens.")
-
-    def __str__(self):
-        return f"{self.occurrence}: {self.zoom_id}"
+        return f"{self.event}: {self.zoom_id}; {self.student}"
 
 
 class Order(models.Model):

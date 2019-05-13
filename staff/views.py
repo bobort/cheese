@@ -2,10 +2,9 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.core.exceptions import FieldError
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
-from django.views.generic.base import View, TemplateView
+from django.views.generic.base import TemplateView
 
-from profile.models import Student, GroupSession, Appointment
-from staff.forms import GroupSessionAppointmentForm
+from profile.models import Student, Appointment
 
 
 class StudentListView(PermissionRequiredMixin, ListView):
@@ -22,14 +21,6 @@ class StudentListView(PermissionRequiredMixin, ListView):
             except FieldError:  # if ordering isn't an actual field
                 return q
         return q
-
-
-class ZoomIDCreateView(PermissionRequiredMixin, CreateView):
-    model = GroupSession
-    template_name = "zoom.html"
-    permission_required = ["profile.create_groupsession"]
-    form_class = GroupSessionAppointmentForm
-    success_url = reverse_lazy("frontend:index")
 
 
 class AppointmentCreateView(PermissionRequiredMixin, CreateView):

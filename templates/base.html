@@ -99,11 +99,11 @@
     </nav>
     {% if occurrences %}
       {% for occurrence in occurrences %}
-        {% if occurrence.groupsession.zoom_id and occurrence.end > now %}
+        {% if occurrence.event.appointment.zoom_id and occurrence.end > now and not occurrence.event.appointment.student_id %}
           {% if now >= occurrence.start|minutes_ago:10 %}
             {% if user.is_authenticated %}
               <section class="alert alert-primary text-center">
-                {{ occurrence.title }} is happening now for free at <a href="https://zoom.us/j/{{ occurrence.groupsession.zoom_id }}">Zoom</a> ({{ occurrence.groupsession.zoom_id }}).  Check it out!
+                {{ occurrence.title }} is happening now for free at <a href="https://zoom.us/j/{{ occurrence.event.appointment.zoom_id }}">Zoom</a> ({{ occurrence.event.appointment.zoom_id }}).  Check it out!
                 You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>.
               </section>
             {% else %}
@@ -112,13 +112,13 @@
               </section>
             {% endif %}
           {% endif %}
-        {% elif not occurrence.groupsession.zoom_id %}
-          {% if user.is_authenticated and perms.profile.create_groupsession or user.is_superuser %}
+        {% elif not occurrence.event.appointment.zoom_id %}
+          {% if user.is_authenticated and perms.profile.create_appointment or user.is_superuser %}
             <section class="alert alert-primary text-center">
               Enter Zoom ID for {{ occurrence.title }} ({{ occurrence.start }} - {{ occurrence.end }}):
               <form action="{% url 'staff:zoom-create' %}" method="post" class="form-inline">
                 {% csrf_token %}
-                <input type="hidden" value="{{ occurrence.pk }}" name="occurrence" />
+                <input type="hidden" value="{{ occurrence.event.pk }}" name="occurrence" />
                 <div class="col-12 md-auto">
                   <input type="text" name="zoom_id" class="form-control col-4" maxlength="10" />
                   <input type="submit" value="Save" name="submit" class="col-2 btn btn-primary" />
