@@ -21,7 +21,7 @@
                         {% for student in student_list %}
                             <tr class="d-flex">
                                 <td class="col-1">{{ student.pk }}</td>
-                                <td class="col-3">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.first_name }} {{ student.last_name }}, {{ student.get_degree_display }}{% if user.is_superuser %}</a>{% endif %}</td>
+                                <td class="col-3">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.last_name }}, {{ student.first_name }}, {{ student.get_degree_display }}{% if user.is_superuser %}</a>{% endif %}</td>
                                 <td class="col-2">{{ student.get_exam_display }}</td>
                                 <td class="col-2">{{ student.test_date }}</td>
                                 <td class="col-2">{{ student.phone_number }}</td>

@@ -2,13 +2,11 @@ import datetime
 
 from django.template.defaultfilters import date
 from django.utils import timezone
+from django.utils.timezone import localtime
 from django.utils.translation import ugettext
 from django.conf import settings as django_settings
 from schedule.models import Event, Occurrence
 from schedule.periods import Period
-
-
-GROUPSESSION_TITLES = ["Morning Cute", "Drill Session"]
 
 
 def new_occurrence_hash(self):
@@ -32,13 +30,14 @@ Occurrence.__str__ = new_occurrence_str
 
 
 def get_event_occurrences_today(request):
-    today = timezone.localtime(timezone.now())  # Go to local server time for appointment modifications
+    # today = localtime(timezone.now())  # Go to local server time for appointment modifications
+    now = timezone.now()
+    today = datetime.datetime(day=now.day, month=now.month, year=now.year, tzinfo=now.tzinfo)
     start = today
-    end = today + datetime.timedelta(days=2)
-    # todo: does get_occurrences return a pk for occurrences already in the database?
+    end = today + datetime.timedelta(days=1)
     occurrences = Period(Event.objects.all(), start, end).get_occurrences()
     # set the Zoom ID for the group session events to be the same as the previous one
     return {
         'occurrences': occurrences,
-        'now': today
+        'now': now,
     }
