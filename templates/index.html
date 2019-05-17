@@ -2,6 +2,16 @@
 {% load static %}
 {% block facebookPlugin %}
     <div id="fb-root"></div>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId            : '806336309714344',
+          autoLogAppEvents : true,
+          xfbml            : true,
+          version          : 'v3.3'
+        });
+      };
+    </script>
     <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3&appId=806336309714344&autoLogAppEvents=1"></script>
 {% endblock facebookPlugin %}
 {% block content %}
