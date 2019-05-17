@@ -1,1 +1,54 @@
 {% extends 'base.html' %}
+{% load static %}
+{% block facebookPlugin %}
+    <div id="fb-root"></div>
+    <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v3.3&appId=806336309714344&autoLogAppEvents=1"></script>
+{% endblock facebookPlugin %}
+{% block content %}
+  <section class="page-section clearfix">
+    <div class="container">
+        <div class="row">
+      <div class="intro col-9">
+        <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'img/intro.jpg' %}" alt="">
+        <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+          <h2 class="section-heading mb-4">
+            <span class="section-heading-upper">Ocean Ink USMLE/COMLEX Resources</span>
+            <span class="section-heading-lower">We Help You Study</span>
+          </h2>
+          <p class="mb-3">
+            We will work with you to help you develop a study plan and provide one-on-one tutoring.
+          </p>
+          <div class="intro-button mx-auto">
+            <a class="btn btn-primary btn-xl" href="{% if user.is_authenticated %}{% url 'frontend:schedule' %}{% else %}{% url 'account_signup' %}{% endif %}">Work With Us Today!</a>
+          </div>
+        </div>
+      </div>
+        <div class="intro col-3">
+          <div class="fb-page" data-href="https://www.facebook.com/oceanink1" data-tabs="timeline" data-width="" data-height="" data-small-header="true" data-adapt-container-width="true" data-hide-cover="true" data-show-facepile="false">
+            <blockquote cite="https://www.facebook.com/oceanink1" class="fb-xfbml-parse-ignore">
+              <a href="https://www.facebook.com/oceanink1">Ocean Ink</a>
+            </blockquote>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section class="page-section cta">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <div class="cta-inner text-center rounded">
+            <h2 class="section-heading mb-4">
+              <span class="section-heading-upper">Our Promise</span>
+              <span class="section-heading-lower">To You</span>
+            </h2>
+            <p class="mb-0">
+              We are dedicated to helping you succeed in your endeavors to pass your board exams.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% include 'section_testimonials.html' %}
+{% endblock content %}

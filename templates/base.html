@@ -25,6 +25,7 @@
       <script src="https://js.stripe.com/v3/"></script>
   </head>
   <body>
+    {% block facebookPlugin %}{% endblock facebookPlugin %}
     <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper text-primary mb-3">Ocean Ink</span>
       <span class="site-heading-lower">USMLE/COMLEX<br>Resources</span>
@@ -130,43 +131,6 @@
       {% endfor %}
     {% endif %}
     {% block content %}
-      <section class="page-section clearfix">
-        <div class="container">
-          <div class="intro">
-            <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{% static 'img/intro.jpg' %}" alt="">
-            <div class="intro-text left-0 text-center bg-faded p-5 rounded">
-              <h2 class="section-heading mb-4">
-                <span class="section-heading-upper">Ocean Ink USMLE/COMLEX Resources</span>
-                <span class="section-heading-lower">We Help You Study</span>
-              </h2>
-              <p class="mb-3">
-                We will work with you to help you develop a study plan and provide one-on-one tutoring.
-              </p>
-              <div class="intro-button mx-auto">
-                <a class="btn btn-primary btn-xl" href="{% if user.is_authenticated %}{% url 'frontend:schedule' %}{% else %}{% url 'account_signup' %}{% endif %}">Work With Us Today!</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section class="page-section cta">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-9 mx-auto">
-              <div class="cta-inner text-center rounded">
-                <h2 class="section-heading mb-4">
-                  <span class="section-heading-upper">Our Promise</span>
-                  <span class="section-heading-lower">To You</span>
-                </h2>
-                <p class="mb-0">
-                  We are dedicated to helping you succeed in your endeavors to pass your board exams.
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-      {% include 'section_testimonials.html' %}
     {% endblock content %}
     <footer class="footer text-faded text-center py-5">
       <div class="container">
