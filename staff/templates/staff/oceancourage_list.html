@@ -8,7 +8,7 @@
             <h5 class="card-header">Emails as comma-delimited list</h5>
             <p class="card-body">
                 {% for student in student_list %}
-                    {{ student.email }}{% if not forloop.last %}, {% endif %}
+                    {{ student.email }}{% if not forloop.last %}; {% endif %}
                 {% endfor %}
             </p>
         </div>
