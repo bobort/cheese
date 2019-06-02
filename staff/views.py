@@ -1,15 +1,25 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
-from django.core.exceptions import FieldError
-from django.urls import reverse_lazy
+from django.core.exceptions import FieldError, PermissionDenied
+from django.db.models import Case, When, Max, F
+from django.urls import reverse
 from django.views.generic import ListView, CreateView
-from django.views.generic.base import TemplateView
+from django.views.generic.base import TemplateView, RedirectView
 
 from profile.models import Student, Appointment
 
 
+class IndexView(RedirectView):
+    def get_redirect_url(self, *args, **kwargs):
+        if self.request.user.groups.filter(name="oceancouragegroup").exists():
+            return reverse("staff:ocean-courage-list")
+        elif self.request.user.groups.filter(name="instructorgroup").exists() or self.request.user.is_superuser:
+            return reverse("staff:student-list")
+        raise PermissionDenied
+
+
 class StudentListView(PermissionRequiredMixin, ListView):
     model = Student
-    template_name = "student_list.html"
+    template_name = "staff/student_list.html"
     permission_required = ['profile.view_student']
 
     def get_queryset(self):
@@ -28,6 +38,28 @@ class AppointmentCreateView(PermissionRequiredMixin, CreateView):
     template_name = "appointment.html"
     permission_required = ["profile.create_appointment"]
     form_class = None
+
+
+class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
+    model = Student
+    template_name = "staff/oceancourage_list.html"
+
+    def has_permission(self):
+        # you must have a staff account and the student must be a subscriber
+        # to the Ocean Courage package
+        return self.request.user.groups.filter(name="oceancouragegroup").exists() or self.request.user.is_superuser
+
+    def get_queryset(self):
+        order_by = self.request.GET.get('ordering')
+        q = super().get_queryset().filter(order__orderlineitem__product__name="Ocean Courage Group Sessions").annotate(
+            last_purchase_date=Max('order__date_paid')
+        )
+        if order_by:
+            try:
+                return q.order_by(order_by)
+            except FieldError:  # if ordering isn't an actual field
+                return q
+        return q
 
 
 class ThrowError(LoginRequiredMixin, UserPassesTestMixin, TemplateView):

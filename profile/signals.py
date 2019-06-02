@@ -25,6 +25,8 @@ def post_save_student(sender, instance, created, **kwargs):
 
 @receiver(post_save, sender=Order)
 def post_save_order(sender, instance, created, **kwargs):
+    # TODO race condition: sometimes the signal is called before order.orderlineitem_set is populated resulting
+    #   in in accurate value of $0 for receipt
     if created:
         message = get_template('email_receipt.html').render({'order': instance})
         send_mail(

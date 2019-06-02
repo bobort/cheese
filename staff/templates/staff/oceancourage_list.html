@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="card">
+            <h1 class="card-header">Ocean Courage Group Sessions Subscribers</h1>
+            <h5 class="card-header">Emails as comma-delimited list</h5>
+            <p class="card-body">
+                {% for student in student_list %}
+                    {{ student.email }}{% if not forloop.last %}, {% endif %}
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+</section>
+<section class="page-section">
+    <div class="container">
+        <div class="card">
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr class="d-flex">
+                            <th class="col-3">Student <a href="{% url 'staff:ocean-courage-list' %}?ordering=-last_name">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=last_name">&uarr;</a></th>
+                            <th class="col-3">Exam <a href="{% url 'staff:ocean-courage-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=exam">&uarr;</a></th>
+                            <th class="col-3">Email <a href="{% url 'staff:ocean-courage-list' %}?ordering=-email">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=email">&uarr;</a></th>
+                            <th class="col-3">Purchase Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                            <tr class="d-flex">
+                                <td class="col-3">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.last_name }}, {{ student.first_name }}, {{ student.get_degree_display }}{% if user.is_superuser %}</a>{% endif %}</td>
+                                <td class="col-3">{{ student.get_exam_display }}</td>
+                                <td class="col-3"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                                <td class="col-3">{{ student.last_purchase_date|date:"SHORT_DATE_FORMAT" }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

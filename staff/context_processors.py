@@ -2,7 +2,6 @@ import datetime
 
 from django.template.defaultfilters import date
 from django.utils import timezone
-from django.utils.timezone import localtime
 from django.utils.translation import ugettext
 from django.conf import settings as django_settings
 from schedule.models import Event, Occurrence
@@ -30,11 +29,9 @@ Occurrence.__str__ = new_occurrence_str
 
 
 def get_event_occurrences_today(request):
-    # today = localtime(timezone.now())  # Go to local server time for appointment modifications
     now = timezone.now()
-    today = datetime.datetime(day=now.day, month=now.month, year=now.year, tzinfo=now.tzinfo)
-    start = today
-    end = today + datetime.timedelta(days=1)
+    start = now
+    end = now + datetime.timedelta(hours=1)
     occurrences = Period(Event.objects.all(), start, end).get_occurrences()
     # set the Zoom ID for the group session events to be the same as the previous one
     return {

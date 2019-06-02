@@ -19,6 +19,15 @@
     {% endcompress css %}
     <!-- JavaScript Files -->
     {% compress js %}
+          <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141228836-1">
+      </script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-141228836-1');
+      </script>
       <script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
       {% block extrajs %}{% endblock extrajs %}
     {% endcompress js %}
@@ -44,11 +53,6 @@
                 {% if request.resolver_match.url_name == 'index' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
-            <li class="nav-item{% if request.resolver_match.url_name == 'services' %} active{% endif %} px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:services' %}">Services
-                {% if request.resolver_match.url_name == 'services' %}<span class="sr-only">(current)</span>{% endif %}
-              </a>
-            </li>
             <li class="nav-item{% if request.resolver_match.url_name == 'resources' %} active{% endif %} px-lg-4">
               <a class="nav-link text-uppercase text-expanded" href="{% url 'frontend:resources' %}">Resources
                 {% if request.resolver_match.url_name == 'resources' %}<span class="sr-only">(current)</span>{% endif %}
@@ -60,7 +64,7 @@
               </a>
             </li>
             <li class="nav-item{% if request.resolver_match.url_name == 'pay' %} active{% endif %} px-lg-4">
-              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:pay' %}">Purchase
+              <a class="nav-link text-uppercase text-expanded" href="{% url 'profile:pay' %}">Pricing
                 {% if request.resolver_match.url_name == 'pay' %}<span class="sr-only">(current)</span>{% endif %}
               </a>
             </li>
@@ -75,7 +79,7 @@
                   {% if request.resolver_match.url_name == 'account_logout' %}<span class="sr-only">(current)</span>{% endif %}
                 </a>
               </li>
-              {% if perms.profile.view_student or user.is_superuser %}
+              {% if perms.profile.view_student or user|has_group:"oceancouragegroup" or user.is_superuser %}
                 <li class="nav-item{% if request.resolver_match.url_name == 'staff' %} active{% endif %} px-lg-4">
                   <a class="nav-link text-uppercase text-expanded" href="{% url 'staff:staff-index' %}">Staff
                     {% if request.resolver_match.url_name == 'staff-index' %}<span class="sr-only">(current)</span>{% endif %}
@@ -83,11 +87,6 @@
                 </li>
               {% endif %}
             {% else %}
-              <li class="nav-item{% if request.resolver_match.url_name == 'account_signup' %} active{% endif %} px-lg-4">
-                <a class="nav-link text-uppercase text-expanded" href="{% url 'account_signup' %}">Register
-                  {% if request.resolver_match.url_name == 'account_signup' %}<span class="sr-only">(current)</span>{% endif %}
-                </a>
-              </li>
               <li class="nav-item{% if request.resolver_match.url_name == 'account_login' %} active{% endif %} px-lg-4">
                 <a class="nav-link text-uppercase text-expanded" href="{% url 'account_login' %}">Sign In
                   {% if request.resolver_match.url_name == 'account_login' %}<span class="sr-only">(current)</span>{% endif %}
@@ -104,28 +103,16 @@
           {% if now >= occurrence.start|minutes_ago:10 %}
             {% if user.is_authenticated %}
               <section class="alert alert-primary text-center">
-                {{ occurrence.title }} is happening now for free at <a href="https://zoom.us/j/{{ occurrence.event.appointment.zoom_id }}">Zoom</a> ({{ occurrence.event.appointment.zoom_id }}).  Check it out!
-                You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>.
+                {{ occurrence.title }} is happening now!  You can <a href="{% url 'profile:pay' %}">subscribe</a> to the
+                Ocean Courage package to have access to by the next session.
+                You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>
+                after paying the Lodgic - Ocean Ink membership fee.
               </section>
             {% else %}
               <section class="alert alert-primary text-center">
-                {{ occurrence.title }} is happening now for all registered students. <a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %}">register</a> now to get the online video session link. Registration is free!
+                {{ occurrence.title }} is happening now for all subscribed students. <a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %}">register</a> now!
               </section>
             {% endif %}
-          {% endif %}
-        {% elif not occurrence.event.appointment.zoom_id %}
-          {% if user.is_authenticated and perms.profile.create_appointment or user.is_superuser %}
-            <section class="alert alert-primary text-center">
-              Enter Zoom ID for {{ occurrence.title }} ({{ occurrence.start }} - {{ occurrence.end }}):
-              <form action="{% url 'staff:zoom-create' %}" method="post" class="form-inline">
-                {% csrf_token %}
-                <input type="hidden" value="{{ occurrence.event.pk }}" name="occurrence" />
-                <div class="col-12 md-auto">
-                  <input type="text" name="zoom_id" class="form-control col-4" maxlength="10" />
-                  <input type="submit" value="Save" name="submit" class="col-2 btn btn-primary" />
-                </div>
-              </form>
-            </section>
           {% endif %}
         {% endif %}
       {% endfor %}

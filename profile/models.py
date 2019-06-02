@@ -156,7 +156,7 @@ class Order(models.Model):
 
 class OrderLineItem(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
-    qty = models.SmallIntegerField()
+    qty = models.SmallIntegerField(verbose_name="Quantity")
     # since charges may change over time, save in Order
     charge = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Charge (USD)")
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
