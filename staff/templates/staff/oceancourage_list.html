@@ -5,7 +5,7 @@
     <div class="container">
         <div class="card">
             <h1 class="card-header">Ocean Courage Group Sessions Subscribers</h1>
-            <h5 class="card-header">Emails as comma-delimited list</h5>
+            <h5 class="card-header">Emails list</h5>
             <p class="card-body">
                 {% for student in student_list %}
                     {{ student.email }}{% if not forloop.last %}; {% endif %}
@@ -24,7 +24,7 @@
                             <th class="col-3">Student <a href="{% url 'staff:ocean-courage-list' %}?ordering=-last_name">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=last_name">&uarr;</a></th>
                             <th class="col-3">Exam <a href="{% url 'staff:ocean-courage-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=exam">&uarr;</a></th>
                             <th class="col-3">Email <a href="{% url 'staff:ocean-courage-list' %}?ordering=-email">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=email">&uarr;</a></th>
-                            <th class="col-3">Purchase Date</th>
+                            <th class="col-3">Purchase Date <a href="{% url 'staff:ocean-courage-list' %}?ordering=-last_purchase_date">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=last_purchase_date">&uarr;</a></th>
                         </tr>
                     </thead>
                     <tbody>

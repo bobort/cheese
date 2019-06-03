@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import FieldError, PermissionDenied
-from django.db.models import Case, When, Max, F
+from django.db.models import Case, When, Max, F, Q
 from django.urls import reverse
 from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
@@ -51,7 +51,10 @@ class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         order_by = self.request.GET.get('ordering')
-        q = super().get_queryset().filter(order__orderlineitem__product__name="Ocean Courage Group Sessions").annotate(
+        q = super().get_queryset().filter(
+            Q(order__orderlineitem__product__name="Ocean Courage Group Sessions") |
+            Q(order__orderlineitem__product__name="USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course")
+        ).annotate(
             last_purchase_date=Max('order__date_paid')
         )
         if order_by:

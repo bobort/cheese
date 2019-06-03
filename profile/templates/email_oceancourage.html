@@ -1,0 +1,16 @@
+{% load utility_tags %}
+<section class="page-section cta">
+    <div class="container">
+        <div class="card">
+            <h2 class="card-header">
+                <span class="section-heading-upper">New Ocean Courage Order!</span>
+            </h2>
+            <div class="card-body">
+                <ul>
+                    <li>Student: {{ order.student }}</li>
+                    <li>Order Date: {{ order.date_paid|date:"SHORT_DATE_FORMAT" }}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
