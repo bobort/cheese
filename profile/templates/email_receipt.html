@@ -16,7 +16,7 @@
                     {% else %}
                         <li>Total Paid: {{ order.grand_total|currency }}</li>
                         {% for li in order.orderlineitem_set.all %}
-                            <li>{{ li.product }}: {{ li.qty }} ({{ li.charge|currency }} ea)</li>
+                            <li>{{ li.product.name }}: {{ li.qty }} ({{ li.charge|currency }} ea)</li>
                         {% endfor %}
                     {% endif %}
                 </ul>

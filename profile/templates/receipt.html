@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
-{% load static utility_tags %}
+{% load static utility_tags admin_urls %}
 {% block content %}
 {% include 'email_receipt.html' %}
+{% if user.is_superuser %}<a class="btn btn-danger" href="{% url 'admin:profile_order_delete' order.pk %}">Delete</a>{% endif %}
 {% endblock content %}
