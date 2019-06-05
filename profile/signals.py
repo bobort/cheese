@@ -3,7 +3,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.loader import get_template
 
-from profile.models import Student, Order, OrderLineItem
+from profile.models import Student, OrderLineItem
 from utils import send_html_email
 
 
