@@ -68,6 +68,7 @@
             }
         };
         var stripe = Stripe("{{ STRIPE_API_KEY }}");
+        var form = document.getElementById("payment-form");
         var elements = stripe.elements({
             fonts: [
                 {
@@ -79,15 +80,19 @@
         var card = elements.create("card", {style: style});
         card.mount("#card-element");
         card.addEventListener("change", function(event) {
-        var displayError = document.getElementById("card-errors");
+            var displayError = document.getElementById("card-errors");
+            var $form = $(form);
+            var $submit = $form.find("input[type=submit]");
             if (event.error) {
                 displayError.textContent = event.error.message;
+                $submit.val("Fix Errors").attr("disabled", true).addClass("disabled");
             } else {
                 displayError.textContent = "";
+                $form.data("submitted", false);
+                $submit.val($submit.data("label")).attr("disabled", false).removeClass("disabled");
             }
         });
         // Create a token or display an error when the form is submitted.
-        var form = document.getElementById("payment-form");
         form.addEventListener("submit", function(event) {
             event.preventDefault();
             // so that disabled fields get POSTed; there is server-side validation
