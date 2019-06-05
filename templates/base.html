@@ -130,7 +130,6 @@
       <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     {% endcompress js %}
     <script>{% block final_js %}{% endblock final_js %}</script>
-    {% compress js %}
       <script>
         // jQuery plugin to prevent double submission of forms
         jQuery.fn.preventDoubleSubmission = function() {
@@ -151,6 +150,5 @@
         };
         $("form").preventDoubleSubmission();
       </script>
-    {% endcompress js %}
   </body>
 </html>
