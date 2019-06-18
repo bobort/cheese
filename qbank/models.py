@@ -21,8 +21,8 @@ class Question(models.Model):
 
     @mark_safe
     def __str__(self):
-        if len(self.vignette) > 99:
-            return f"{self.vignette[:48]}...{self.vignette[:-48]}: {self.correct_answer}"
+        if len(self.vignette) > 40:
+            return f"{self.vignette[:20]}...{self.vignette[-20:]}: {self.correct_answer}"
         return f"{self.vignette}: {self.correct_answer}"
 
 
