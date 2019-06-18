@@ -15,13 +15,15 @@ class Answer(models.Model):
 
 
 class Question(models.Model):
-    description = HTMLField()
+    vignette = HTMLField()
     correct_answer = models.ForeignKey(Answer, blank=True, null=True, on_delete=models.CASCADE, related_name="+")
-    correct_answer_description = HTMLField()
+    explanation_summary = HTMLField()
 
     @mark_safe
     def __str__(self):
-        return self.description[:100]
+        if len(self.vignette) > 99:
+            return f"{self.vignette[:48]}...{self.vignette[:-48]}: {self.correct_answer}"
+        return f"{self.vignette}: {self.correct_answer}"
 
 
 class UserQuestion(models.Model):

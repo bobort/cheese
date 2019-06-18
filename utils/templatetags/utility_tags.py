@@ -2,7 +2,6 @@ import locale
 import platform
 from datetime import timedelta
 from django import template
-from django.contrib.auth.models import Group
 
 register = template.Library()
 
