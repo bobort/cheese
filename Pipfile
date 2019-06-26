@@ -16,6 +16,7 @@ django-bootstrap-form = "*"
 stripe = "*"
 django-debug-permissions = "*"
 django-scheduler = "*"
+django-report-builder = "*"
 
 [dev-packages]
 coverage = "*"
