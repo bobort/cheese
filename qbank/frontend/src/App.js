@@ -20,7 +20,7 @@ class App extends Component {
             <li key={item.id} className="list-group-item d-flex justify-content-between">
                 {item.id === correct_answer && <strong>Correct.</strong>}
                 <span className="answer">{ item.description }</span>
-                <Button variant="secondar" className="mr-2"> Edit </Button>
+                <Button variant="secondary" className="mr-2"> Edit </Button>
                 <Button variant="danger">Delete </Button>
             </li>
         ));
