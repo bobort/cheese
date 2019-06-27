@@ -35,6 +35,10 @@ class StudentCreationForm(CrispyFormMixin, UserCreationForm):
             css_class="row"
         ),
         Div(
+            Div(Field('marketing_subscription'), css_class="col"),
+            css_class="row"
+        ),
+        Div(
             Div(Field('agree_to_terms'), css_class="col"),
             css_class="row"
         )
@@ -42,7 +46,8 @@ class StudentCreationForm(CrispyFormMixin, UserCreationForm):
 
     class Meta:
         model = Student
-        fields = ('email', 'first_name', 'last_name', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'graduation_year',
+                  'degree', 'exam', 'test_date', 'marketing_subscription')
         field_classes = {'email': forms.EmailField}
 
     def clean_agree_to_terms(self):

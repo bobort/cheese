@@ -15,3 +15,9 @@ def send_html_email(subject, html_message, recipients, sender=None):
         email_message = EmailMessage(subject, html_message, sender, recipients)
         email_message.content_subtype = "html"
         email_message.send()
+
+
+def divide_chunks(l, n):
+    # looping till length l
+    for i in range(0, len(l), n):
+        yield l[i:i + n]

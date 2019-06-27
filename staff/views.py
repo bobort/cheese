@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
 
 from profile.models import Student, Appointment
+from utils import divide_chunks
 
 
 class IndexView(RedirectView):
@@ -31,6 +32,12 @@ class StudentListView(PermissionRequiredMixin, ListView):
             except FieldError:  # if ordering isn't an actual field
                 return q
         return q
+
+    def get_context_data(self, *args, **kwargs):
+        context = super().get_context_data(*args, **kwargs)
+        context['marketing_list_chunks'] = divide_chunks(self.get_queryset().filter(marketing_subscription=True), 90)
+        return context
+
 
 
 class AppointmentCreateView(PermissionRequiredMixin, CreateView):

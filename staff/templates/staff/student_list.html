@@ -5,6 +5,14 @@
     <div class="container">
         <div class="card">
             <h1 class="card-header">Student List <a href="{% url 'staff:ocean-courage-list' %}" class="btn btn-default">View Ocean Courage Subscribers</a></h1>
+            <h5 class="card-header">Marketing Emails list</h5>
+                {% for chunk in marketing_list_chunks %}
+                    <p class="card-body">
+                        {% for student in chunk %}
+                            {{ student.email }}{% if not forloop.last %}; {% endif %}
+                        {% endfor %}
+                    </p>
+                {% endfor %}
             <div class="table-responsive">
                 <table class="table table-bordered">
                     <thead>

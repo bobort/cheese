@@ -64,6 +64,7 @@ class Student(AbstractUser):
         help_text="Enter the date that you need to complete the test by or the date you are scheduled to take it."
     )
     phone_number = models.CharField(max_length=31, blank=False, null=True)
+    marketing_subscription = models.BooleanField(default=True, verbose_name="Agree to receive marketing emails")
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
