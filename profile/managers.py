@@ -1,6 +1,10 @@
+import datetime
+
+from django.apps import apps
 from django.contrib.auth.models import UserManager
 from django.db import models
-from django.db.models.functions import Now
+from django.db.models import Case, When, F
+from django.db.models.functions import Now, ExtractMonth
 from django.utils import timezone
 
 
@@ -34,3 +38,20 @@ class StudentManager(UserManager):
 class AppointmentManager(models.Manager):
     def upcoming(self):
         return self.filter(dt__gte=Now())
+
+
+class OceanCourageManager(models.QuerySet):
+    def get(self, *args, **kwargs):
+        return super().get(*args, **kwargs).filter(name="Ocean Courage Group Sessions")
+
+    def with_expiration_date(self):
+        OrderLineItem = apps.get_model("profile", "OrderLineItem")
+        minimum_date = datetime.date(month=6, day=2, year=2019)
+        # TODO retrieve only the most recent order line item per student
+        for li in OrderLineItem.objects.filter(product__in=self).order_by('-order__date_paid').select_related('order'):
+            if li.order.date_paid <= minimum_date:
+                initial_date = minimum_date
+            else:
+                date_paid = li.order.date_paid
+                initial_date = datetime.date(month=date_paid.month, day=date_paid.day, year=date_paid.year)
+
