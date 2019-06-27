@@ -75,11 +75,17 @@ class StudentChangeForm(CrispyFormMixin, UserChangeForm):
             Div(Field('test_date'), css_class="col"),
             css_class="row"
         ),
+        Div(
+            Div(Field('marketing_subscription'), css_class="col"),
+            css_class="row"
+        ),
+
     )
 
     class Meta:
         model = Student
-        fields = ('email', 'first_name', 'last_name', 'phone_number', 'graduation_year', 'degree', 'exam', 'test_date',)
+        fields = ('email', 'first_name', 'last_name', 'phone_number', 'graduation_year',
+                  'degree', 'exam', 'test_date', 'marketing_subscription')
         field_classes = {'email': forms.EmailField}
 
 
