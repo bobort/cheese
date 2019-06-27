@@ -1,4 +1,4 @@
-from django.contrib.auth.models import Group
+from django.contrib.auth.models import Group, User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.template.loader import get_template
@@ -22,5 +22,6 @@ def post_save_orderlineitem(sender, instance, created, **kwargs):
         if instance.product.name in ["Ocean Courage Group Sessions", "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course"]:
             message = get_template('email_oceancourage.html').render({'order': instance})
             email_list = Group.objects.get(name="oceancouragegroup").user_set.all().values_list('email', flat=True)
+            email_list += User.objects.filter(is_superuser=True).values_list('email', flat=True)
             send_html_email("New Ocean Courage Student", message, email_list, "matthew.pava@gmail.com")
 
