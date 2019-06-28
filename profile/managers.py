@@ -89,7 +89,8 @@ class OrderLineItemQuerySet(models.QuerySet):
             expiration_date = li.initial_date + interval
             if prev_li:
                 if li.initial_date <= prev_li.expiration_date:
-                    expiration_date = prev_li.expiration_date + interval
+                    # add another day since access is still granted on the expiration date
+                    expiration_date = prev_li.expiration_date + interval + relativedelta(days=1)
             li.expiration_date = expiration_date
             prev_li = li
         return lis

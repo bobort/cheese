@@ -22,6 +22,10 @@ def post_save_orderlineitem(sender, instance, created, **kwargs):
     if created:
         if instance.product.name in ["Ocean Courage Group Sessions", "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course"]:
             message = get_template('email_oceancourage.html').render({'order': instance})
-            email_list = Group.objects.get(name="oceancouragegroup").user_set.all().values_list('email', flat=True)
-            email_list += get_user_model().objects.filter(is_superuser=True).values_list('email', flat=True)
+            email_list = list(
+                Group.objects.get(name="oceancouragegroup").user_set.all().values_list('email', flat=True)
+            )
+            email_list += list(
+                get_user_model().objects.filter(is_superuser=True).values_list('email', flat=True)
+            )
             send_html_email("New Ocean Courage Student", message, email_list, "matthew.pava@gmail.com")
