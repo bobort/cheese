@@ -25,4 +25,3 @@ def post_save_orderlineitem(sender, instance, created, **kwargs):
             email_list = Group.objects.get(name="oceancouragegroup").user_set.all().values_list('email', flat=True)
             email_list += get_user_model().objects.filter(is_superuser=True).values_list('email', flat=True)
             send_html_email("New Ocean Courage Student", message, email_list, "matthew.pava@gmail.com")
-
