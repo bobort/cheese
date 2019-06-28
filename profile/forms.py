@@ -131,8 +131,12 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
             self.formset.save()
             # send email message after everything is saved
             message = render_to_string('email_receipt.html', {'order': instance})
-            send_html_email("New Payment", message, ["matthew.pava@gmail.com", "drlepava@gmail.com"])
-            send_html_email("Thank you for your payment.", message, [instance.student.email], "matthew.pava@gmail.com")
+            send_html_email(
+                "New Payment", message, ["matthew.pava@gmail.com", "drlepava@gmail.com"], [instance.student.email]
+            )
+            send_html_email(
+                "Thank you for your payment.", message, [instance.student.email], "matthew.pava@gmail.com"
+            )
         return instance
 
 
