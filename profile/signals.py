@@ -21,7 +21,7 @@ def post_save_student(sender, instance, created, **kwargs):
 def post_save_orderlineitem(sender, instance, created, **kwargs):
     if created:
         if instance.product.name in ["Ocean Courage Group Sessions", "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course"]:
-            message = get_template('email_oceancourage.html').render({'order': instance})
+            message = get_template('email_oceancourage.html').render({'order': instance.order})
             email_list = list(
                 Group.objects.get(name="oceancouragegroup").user_set.all().values_list('email', flat=True)
             )
