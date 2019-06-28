@@ -39,7 +39,6 @@ class StudentListView(PermissionRequiredMixin, ListView):
         return context
 
 
-
 class AppointmentCreateView(PermissionRequiredMixin, CreateView):
     model = Appointment
     template_name = "appointment.html"
@@ -64,6 +63,7 @@ class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
         ).annotate(
             last_purchase_date=Max('order__date_paid')
         )
+
         if order_by:
             try:
                 return q.order_by(order_by)

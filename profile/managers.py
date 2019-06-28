@@ -1,10 +1,10 @@
 import datetime
 
-from django.apps import apps
+from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import UserManager
 from django.db import models
-from django.db.models import Case, When, F
-from django.db.models.functions import Now, ExtractMonth
+from django.db.models import F, When, Case, Value, CharField, DateField
+from django.db.models.functions import Now
 from django.utils import timezone
 
 
@@ -40,24 +40,56 @@ class AppointmentManager(models.Manager):
         return self.filter(dt__gte=Now())
 
 
-class OceanCourageManager(models.QuerySet):
-    def get(self, *args, **kwargs):
-        return super().get(*args, **kwargs).filter(name="Ocean Courage Group Sessions")
-
-    def with_expiration_date(self):
-        OrderLineItem = apps.get_model("profile", "OrderLineItem")
+class OrderLineItemQuerySet(models.QuerySet):
+    def with_ocean_courage_subscription_information(self):
         minimum_date = datetime.date(month=6, day=2, year=2019)
-        # TODO retrieve only the most recent order line item per student
-        for li in OrderLineItem.objects.filter(product__in=self).select_related('order'):
-            if li.order.date_paid <= minimum_date:
-                initial_date = minimum_date
-            else:
-                date_paid = li.order.date_paid
-                initial_date = datetime.date(month=date_paid.month, day=date_paid.day, year=date_paid.year)
-            interval = li.qty
-            li.expiration_date = datetime.date(
-                month=initial_date.month + interval,
-                day=initial_date.day,
-                year=initial_date.year + 1 if initial_date == 12 else 1
-            )
+        # lis = list(self.filter(product__name="Ocean Courage Group Sessions").select_related('order'))
+        # different scenarios:
+        #   order qty n on one receipt
+        #   order qty n on one receipt and qty m on one receipt before the first receipt subscription expires
+        #   Course subscribers have six weeks
 
+        # for each purchase date, get the expiration date (purchase date + qty in months)
+        #   if the next purchase date is after the previous expiration date, disregard the previous purchase date
+        #   otherwise add qty in months to the last expiration date
+
+        lis = list(self.filter(
+            product__name__in=[
+                "Ocean Courage Group Sessions",
+                "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course",
+            ]
+        ).select_related('order').annotate(
+            interval_unit=Case(
+                When(
+                    product__name="Ocean Courage Group Sessions",
+                    then=Value("1 month")
+                ),
+                default=Value("6 weeks"),
+                output_field=CharField()
+            )
+        ).annotate(
+            initial_date=Case(
+                When(
+                    order__date_paid__date__lt=minimum_date,
+                    then=minimum_date
+                ),
+                default=F('order__date_paid__date'),
+                output_field=DateField()
+            )
+        ).annotate(
+            interval=F('qty')
+        ).order_by('initial_date'))
+
+        prev_li = None
+        for li in lis:
+            if li.interval_unit == "6 weeks":
+                interval = relativedelta(weeks=6*li.interval)
+            else:
+                interval = relativedelta(months=li.interval)
+            expiration_date = li.initial_date + interval
+            if prev_li:
+                if li.initial_date <= prev_li.expiration_date:
+                    expiration_date = prev_li.expiration_date + interval
+            li.expiration_date = expiration_date
+            prev_li = li
+        return lis

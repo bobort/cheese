@@ -1,5 +1,11 @@
 <table class="table table-striped">
     <tbody>
+        {% if student.ocean_courage_subscription %}
+            <tr>
+                <th class="col-2">Ocean Courage Expiration Date:</th>
+                <td>{{ student.ocean_courage_subscription.expiration|date:"SHORT_DATE_FORMAT" }}{% if student.ocean_courage_subscription.is_expired %} (Expired){% endif %}</td>
+            </tr>
+        {% endif %}
         <tr>
             <th class="col-2">Email:</th>
             <td class="col-10">{{ student.email }}</td>
@@ -14,7 +20,7 @@
         </tr>
         <tr>
             <th>Last login:</th>
-            <td>{{ student.last_login|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ student.last_login|date:"m/d/Y H:i:s" }}</td>
         </tr>
         <tr>
             <th>Graduation year:</th>

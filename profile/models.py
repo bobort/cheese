@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from schedule.models import Occurrence, Event
 
-from profile.managers import StudentManager
+from profile.managers import StudentManager, OrderLineItemQuerySet
 
 USMLE_STEP1, USMLE_STEP2CK, USMLE_STEP2CS, USMLE_STEP3, COMLEX_LEVEL1, COMLEX_LEVEL2, COMLEX_LEVEL3, \
 SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER, ALL = range(0, 12)
@@ -82,6 +82,29 @@ class Student(AbstractUser):
     def current_balance(self):
         return self.payment_set.all().aggregate(sum=Sum('total'))['sum'] -\
                self.appointment_set.all().aggregate(sum=Sum('charge'))['sum']
+
+    @property
+    def ocean_courage_subscription(self):
+        class SubscriptionInformation(object):
+            expiration = None
+
+            def __init__(s, expiration):
+                s.expiration = expiration
+
+            @property
+            def is_expired(s):
+                return s.expiration < timezone.now()
+
+        lis = OrderLineItem.objects.filter(order__student=self)
+        if lis:
+            si = SubscriptionInformation(
+                max([
+                    li.expiration_date
+                    for li in lis.with_ocean_courage_subscription_information()
+                ])
+            )
+            return si
+        return None
 
     def __str__(self):
         return self.get_full_name()
@@ -161,6 +184,8 @@ class OrderLineItem(models.Model):
     # since charges may change over time, save in Order
     charge = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Charge (USD)")
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
+
+    objects = OrderLineItemQuerySet.as_manager()
 
 
 class Product(models.Model):

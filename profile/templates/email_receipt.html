@@ -8,7 +8,7 @@
             <div class="card-body">
                 <ul>
                     <li>Student: {{ order.student }}</li>
-                    <li>Order Date: {{ order.date_paid|date:"SHORT_DATE_FORMAT" }}</li>
+                    <li>Order Date: {{ order.date_paid|date:"m/d/Y H:i:s" }}</li>
                     {% if order.total %} {# change in the future when these fields are converted to OrderLineItem #}
                         <li>Total Paid: {{ order.total|currency }}</li>
                         <li>In Person Appointments: {{ order.in_person_appt_qty }}</li>
