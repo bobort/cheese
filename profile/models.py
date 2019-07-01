@@ -96,13 +96,9 @@ class Student(AbstractUser):
                 return s.expiration < timezone.now()
 
         lis = OrderLineItem.objects.filter(order__student=self)
-        if lis:
-            si = SubscriptionInformation(
-                max([
-                    li.expiration_date
-                    for li in lis.with_ocean_courage_subscription_information()
-                ])
-            )
+        sis = lis.with_ocean_courage_subscription_information()
+        if lis and sis:
+            si = SubscriptionInformation(max([li.expiration_date for li in sis]))
             return si
         return None
 
