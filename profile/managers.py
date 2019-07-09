@@ -73,6 +73,10 @@ class OrderLineItemQuerySet(models.QuerySet):
                     order__date_paid__date__lt=minimum_date,
                     then=minimum_date
                 ),
+                When(
+                    product_start_date__isnull=False,
+                    then=F('product_start_date')
+                ),
                 default=F('order__date_paid__date'),
                 output_field=DateField()
             )
