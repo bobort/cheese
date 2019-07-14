@@ -2,6 +2,7 @@ from crispy_forms.layout import Layout, Field, Div
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from django.core.mail import send_mail
+from django.db.models import Q
 from django.template.loader import render_to_string
 
 from profile.models import Student, Order, Product, OrderLineItem
@@ -104,11 +105,13 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
     def initial_formset_data(self):
         initial_data = []
         for product in Product.objects.all():
-            initial_data.append({
-                'product': product,
-                'qty': 0,
-                'charge': product.charge,
-            })
+            owners_list = list(product.owners.all())
+            if len(owners_list) == 0 or len(owners_list) > 1 and self.user in owners_list or self.user.is_superuser:
+                initial_data.append({
+                    'product': product,
+                    'qty': 0,
+                    'charge': product.charge,
+                })
         return initial_data
 
     @property
@@ -116,8 +119,13 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
         if not self._formset:
             self._formset = forms.inlineformset_factory(
                 Order, OrderLineItem,
-                form=OrderLineItemForm, formset=OrderLineItemFormSet, extra=len(self.initial_formset_data)
-            )(self.data or None, instance=self.instance, initial=self.initial_formset_data)
+                form=OrderLineItemForm, formset=OrderLineItemFormSet, extra=len(self.initial_formset_data),
+            )(
+                self.data or None,
+                instance=self.instance,
+                initial=self.initial_formset_data,
+                form_kwargs={'user': self.user}
+            )
         return self._formset
 
     def is_valid(self):
@@ -160,6 +168,10 @@ class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
         ),
     )
 
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop('user')
+        super().__init__(*args, **kwargs)
+
     def clean(self):
         super().clean()
         if self.cleaned_data:
@@ -170,6 +182,8 @@ class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
                 raise forms.ValidationError({'charge': "Invalid charge for product. Please refresh the page."})
             if qty == 0:
                 self.cleaned_data['DELETE'] = True
+            elif qty < 0 and not self.user.is_superuser:
+                raise forms.ValidationError({'qty': "You must have a whole number in the Qty field."})
         return self.cleaned_data
 
 

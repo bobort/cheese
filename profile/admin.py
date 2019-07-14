@@ -18,7 +18,8 @@ class StudentAdmin(UserAdmin):
         (_('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser',
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
-        (_('Student info'), {'fields': ('graduation_year', 'degree', 'exam', 'test_date')})
+        (_('Student info'), {'fields': ('graduation_year', 'degree', 'exam', 'test_date')}),
+        (_('Special products'), {'fields': ('products', )})
     )
     add_fieldsets = (
         (None, {

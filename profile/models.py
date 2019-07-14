@@ -65,6 +65,7 @@ class Student(AbstractUser):
     )
     phone_number = models.CharField(max_length=31, blank=False, null=True)
     marketing_subscription = models.BooleanField(default=True, verbose_name="Agree to receive marketing emails")
+    products = models.ManyToManyField('Product', blank=True, related_name="owners")
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -188,13 +189,9 @@ class OrderLineItem(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     notes = models.TextField(blank=True, null=True)
-    # The exam that the product is designed for
-    #   Even if you are not taking that exam, the list can be filtered to show every product available.
-    exam = models.IntegerField(
-        blank=True,
-        null=True,
-        choices=EXAM_CHOICES
-    )
+    # TODO add ability to track all exams for a particular product so that
+    #    we can render only the products that a student would find helpful
+    #    based on the exam that they are taking
     charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this product costs
 
     def __str__(self):

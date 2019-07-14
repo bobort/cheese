@@ -22,6 +22,8 @@
                     {{ form.formset.management_form|crispy }}
                     {% for f in form.formset %}
                         {% crispy f %}
+                        {{ f.errors }}
+                        {{ f.errors|as_crispy_errors }}
                     {% endfor %}
                     <div class="row">
                         <div class="col">
