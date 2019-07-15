@@ -65,7 +65,6 @@ class Student(AbstractUser):
     )
     phone_number = models.CharField(max_length=31, blank=False, null=True)
     marketing_subscription = models.BooleanField(default=True, verbose_name="Agree to receive marketing emails")
-    products = models.ManyToManyField('Product', blank=True, related_name="owners")
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -193,6 +192,7 @@ class Product(models.Model):
     #    we can render only the products that a student would find helpful
     #    based on the exam that they are taking
     charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this product costs
+    owners = models.ManyToManyField('Student', blank=True, related_name="products")
 
     def __str__(self):
         return f"{self.name}\r\n{self.notes}"
