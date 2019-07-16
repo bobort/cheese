@@ -1,4 +1,5 @@
 from django.views.generic import TemplateView
+from schedule.views import FullCalendarView
 
 
 class IndexView(TemplateView):
@@ -39,3 +40,7 @@ class DisclaimerView(TemplateView):
 
 class ReturnPolicyView(TemplateView):
     template_name = "legal/return_policy.html"
+
+
+class CalendarView(TemplateView):
+    template_name = "calendar.html"

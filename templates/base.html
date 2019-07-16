@@ -143,11 +143,10 @@
       </div>
     </footer>
     {% compress js %}
-      <!-- Bootstrap core JavaScript -->
-      <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+      <!-- Bootstrap core JavaScript needs jQuery first-->
       <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
     {% endcompress js %}
-    <script>{% block final_js %}{% endblock final_js %}</script>
+    <script>{% block finaljs %}{% endblock finaljs %}</script>
       <script>
         // jQuery plugin to prevent double submission of forms
         jQuery.fn.preventDoubleSubmission = function() {
