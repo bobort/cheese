@@ -1,4 +1,4 @@
-from crispy_forms.layout import Layout, Field, Div
+from crispy_forms.layout import Layout, Field, Div, HTML
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
 from django.core.mail import send_mail
@@ -106,7 +106,7 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
         initial_data = []
         for product in Product.objects.all():
             owners_list = list(product.owners.all())
-            if len(owners_list) == 0 or len(owners_list) > 1 and self.user in owners_list or self.user.is_superuser:
+            if len(owners_list) == 0 or (len(owners_list) > 0 and self.user in owners_list) or self.user.is_superuser:
                 initial_data.append({
                     'product': product,
                     'qty': 0,
@@ -166,6 +166,7 @@ class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
             ),
             css_class="row formset-item"
         ),
+        HTML("<hr>")
     )
 
     def __init__(self, *args, **kwargs):

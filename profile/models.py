@@ -195,7 +195,7 @@ class Product(models.Model):
     owners = models.ManyToManyField('Student', blank=True, related_name="products")
 
     def __str__(self):
-        return f"{self.name}\r\n{self.notes}"
+        return f"<strong>{self.name}</strong>\r\n{self.notes}"
 
 
 class Course(models.Model):
