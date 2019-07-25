@@ -184,6 +184,9 @@ class OrderLineItem(models.Model):
 
     objects = OrderLineItemQuerySet.as_manager()
 
+    def __str__(self):
+        return f"{self.product.name} x{self.qty} @ ${self.charge}; {self.order.student} on {self.order.date_paid}"
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)

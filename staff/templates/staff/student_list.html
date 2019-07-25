@@ -18,22 +18,24 @@
                     <thead>
                         <tr class="d-flex">
                             <th class="col-1">ID <a href="{% url 'staff:student-list' %}?ordering=-pk">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=pk">&uarr;</a></th>
-                            <th class="col-3">Student <a href="{% url 'staff:student-list' %}?ordering=-last_name">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=last_name">&uarr;</a></th>
-                            <th class="col-2">Exam <a href="{% url 'staff:student-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=exam">&uarr;</a></th>
+                            <th class="col-2">Student <a href="{% url 'staff:student-list' %}?ordering=-first_name">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=first_name">&uarr;</a></th>
+                            <th class="col-1">Degree <a href="{% url 'staff:student-list' %}?ordering=-degree">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=degree">&uarr;</a></th>
+                            <th class="col-1">Exam <a href="{% url 'staff:student-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=exam">&uarr;</a></th>
                             <th class="col-2">Exam Date <a href="{% url 'staff:student-list' %}?ordering=-test_date">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=test_date">&uarr;</a></th>
                             <th class="col-2">Phone <a href="{% url 'staff:student-list' %}?ordering=-phone_number">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=phone_number">&uarr;</a></th>
-                            <th class="col-2">Email <a href="{% url 'staff:student-list' %}?ordering=-email">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=email">&uarr;</a></th>
+                            <th class="col-3">Email <a href="{% url 'staff:student-list' %}?ordering=-email">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=email">&uarr;</a></th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for student in student_list %}
                             <tr class="d-flex">
                                 <td class="col-1">{{ student.pk }}</td>
-                                <td class="col-3">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.last_name }}, {{ student.first_name }}, {{ student.get_degree_display }}{% if user.is_superuser %}</a>{% endif %}</td>
-                                <td class="col-2">{{ student.get_exam_display }}</td>
-                                <td class="col-2">{{ student.test_date }}</td>
+                                <td class="col-2">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.first_name }} {{ student.last_name }}{% if user.is_superuser %}</a>{% endif %}</td>
+                                <td class="col-1">{{ student.get_degree_display }}</td>
+                                <td class="col-1">{% if student.get_exam_display|slice:":6" == "USMLE " or student.get_exam_display|slice:":7" == "COMLEX " %}{{ student.get_exam_display.split|slice:"1:"|join:" " }}{% else %}{{ student.get_exam_display }}{% endif %}</td>
+                                <td class="col-2">{{ student.test_date|default_if_none:"" }}</td>
                                 <td class="col-2">{{ student.phone_number }}</td>
-                                <td class="col-2"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                                <td class="col-3"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
                             </tr>
                         {% endfor %}
                     </tbody>

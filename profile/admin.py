@@ -46,7 +46,13 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(OrderLineItem)
+
+
+class OrderLineItemAdmin(admin.ModelAdmin):
+    search_fields = ('product__name', 'order__student__first_name', 'order__student__last_name')
+
+
+admin.site.register(OrderLineItem, OrderLineItemAdmin)
 
 admin.site.register(Course)
 admin.site.register(AgendaItem)
