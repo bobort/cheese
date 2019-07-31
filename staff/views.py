@@ -1,6 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import FieldError, PermissionDenied
-from django.db.models import Case, When, Max, F, Q
+from django.db.models import Case, When, Max, F, Q, IntegerField
 from django.urls import reverse
 from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
@@ -28,9 +28,9 @@ class StudentListView(PermissionRequiredMixin, ListView):
         q = super().get_queryset().filter(is_staff=False)
         if order_by:
             try:
-                return q.order_by(order_by)
+                q = q.order_by(order_by)
             except FieldError:  # if ordering isn't an actual field
-                return q
+                pass
         return q
 
     def get_context_data(self, *args, **kwargs):
@@ -65,10 +65,18 @@ class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
         )
 
         if order_by:
-            try:
-                return q.order_by(order_by)
-            except FieldError:  # if ordering isn't an actual field
-                return q
+            if 'expiration' in order_by:
+                sorted_q = sorted(
+                    q, key=lambda d: d.ocean_courage_subscription.expiration,
+                    reverse=True if '-expiration' in order_by else False
+                )
+                cases = [When(pk=record.pk, then=sort_order) for sort_order, record in enumerate(sorted_q)]
+                q = q.annotate(sort_order=Case(*cases, output_field=IntegerField())).order_by('sort_order')
+            else:
+                try:
+                    q = q.order_by(order_by)
+                except FieldError:  # if ordering isn't an actual field
+                    pass
         return q
 
 
