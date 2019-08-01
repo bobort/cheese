@@ -19,7 +19,6 @@ class StudentAdmin(UserAdmin):
                                        'groups', 'user_permissions')}),
         (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
         (_('Student info'), {'fields': ('graduation_year', 'degree', 'exam', 'test_date')}),
-        (_('Special products'), {'fields': ('products', )})
     )
     add_fieldsets = (
         (None, {
@@ -38,8 +37,26 @@ class StudentSearchAdmin(admin.ModelAdmin):
 
 
 admin.site.register(ExamScore, StudentSearchAdmin)
-admin.site.register(Order, StudentSearchAdmin)
 admin.site.register(Appointment, StudentSearchAdmin)
+
+
+class OrderLineItemInline(admin.TabularInline):
+    model = OrderLineItem
+    raw_id_fields = ('product', )
+
+
+class OrderAdmin(StudentSearchAdmin):
+    inlines = [OrderLineItemInline, ]
+
+
+admin.site.register(Order, OrderAdmin)
+
+
+class OrderLineItemAdmin(admin.ModelAdmin):
+    search_fields = ('product__name', 'order__student__first_name', 'order__student__last_name')
+
+
+admin.site.register(OrderLineItem, OrderLineItemAdmin)
 
 
 class ProductAdmin(admin.ModelAdmin):
@@ -47,7 +64,7 @@ class ProductAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Product, ProductAdmin)
-admin.site.register(OrderLineItem)
+
 
 admin.site.register(Course)
 admin.site.register(AgendaItem)

@@ -8,7 +8,9 @@
             <h5 class="card-header">Emails list</h5>
             <p class="card-body">
                 {% for student in student_list %}
-                    {{ student.email }}{% if not forloop.last %}; {% endif %}
+                    {% if not student.ocean_courage_subscription.is_expired %}
+                        {{ student.email }}{% if not forloop.last %}; {% endif %}
+                    {% endif %}
                 {% endfor %}
             </p>
         </div>
@@ -21,22 +23,45 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr class="d-flex">
-                            <th class="col-3">Student <a href="{% url 'staff:ocean-courage-list' %}?ordering=-last_name">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=last_name">&uarr;</a></th>
-                            <th class="col-2">Exam <a href="{% url 'staff:ocean-courage-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=exam">&uarr;</a></th>
+                            <th class="col-4">Student <a href="{% url 'staff:ocean-courage-list' %}?ordering=-last_name">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=last_name">&uarr;</a></th>
+                            <th class="col-1">Exam <a href="{% url 'staff:ocean-courage-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=exam">&uarr;</a></th>
                             <th class="col-3">Email <a href="{% url 'staff:ocean-courage-list' %}?ordering=-email">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=email">&uarr;</a></th>
                             <th class="col-2">Purchase Date <a href="{% url 'staff:ocean-courage-list' %}?ordering=-last_purchase_date">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=last_purchase_date">&uarr;</a></th>
-                            <th class="col-2">Expiration</th>
+                            <th class="col-2">Expiration Date <a href="{% url 'staff:ocean-courage-list' %}?ordering=-expiration">&darr;</a> <a href="{% url 'staff:ocean-courage-list' %}?ordering=expiration">&uarr;</a></th>
+                        </tr>
+                        <tr>
+                            <th colspan="5">Current Subscriptions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {% for student in student_list %}
-                            <tr class="d-flex">
-                                <td class="col-3">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.last_name }}, {{ student.first_name }}, {{ student.get_degree_display }}{% if user.is_superuser %}</a>{% endif %}</td>
-                                <td class="col-2">{{ student.get_exam_display }}</td>
-                                <td class="col-3"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
-                                <td class="col-2">{{ student.last_purchase_date|date:"SHORT_DATE_FORMAT" }}</td>
-                                <td class="col-2">{{ student.ocean_courage_subscription.expiration|date:"SHORT_DATE_FORMAT" }}{% if student.ocean_courage_subscription.is_expired %} (Expired){% endif %}</td>
-                            </tr>
+                            {% if not student.ocean_courage_subscription.is_expired %}
+                                <tr class="d-flex">
+                                    <td class="col-4">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.first_name }} {{ student.last_name }}{% if user.is_superuser %}</a>{% endif %}</td>
+                                    <td class="col-1">{% if student.get_exam_display|slice:":6" == "USMLE " or student.get_exam_display|slice:":7" == "COMLEX " %}{{ student.get_exam_display.split|slice:"1:"|join:" " }}{% else %}{{ student.get_exam_display }}{% endif %}</td>
+                                    <td class="col-3"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                                    <td class="col-2">{{ student.last_purchase_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td class="col-2">{{ student.ocean_courage_subscription.expiration|date:"SHORT_DATE_FORMAT" }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </tbody>
+                    <thead>
+                        <tr class="d-flex">
+                            <th colspan="5" class="col-12">Expired Subscriptions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for student in student_list %}
+                            {% if student.ocean_courage_subscription.is_expired %}
+                                <tr class="d-flex">
+                                    <td class="col-4">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student.first_name }} {{ student.last_name }}{% if user.is_superuser %}</a>{% endif %}</td>
+                                    <td class="col-1">{% if student.get_exam_display|slice:":6" == "USMLE " or student.get_exam_display|slice:":7" == "COMLEX " %}{{ student.get_exam_display.split|slice:"1:"|join:" " }}{% else %}{{ student.get_exam_display }}{% endif %}</td>
+                                    <td class="col-3"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                                    <td class="col-2">{{ student.last_purchase_date|date:"SHORT_DATE_FORMAT" }}</td>
+                                    <td class="col-2">{{ student.ocean_courage_subscription.expiration|date:"SHORT_DATE_FORMAT" }}</td>
+                                </tr>
+                            {% endif %}
                         {% endfor %}
                     </tbody>
                 </table>

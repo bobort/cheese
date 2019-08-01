@@ -112,7 +112,7 @@ class Student(AbstractUser):
         return super().save(*args, **kwargs)
 
     def get_full_name(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.last_name}, {self.first_name}"
 
     def get_absolute_url(self):
         return reverse('profile:view', kwargs={'pk': self.pk})
@@ -184,6 +184,9 @@ class OrderLineItem(models.Model):
 
     objects = OrderLineItemQuerySet.as_manager()
 
+    def __str__(self):
+        return f"{self.product.name} x{self.qty} @ ${self.charge}; {self.order.student} on {self.order.date_paid}"
+
 
 class Product(models.Model):
     name = models.CharField(max_length=255)
@@ -195,7 +198,7 @@ class Product(models.Model):
     owners = models.ManyToManyField('Student', blank=True, related_name="products")
 
     def __str__(self):
-        return f"{self.name}\r\n{self.notes}"
+        return f"<strong>{self.name}</strong>\r\n{self.notes}"
 
 
 class Course(models.Model):

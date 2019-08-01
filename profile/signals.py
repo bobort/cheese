@@ -11,6 +11,7 @@ from utils import send_html_email
 
 OCEAN_COURAGE_PRODUCTS = ["Ocean Courage Group Sessions", "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course"]
 
+
 @receiver(post_save, sender=Student)
 def post_save_student(sender, instance, created, **kwargs):
     if created:
@@ -34,7 +35,7 @@ def post_save_orderlineitem(sender, instance, created, **kwargs):
             lis = [
                 li
                 for li in OrderLineItem.objects.filter(
-                    order__student=instance.student
+                    order__student=instance.order.student
                 ).with_ocean_courage_subscription_information()
                 if li.pk != instance.pk
             ]
