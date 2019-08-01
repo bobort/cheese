@@ -112,7 +112,7 @@ class Student(AbstractUser):
         return super().save(*args, **kwargs)
 
     def get_full_name(self):
-        return f"{self.first_name} {self.last_name}"
+        return f"{self.last_name}, {self.first_name}"
 
     def get_absolute_url(self):
         return reverse('profile:view', kwargs={'pk': self.pk})

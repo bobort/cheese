@@ -16,6 +16,7 @@ stripe = "*"
 django-debug-permissions = "*"
 django-scheduler = "*"
 django-report-builder = "*"
+intuit-oauth = "*"
 
 [dev-packages]
 coverage = "*"
