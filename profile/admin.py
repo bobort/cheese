@@ -60,6 +60,7 @@ admin.site.register(OrderLineItem, OrderLineItemAdmin)
 
 
 class ProductAdmin(admin.ModelAdmin):
+    filter_horizontal = ('owners', )
     search_fields = ('name', 'notes')
 
 

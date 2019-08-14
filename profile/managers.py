@@ -40,6 +40,11 @@ class AppointmentManager(models.Manager):
         return self.filter(dt__gte=Now())
 
 
+class AvailableProductsManager(models.Manager):
+    def get_queryset(self):
+        return super().get_queryset().filter(removed=False)
+
+
 class OrderLineItemQuerySet(models.QuerySet):
     def with_ocean_courage_subscription_information(self):
         minimum_date = datetime.date(month=6, day=2, year=2019)

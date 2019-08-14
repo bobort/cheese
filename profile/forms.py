@@ -104,7 +104,7 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
     @property
     def initial_formset_data(self):
         initial_data = []
-        for product in Product.objects.all():
+        for product in Product.available.all():
             owners_list = list(product.owners.all())
             if len(owners_list) == 0 or (len(owners_list) > 0 and self.user in owners_list) or self.user.is_superuser:
                 initial_data.append({

@@ -6,7 +6,7 @@ from django.urls import reverse
 from django.utils import timezone
 from schedule.models import Occurrence, Event
 
-from profile.managers import StudentManager, OrderLineItemQuerySet
+from profile.managers import StudentManager, OrderLineItemQuerySet, AvailableProductsManager
 
 USMLE_STEP1, USMLE_STEP2CK, USMLE_STEP2CS, USMLE_STEP3, COMLEX_LEVEL1, COMLEX_LEVEL2, COMLEX_LEVEL3, \
 SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER, ALL = range(0, 12)
@@ -196,6 +196,10 @@ class Product(models.Model):
     #    based on the exam that they are taking
     charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this product costs
     owners = models.ManyToManyField('Student', blank=True, related_name="products")
+    removed = models.BooleanField()
+
+    objects = models.Manager()
+    available = AvailableProductsManager()
 
     def __str__(self):
         return f"<strong>{self.name}</strong>\r\n{self.notes}"
