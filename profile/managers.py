@@ -43,7 +43,8 @@ class AppointmentManager(models.Manager):
 class AvailableProductsManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(
-            Q(expiration_date__isnull=True) | (Q(removed=False) & Q(expiration_date__gte=TruncDate(Now())))
+            (Q(expiration_date__isnull=True) & Q(removed=False)) |
+            (Q(removed=False) & Q(expiration_date__gte=TruncDate(Now())))
         )
 
 
