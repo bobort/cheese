@@ -177,6 +177,7 @@ class Order(models.Model):
 class OrderLineItem(models.Model):
     product = models.ForeignKey('Product', on_delete=models.CASCADE)
     product_start_date = models.DateField(blank=True, null=True)
+    product_end_date = models.DateField(blank=True, null=True)
     qty = models.SmallIntegerField(verbose_name="Quantity")
     # since charges may change over time, save in Order
     charge = models.DecimalField(max_digits=6, decimal_places=2, verbose_name="Charge (USD)")
@@ -191,11 +192,13 @@ class OrderLineItem(models.Model):
 class Product(models.Model):
     name = models.CharField(max_length=255)
     notes = models.TextField(blank=True, null=True)
+    product_duration = models.DurationField(blank=True, null=True)
     # TODO add ability to track all exams for a particular product so that
     #    we can render only the products that a student would find helpful
     #    based on the exam that they are taking
     charge = models.DecimalField(max_digits=6, decimal_places=2)  # track how much this product costs
     owners = models.ManyToManyField('Student', blank=True, related_name="products")
+    expiration_date = models.DateField(blank=True, null=True)
     removed = models.BooleanField()
 
     objects = models.Manager()

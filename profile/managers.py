@@ -3,8 +3,8 @@ import datetime
 from dateutil.relativedelta import relativedelta
 from django.contrib.auth.models import UserManager
 from django.db import models
-from django.db.models import F, When, Case, Value, CharField, DateField
-from django.db.models.functions import Now
+from django.db.models import F, When, Case, Value, CharField, DateField, Q
+from django.db.models.functions import Now, TruncDate
 from django.utils import timezone
 
 
@@ -42,7 +42,9 @@ class AppointmentManager(models.Manager):
 
 class AvailableProductsManager(models.Manager):
     def get_queryset(self):
-        return super().get_queryset().filter(removed=False)
+        return super().get_queryset().filter(
+            Q(expiration_date__isnull=True) | (Q(removed=False) & Q(expiration_date__gte=TruncDate(Now())))
+        )
 
 
 class OrderLineItemQuerySet(models.QuerySet):
@@ -57,12 +59,13 @@ class OrderLineItemQuerySet(models.QuerySet):
         # for each purchase date, get the expiration date (purchase date + qty in months)
         #   if the next purchase date is after the previous expiration date, disregard the previous purchase date
         #   otherwise add qty in months to the last expiration date
-
+        # TODO incorporate product_end_date into expiration
+        # TODO    Set product_start_date when order is placed
+        # TODO    Set product_end_date when order is placed by adding the product_duration field
+        # TODO    Add Ocean Courage Group Sessions to Course product name
+        # TODO    Add September deal of free October month
         lis = list(self.filter(
-            product__name__in=[
-                "Ocean Courage Group Sessions",
-                "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course",
-            ]
+            product__name__icontains="Ocean Courage Group Sessions",
         ).select_related('order').annotate(
             interval_unit=Case(
                 When(
