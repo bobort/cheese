@@ -152,7 +152,7 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
 
 
 class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
-    owners = forms.CharField()
+    owners = forms.CharField(required=False)
 
     class Meta:
         model = OrderLineItem
