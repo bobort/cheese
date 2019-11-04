@@ -10,9 +10,7 @@
                     You can schedule your appointments within one month's
                     time. Once an appointment is made, it cannot be rescheduled. No refunds are available.
                     For your security, we do not store credit or debit card information on this website.
-                    We may refuse service to you at any time, but you will likely receive a
-                    refund (less processing fees) under such circumstances.
-                    You may have different tutors for your sessions.
+                    We may refuse service to you at any time. You may have different tutors for your sessions.
                 </p>
                 <form method="post" id="payment-form" novalidate class="card-text">
                     {% crispy form %}
@@ -148,6 +146,17 @@
             // remove headings for row > 0
             if(i > 0) {
                 $(products[i]).parent().find("label").remove();
+            }
+        }
+
+        // correct form components
+        var owners = $(".field-owner");
+        var ownerText = "";
+        owners.parent().find("label").remove();
+        for(var i = 0, len = owners.length; i < len; ++i) {
+            ownerText = $(owners[i]).find("input").val();
+            if (ownerText) {
+                $(owners[i]).html("<p><strong>Owners:</strong> " + ownerText + "</p>");
             }
         }
     })();

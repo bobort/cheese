@@ -4,6 +4,7 @@ from django import forms
 from django.core.mail import send_mail
 from django.db.models import Q
 from django.template.loader import render_to_string
+from django.utils.encoding import force_str
 
 from profile.models import Student, Order, Product, OrderLineItem
 from utils import send_html_email
@@ -112,6 +113,8 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
                     'qty': 0,
                     'charge': product.charge,
                 })
+                if self.user.is_superuser:
+                    initial_data[-1]["owners"] = ", ".join([force_str(o) for o in product.owners.all()])
         return initial_data
 
     @property
@@ -149,6 +152,8 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
 
 
 class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
+    owners = forms.CharField()
+
     class Meta:
         model = OrderLineItem
         fields = ('product', 'qty', 'charge')
@@ -163,6 +168,10 @@ class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
             Div(
                 Field('charge', readonly=True, css_class="readonly disabled form-control-plaintext"),
                 css_class="col-xs-6 col-3 field-money"
+            ),
+            Div(
+                Field('owners', readonly=True, css_class="d-none"),  # javascript takes care of owner rendering
+                css_class="col-xs-12 col-6 field-owner"
             ),
             css_class="row formset-item"
         ),

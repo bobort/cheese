@@ -7,6 +7,8 @@ from django.db.models import F, When, Case, Value, CharField, DateField, Q
 from django.db.models.functions import Now, TruncDate
 from django.utils import timezone
 
+from cheese.settings import OCEAN_COURAGE_PRODUCTS
+
 
 class StudentManager(UserManager):
     def create_user(self, email, password=None, **extra_fields):
@@ -64,10 +66,12 @@ class OrderLineItemQuerySet(models.QuerySet):
         # TODO    Set product_start_date when order is placed
         # TODO    Set product_end_date when order is placed by adding the product_duration field
         # TODO    Add Ocean Courage Group Sessions to Course product name
-        # TODO    Add September deal of free October month
-        lis = list(self.filter(
-            product__name__icontains="Ocean Courage Group Sessions",
-        ).select_related('order').annotate(
+        product_criteria_1 = [Q(product__name__icontains=s) for s in OCEAN_COURAGE_PRODUCTS]
+        product_criteria = Q()
+        for c in product_criteria_1:
+            product_criteria |= c
+
+        lis = list(self.filter(product_criteria).select_related('order').annotate(
             interval_unit=Case(
                 When(
                     product__name="Ocean Courage Group Sessions",

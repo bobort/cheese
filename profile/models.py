@@ -4,7 +4,7 @@ from django.db import models
 from django.db.models import Sum, F
 from django.urls import reverse
 from django.utils import timezone
-from schedule.models import Occurrence, Event
+from schedule.models import Event
 
 from profile.managers import StudentManager, OrderLineItemQuerySet, AvailableProductsManager
 

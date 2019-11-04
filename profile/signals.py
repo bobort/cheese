@@ -6,10 +6,8 @@ from django.template.loader import get_template
 from django.utils import timezone
 
 from profile.models import Student, OrderLineItem
+from cheese.settings import OCEAN_COURAGE_PRODUCTS
 from utils import send_html_email
-
-
-OCEAN_COURAGE_PRODUCTS = ["Ocean Courage Group Sessions", "USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course"]
 
 
 @receiver(post_save, sender=Student)

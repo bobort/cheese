@@ -59,7 +59,7 @@ class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
         order_by = self.request.GET.get('ordering')
         q = super().get_queryset().filter(
             Q(order__orderlineitem__product__name="Ocean Courage Group Sessions") |
-            Q(order__orderlineitem__product__name="USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course")
+            Q(order__orderlineitem__product__name__icontains="USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course")
         ).annotate(
             last_purchase_date=Max('order__date_paid')
         )

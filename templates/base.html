@@ -115,26 +115,28 @@
         </div>
       </div>
     </nav>
-    {% if occurrences %}
-      {% for occurrence in occurrences %}
-        {% if occurrence.event.appointment.zoom_id and occurrence.end > now and not occurrence.event.appointment.student_id %}
-          {% if now >= occurrence.start|minutes_ago:10 %}
-            {% if user.is_authenticated %}
-              <section class="alert alert-primary text-center">
-                {{ occurrence.title }} is happening now!  You can <a href="{% url 'profile:pay' %}">subscribe</a> to the
-                Ocean Courage package to have access to by the next session.
-                You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>
-                after paying the Lodgic - Ocean Ink membership fee.
-              </section>
-            {% else %}
-              <section class="alert alert-primary text-center">
-                {{ occurrence.title }} is happening now for all subscribed students. <a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %}">register</a> now!
-              </section>
+    {% comment %}
+      {% if occurrences %}
+        {% for occurrence in occurrences %}
+          {% if occurrence.event.appointment.zoom_id and occurrence.end > now and not occurrence.event.appointment.student_id %}
+            {% if now >= occurrence.start|minutes_ago:10 %}
+              {% if user.is_authenticated %}
+                <section class="alert alert-primary text-center">
+                  {{ occurrence.title }} is happening now!  You can <a href="{% url 'profile:pay' %}">subscribe</a> to the
+                  Ocean Courage package to have access to by the next session.
+                  You are also welcome to join us in person at <a href="https://www.lodgic.org/">Lodgic Everyday Community</a>
+                  after paying the Lodgic - Ocean Ink membership fee.
+                </section>
+              {% else %}
+                <section class="alert alert-primary text-center">
+                  {{ occurrence.title }} is happening now for all subscribed students. <a href="{% url 'account_login' %}">Sign in</a> or <a href="{% url 'account_signup' %}">register</a> now!
+                </section>
+              {% endif %}
             {% endif %}
           {% endif %}
-        {% endif %}
-      {% endfor %}
-    {% endif %}
+        {% endfor %}
+      {% endif %}
+    {% endcomment %}
     {% block content %}
     {% endblock content %}
     <footer class="footer text-faded text-center py-5">
