@@ -152,12 +152,12 @@
         // correct form components
         var owners = $(".field-owner");
         var ownerText = "";
+        owners.find("label").remove();
         for(var i = 0, len = owners.length; i < len; ++i) {
             ownerText = $(owners[i]).find("input").val();
             if (ownerText) {
                 $(owners[i]).html("<p><strong>Owners:</strong> " + ownerText + "</p>");
             }
-            $(owners[i]).parent().find("label").remove();
         }
     })();
 {% endblock final_js %}
