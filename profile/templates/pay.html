@@ -61,6 +61,7 @@
 </section>
 {% endblock content %}
 {% block final_js %}
+    var submitCaption = $("#purchaseButton").val();
     (function() {
         var style = {
             base: {
@@ -85,11 +86,12 @@
             var $submit = $form.find("input[type=submit]");
             if (event.error) {
                 displayError.textContent = event.error.message;
-                $submit.val("Fix Errors").attr("disabled", true).addClass("disabled");
+                submitCaption = $submit.val();
+                $submit.val("Fix Errors").prop("disabled", true).addClass("disabled");
             } else {
                 displayError.textContent = "";
                 $form.data("submitted", false);
-                $submit.val($submit.data("label")).attr("disabled", false).removeClass("disabled");
+                $submit.val(submitCaption).prop("disabled", false).removeClass("disabled");
             }
         });
         // Create a token or display an error when the form is submitted.
@@ -135,7 +137,8 @@
                 total += (money * qty);
             }
             grandTotal.val(total);
-            $("#purchaseButton").val("Purchase at $" + grandTotal.val());
+            submitCaption = "Purchase at $" + grandTotal.val();
+            $("#purchaseButton").val(submitCaption);
         }).change();
 
         // correct form components
