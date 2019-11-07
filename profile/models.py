@@ -1,3 +1,5 @@
+from decimal import Decimal
+
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -7,6 +9,7 @@ from django.utils import timezone
 from schedule.models import Event
 
 from profile.managers import StudentManager, OrderLineItemQuerySet, AvailableProductsManager
+from profile.quickbooks import save_invoice
 
 USMLE_STEP1, USMLE_STEP2CK, USMLE_STEP2CS, USMLE_STEP3, COMLEX_LEVEL1, COMLEX_LEVEL2, COMLEX_LEVEL3, \
 SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER, ALL = range(0, 12)
@@ -171,7 +174,8 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.number:
             self.number = Order.get_next_number()
-        return super().save(*args, **kwargs)
+        result = super().save(*args, **kwargs)
+        return result
 
 
 class OrderLineItem(models.Model):
@@ -185,6 +189,10 @@ class OrderLineItem(models.Model):
 
     objects = OrderLineItemQuerySet.as_manager()
 
+    @property
+    def total_charge(self):
+        return Decimal(self.qty) * self.charge
+
     def __str__(self):
         return f"{self.product.name} x{self.qty} @ ${self.charge}; {self.order.student} on {self.order.date_paid}"
 
@@ -193,6 +201,7 @@ class Product(models.Model):
     name = models.CharField(max_length=255)
     notes = models.TextField(blank=True, null=True)
     product_duration = models.DurationField(blank=True, null=True)
+    account_name = models.CharField(max_length=255)
     # TODO add ability to track all exams for a particular product so that
     #    we can render only the products that a student would find helpful
     #    based on the exam that they are taking

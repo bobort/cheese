@@ -17,6 +17,7 @@ django-debug-permissions = "*"
 django-scheduler = "*"
 django-report-builder = "*"
 intuit-oauth = "*"
+python-quickbooks = "*"
 
 [dev-packages]
 coverage = "*"
