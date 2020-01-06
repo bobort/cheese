@@ -134,20 +134,21 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
     def is_valid(self):
         return self.formset.is_valid() and super().is_valid()
 
+    @property
+    def grand_total(self):
+        if self.is_valid():
+            total = 0
+            for form in self.formset:
+                total += form.cleaned_data.get('charge', 0) * form.cleaned_data.get('qty', 0)
+            return total
+        return 0
+
     def save(self, commit=True):
         instance = super().save(commit=False)
         instance.student = self.user
         if commit:
             instance.save()
             self.formset.save()
-            # send email message after everything is saved
-            message = render_to_string('email_receipt.html', {'order': instance})
-            send_html_email(
-                "New Payment", message, ["matthew.pava@gmail.com", "drlepava@gmail.com"], instance.student.email
-            )
-            send_html_email(
-                "Thank you for your payment.", message, [instance.student.email], "matthew.pava@gmail.com"
-            )
         return instance
 
 

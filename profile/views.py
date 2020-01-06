@@ -3,12 +3,14 @@ from django.conf import settings
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.shortcuts import render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse, reverse_lazy
 from django.views.generic import DetailView, UpdateView
 
 from profile.forms import OrderForm, StudentChangeForm
 from profile.models import Order, Student
 # from profile.quickbooks import save_invoice
+from utils import send_html_email
 
 
 @login_required
@@ -24,40 +26,36 @@ def process_payment(request):
 
         try:
             if token and form.is_valid():
+                grand_total = form.grand_total
+                if grand_total > 0:
+                    stripe.Charge.create(
+                        amount=int(grand_total * 100),  # stripe amounts are in pennies
+                        currency='usd',
+                        description='Ocean Ink',
+                        source=token,
+                        metadata={'student_id': request.user.pk},
+                    )
+                try:
+                    # save_invoice(order)
+                    pass
+                except:
+                    pass
+                # send email message after everything is saved
                 order = form.save()
-                charge = stripe.Charge.create(
-                    amount=int(order.grand_total * 100),  # stripe amounts are in pennies
-                    currency='usd',
-                    description='Ocean Ink',
-                    source=token,
-                    metadata={'student_id': request.user.pk},
+                message = render_to_string('email_receipt.html', {'order': order})
+                send_html_email(
+                    "New Payment", message, ["matthew.pava@gmail.com", "drlepava@gmail.com"], order.student.email
                 )
-                if charge.paid:
-                    try:
-                        # save_invoice(order)
-                        pass
-                    except:
-                        pass
-                    return redirect(reverse('profile:receipt', kwargs={'pk': order.pk}))
-                else:
-                    print("User: %s" % request.user)
-                    print("Stripe charge not paid. %s" % charge)
-                    return render(request, status=500)
+                send_html_email(
+                    "Thank you for your payment.", message, [order.student.email], "matthew.pava@gmail.com"
+                )
+                return redirect(reverse('profile:receipt', kwargs={'pk': order.pk}))
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
-            body = e.json_body
-            err = body.get('error', {})
-            print("User: %s" % request.user)
-            print("Status is: %s" % e.http_status)
-            print("Type is: %s" % err.get('type'))
-            print("Code is: %s" % err.get('code'))
-            # param is '' in this case
-            print("Param is: %s" % err.get('param'))
-            print("Message is: %s" % err.get('message'))
+            form.card_errors = e.user_message
         except stripe.error.RateLimitError as e:
             # Too many requests made to the API too quickly
-            print("User: %s" % request.user)
-            print("Stripe rate limit reached.")
+            form.card_errors = "Server error: Stripe rate limit reached. Please try again."
         except stripe.error.InvalidRequestError as e:
             # Invalid parameters were supplied to Stripe's API
             print("User: %s" % request.user)
