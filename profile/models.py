@@ -9,7 +9,6 @@ from django.utils import timezone
 from schedule.models import Event
 
 from profile.managers import StudentManager, OrderLineItemQuerySet, AvailableProductsManager
-from profile.quickbooks import save_invoice
 
 USMLE_STEP1, USMLE_STEP2CK, USMLE_STEP2CS, USMLE_STEP3, COMLEX_LEVEL1, COMLEX_LEVEL2, COMLEX_LEVEL3, \
 SPECIALTY, MED_COACH_A, MED_COACH_B, OTHER, ALL = range(0, 12)

@@ -8,7 +8,7 @@ from django.views.generic import DetailView, UpdateView
 
 from profile.forms import OrderForm, StudentChangeForm
 from profile.models import Order, Student
-from profile.quickbooks import save_invoice
+# from profile.quickbooks import save_invoice
 
 
 @login_required
@@ -34,7 +34,8 @@ def process_payment(request):
                 )
                 if charge.paid:
                     try:
-                        save_invoice(order)
+                        # save_invoice(order)
+                        pass
                     except:
                         pass
                     return redirect(reverse('profile:receipt', kwargs={'pk': order.pk}))
