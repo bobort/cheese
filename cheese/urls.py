@@ -17,6 +17,8 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
+import utils
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^api-auth/', include('rest_framework.urls')),
@@ -26,4 +28,5 @@ urlpatterns = [
     path('accounts/', include('allauth.urls')),
     path('profile/', include('profile.urls')),
     path('staff/', include('staff.urls')),
+    path('bingo', utils.views.BingoView.as_view(), name='bingo')
 ]

@@ -1,5 +1,6 @@
 from django.conf import settings
 from django.core.mail import EmailMessage
+from . import views
 
 
 def send_html_email(subject, html_message, recipients, sender=None):
