@@ -18,6 +18,7 @@ django-scheduler = "*"
 django-report-builder = "*"
 intuit-oauth = "*"
 python-quickbooks = "*"
+twilio = "*"
 
 [dev-packages]
 coverage = "*"
