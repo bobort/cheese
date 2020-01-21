@@ -10,7 +10,7 @@ from django.views.generic import DetailView, UpdateView
 from profile.forms import OrderForm, StudentChangeForm
 from profile.models import Order, Student
 # from profile.quickbooks import save_invoice
-from utils import send_html_email
+from utils import send_html_email, send_sms
 
 
 @login_required
@@ -49,6 +49,8 @@ def process_payment(request):
                 send_html_email(
                     "Thank you for your payment.", message, [order.student.email], "matthew.pava@gmail.com"
                 )
+                products = ', '.join(order.orderlineitem_set.values_list('product__name', flat=True))
+                send_sms.send(f"{order.student} bought ${order.grand_total}: {products}")
                 return redirect(reverse('profile:receipt', kwargs={'pk': order.pk}))
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
