@@ -10,8 +10,9 @@
                     <thead>
                         <tr class="d-flex">
                             <th class="col-2">Date <a href="{% url 'staff:orderlineitem-list' %}?ordering=-order__date_paid">&darr;</a> <a href="{% url 'staff:orderlineitem-list' %}?ordering=order__date_paid">&uarr;</a></th>
-                            <th class="col-4">Student <a href="{% url 'staff:orderlineitem-list' %}?ordering=-order__student">&darr;</a> <a href="{% url 'staff:orderlineitem-list' %}?ordering=order__student">&uarr;</a></th>
+                            <th class="col-3">Student <a href="{% url 'staff:orderlineitem-list' %}?ordering=-order__student">&darr;</a> <a href="{% url 'staff:orderlineitem-list' %}?ordering=order__student">&uarr;</a></th>
                             <th class="col-4">Product <a href="{% url 'staff:orderlineitem-list' %}?ordering=-product__name">&darr;</a> <a href="{% url 'staff:orderlineitem-list' %}?ordering=product__name">&uarr;</a></th>
+                            <th class="col-1">Qty <a href="{% url 'staff:orderlineitem-list' %}?ordering=-qty">&darr;</a> <a href="{% url 'staff:orderlineitem-list' %}?ordering=qty">&uarr;</a></th>
                             <th class="col-2">Cost<a href="{% url 'staff:orderlineitem-list' %}?ordering=-charge">&darr;</a> <a href="{% url 'staff:orderlineitem-list' %}?ordering=charge">&uarr;</a></th>
                         </tr>
                     </thead>
@@ -19,8 +20,9 @@
                         {% for oli in orderlineitem_list %}
                             <tr class="d-flex">
                                 <td class="col-2">{% if user.is_superuser %}<a href="{{ oli.order.get_absolute_url }}">{% endif %}{{ oli.order.date_paid|date:"SHORT_DATE_FORMAT" }}{% if user.is_superuser %}</a>{% endif %}</td>
-                                <td class="col-4">{% if user.is_superuser %}<a href="{{ oli.order.student.get_absolute_url }}">{% endif %}{{ oli.order.student }}{% if user.is_superuser %}</a>{% endif %}</td>
+                                <td class="col-3">{% if user.is_superuser %}<a href="{{ oli.order.student.get_absolute_url }}">{% endif %}{{ oli.order.student }}{% if user.is_superuser %}</a>{% endif %}</td>
                                 <td class="col-4">{{ oli.product.name }}</td>
+                                <td class="col-1">{{ oli.qty }}</td>
                                 <td class="col-2">{{ oli.charge|currency }}</td>
                             </tr>
                         {% endfor %}
