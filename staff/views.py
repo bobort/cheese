@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
 
-from profile.models import Student, Appointment
+from profile.models import Student, Appointment, OrderLineItem
 from utils import divide_chunks
 
 
@@ -37,6 +37,23 @@ class StudentListView(PermissionRequiredMixin, ListView):
         context = super().get_context_data(*args, **kwargs)
         context['marketing_list_chunks'] = divide_chunks(self.get_queryset().filter(marketing_subscription=True), 90)
         return context
+
+
+class OrderLineItemListView(PermissionRequiredMixin, ListView):
+    model = OrderLineItem
+    template_name = "staff/orderlineitem_list.html"
+    permission_required = ['profile.view_orderlineitem']
+    ordering = ('order__date_paid', )
+
+    def get_queryset(self):
+        order_by = self.request.GET.get('ordering')
+        q = super().get_queryset()
+        if order_by:
+            try:
+                q = q.order_by(order_by)
+            except FieldError:  # if ordering isn't an actual field
+                pass
+        return q
 
 
 class AppointmentCreateView(PermissionRequiredMixin, CreateView):
