@@ -43,7 +43,7 @@ class OrderLineItemListView(PermissionRequiredMixin, ListView):
     model = OrderLineItem
     template_name = "staff/orderlineitem_list.html"
     permission_required = ['profile.view_orderlineitem']
-    ordering = ('order__date_paid', )
+    ordering = ('-order__date_paid', )
 
     def get_queryset(self):
         order_by = self.request.GET.get('ordering')
