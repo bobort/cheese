@@ -44,7 +44,7 @@ def process_payment(request):
                 order = form.save()
                 message = render_to_string('email_receipt.html', {'order': order})
                 send_html_email(
-                    "New Payment", message, ["matthew.pava@gmail.com", "drlepava@gmail.com"], order.student.email
+                    "New Payment", message, ["matthew.pava@gmail.com", "drlepava@gmail.com"]
                 )
                 send_html_email(
                     "Thank you for your payment.", message, [order.student.email], "matthew.pava@gmail.com"
