@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section cta">
+	<div class="container">
+		<div class="card">
+			<h2 class="card-header">
+				<span class="section-heading-upper">Drills</span>
+			</h2>
+			<table class="table table-striped table-hover table-bordered">
+				<thead>
+					<tr>
+						<th class="col-12">Topic</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% for topic in object_list %}
+						<tr>
+							<td><a href="{{ topic.get_absolute_url }}">{{ topic }}</a></td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+</section>
+{% endblock content %}

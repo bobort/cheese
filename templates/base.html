@@ -1,6 +1,6 @@
 {% load static compress tz utility_tags %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-100">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -51,7 +51,8 @@
     {% endcompress js %}
       <script src="https://js.stripe.com/v3/"></script>
   </head>
-  <body>
+  <body class="d-flex flex-column h-100{% block bodyClass%}{% endblock %}">
+    {% block visibleHeader %}
     {% block facebookPlugin %}{% endblock facebookPlugin %}
     <h1 class="site-heading text-center text-white d-none d-lg-block">
       <span class="site-heading-upper text-primary mb-3">Ocean Ink</span>
@@ -137,11 +138,14 @@
         {% endfor %}
       {% endif %}
     {% endcomment %}
-    {% block content %}
-    {% endblock content %}
-    <footer class="footer text-faded text-center py-5">
+    {% endblock visibleHeader %}
+    <main role="main" class="flex-shrink-0">
+      {% block content %}
+      {% endblock content %}
+    </main>
+    <footer class="footer mt-auto py-3 text-faded text-center">
       <div class="container">
-        <p class="m-0 small">Copyright &copy; Ocean Ink LLC 2019 | <a href="{% url 'frontend:about' %}">About Us</a> | <a href="{% url 'frontend:privacy-policy' %}">Privacy Policy</a> | <a href="{% url 'frontend:terms' %}">Terms of Use</a> | <a href="{% url 'frontend:disclaimer' %}">Disclaimer</a> | <a href="{% url 'frontend:return-policy' %}">Return Policy</a></p>
+        <p class="m-0 small">Copyright &copy; Ocean Ink LLC {{ now|date:"Y" }} | <a href="{% url 'frontend:about' %}">About Us</a> | <a href="{% url 'frontend:privacy-policy' %}">Privacy Policy</a> | <a href="{% url 'frontend:terms' %}">Terms of Use</a> | <a href="{% url 'frontend:disclaimer' %}">Disclaimer</a> | <a href="{% url 'frontend:return-policy' %}">Return Policy</a></p>
       </div>
     </footer>
     {% compress js %}

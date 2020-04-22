@@ -1,6 +1,8 @@
 import locale
 import platform
 from datetime import timedelta
+from os import urandom
+
 from django import template
 
 register = template.Library()
@@ -25,3 +27,10 @@ def currency(value):
 @register.filter
 def has_group(user, group_name):
     return user.groups.filter(name=group_name).exists()
+
+
+@register.filter
+def encrypt(s, key=None):
+    if key is None:
+        key = len(s)
+    return "".join(chr(ord(a) ^ (key % 255)) for a in s)

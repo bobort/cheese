@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% load utility_tags %}
+{% block bodyClass %} drill{% endblock bodyClass %}
+{% block visibleHeader %}{% endblock visibleHeader %}
+{% block content %}
+<section class="h-100 d-print-none">
+	<div class="container h-100">
+		<div class="d-flex align-items-center justify-content-center h-100">
+			<div class="d-flex flex-column">
+				<h1 class="text align-self-center p-2" id="question"></h1>
+				<h1 class="text align-self-center p-2" id="answer"></h1>
+			</div>
+		</div>
+	</div>
+</section>
+<div class="drill-buttons">
+	<button id="prev" class="btn btn-success disabled" disabled>&lt;</button>
+	<button id="next" class="btn btn-success">&gt;</button>
+</div>
+{% endblock %}
+{% block final_js %}
+String.prototype.normalise_to_ascii   = function() {
+	return unescape(encodeURIComponent(this));
+}
+String.prototype.normalise_to_unicode = function() {
+	return decodeURIComponent(escape(this));
+}
+String.prototype.decrypt = function(key){
+	var s = this + "";
+	key = Number(String(Number(key))) === key ? Number(key) : s.length % 255;
+	s = s.split('').map( function(c) {
+		return c.charCodeAt(0);
+	}).map( function(i) {
+		return i ^ key;
+	});
+	s = String.fromCharCode.apply(undefined, s);
+	return s;
+};
+snoitseuq = [
+	{% for q in drilltopic.question_set.all %}
+		{q: "{{ q.q|safe|encrypt|escapejs }}", a: "{{ q.a|safe|encrypt|escapejs }}" },
+		{% if forloop.last %}{q: "The end".decrypt(), a: ""}{% endif %}
+	{% endfor %}
+];
+$(document).ready( function() {
+	var currentS = 0;
+	var maxS = snoitseuq.length - 1;
+	$("#question").html(snoitseuq[currentS].q.decrypt());
+	$("#prev").click( function(event) {
+		currentS = currentS - 1;
+		if (currentS <= 0) {
+			$(event.target).prop("disabled", true);
+			$(event.target).addClass("disabled");
+			currentS = 0;
+		}
+		if ( $("#next").prop("disabled") ) {
+			$("#next").prop("disabled", false);
+			$("#next").removeClass("disabled");
+		}
+		$("#question").html(snoitseuq[currentS].q.decrypt());
+		$("#answer").html("");
+	});
+	$("#next").click( function(event) {
+		if (currentS >= maxS) {
+			$(event.target).prop("disabled", true);
+			$(event.target).addClass("disabled");
+		} else if ( $("#prev").prop("disabled") ) {
+			$("#prev").prop("disabled", false);
+			$("#prev").removeClass("disabled");
+		}
+		if ($("#answer").html() == "") {
+			$("#answer").html(snoitseuq[currentS].a.decrypt());
+		} else {
+			currentS = currentS + 1;
+			$("#question").html(snoitseuq[currentS].q.decrypt());
+			$("#answer").html("");
+		}
+	});
+});
+{% endblock final_js %}

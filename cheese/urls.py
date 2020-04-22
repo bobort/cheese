@@ -21,12 +21,14 @@ import utils
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    url(r'^api-auth/', include('rest_framework.urls')),
+    path('tinymce/', include('tinymce.urls')),
+    url(r'^api-auth/', include('rest_framework.urls', namespace="rest_framework_auth")),
     url(r'^report_builder/', include('report_builder.urls')),
     url(r'^tinymce/', include('tinymce.urls')),
     path('', include('frontend.urls')),
     path('accounts/', include('allauth.urls')),
     path('profile/', include('profile.urls')),
     path('staff/', include('staff.urls')),
-    path('bingo', utils.views.BingoView.as_view(), name='bingo')
+    path('drills/', include('drill.urls')),
+    path('bingo', utils.views.BingoView.as_view(), name='bingo'),
 ]

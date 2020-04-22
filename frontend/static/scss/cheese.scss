@@ -20,3 +20,21 @@ section a:hover, .footer a:hover {
 .cta-inner:before {
     z-index: -1
 }
+body.drill {
+    background: url('../drill/bg.png');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: right bottom;
+    overflow-x: hidden;
+}
+.drill-buttons {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+}
+#question {
+    color: red;
+}
+#answer {
+    color: black;
+}
