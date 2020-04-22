@@ -31,6 +31,7 @@ def has_group(user, group_name):
 
 @register.filter
 def encrypt(s, key=None):
+    s = str(s)
     if key is None:
         key = len(s)
     return "".join(chr(ord(a) ^ (key % 255)) for a in s)
