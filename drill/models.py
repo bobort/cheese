@@ -13,8 +13,12 @@ class DrillTopic(models.Model):
         return reverse('drill:questions', kwargs={'pk': self.pk})
 
 
+def get_last_drill_topic():
+    return DrillTopic.objects.last().id
+
+
 class Question(models.Model):
-    topic = models.ForeignKey(DrillTopic, on_delete=models.CASCADE)
+    topic = models.ForeignKey(DrillTopic, on_delete=models.CASCADE, default=get_last_drill_topic)
     q = HTMLField()
     a = HTMLField()
 
