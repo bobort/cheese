@@ -14,7 +14,7 @@
 	</div>
 </section>
 <div class="drill-buttons">
-	<span id="q_number"></span>
+	<span id="q_number"></span> (<span id="q_index">1</span> of {{ drilltopic.question_set.count }})
 	<button id="prev" class="btn btn-success disabled" disabled>&lt;</button>
 	<button id="next" class="btn btn-success">&gt;</button>
 </div>
@@ -40,14 +40,14 @@ String.prototype.decrypt = function(key){
 snoitseuq = [
 	{% for q in drilltopic.question_set.all %}
 		{q: "{{ q.q|safe|encrypt|escapejs }}", a: "{{ q.a|safe|encrypt|escapejs }}", i: "{{ q.id|encrypt|escapejs }}" },
-		{% if forloop.last %}{q: "The end".decrypt(), a: ""}{% endif %}
+		{% if forloop.last %}{q: "The end".decrypt(), a: "", i: ""}{% endif %}
 	{% endfor %}
 ];
 $(document).ready( function() {
 	var currentS = 0;
 	var maxS = snoitseuq.length - 1;
 	$("#question").html(snoitseuq[currentS].q.decrypt());
-	$("#q_number").html(snoitseuq[currentS].i.decrypt());
+	$("#q_number").html("ID: " + snoitseuq[currentS].i.decrypt());
 	$("#prev").click( function(event) {
 		currentS = currentS - 1;
 		if (currentS <= 0) {
@@ -60,7 +60,8 @@ $(document).ready( function() {
 			$("#next").removeClass("disabled");
 		}
 		$("#question").html(snoitseuq[currentS].q.decrypt());
-		$("#q_number").html(snoitseuq[currentS].i.decrypt());
+		$("#q_number").html("ID: " + snoitseuq[currentS].i.decrypt());
+		$("#q_index").html(currentS + 1);
 		$("#answer").html("");
 	});
 	$("#next").click( function(event) {
@@ -72,12 +73,19 @@ $(document).ready( function() {
 			$("#prev").removeClass("disabled");
 		}
 		if ($("#answer").html() == "") {
-			$("#answer").html(snoitseuq[currentS].a.decrypt());
+			if (currentS < maxS) {
+				$("#answer").html(snoitseuq[currentS].a.decrypt());
+			}
 		} else {
 			currentS = currentS + 1;
 			$("#question").html(snoitseuq[currentS].q.decrypt());
-			$("#q_number").html(snoitseuq[currentS].i.decrypt());
+			$("#q_number").html("ID: " + snoitseuq[currentS].i.decrypt());
 			$("#answer").html("");
+		}
+		if (currentS < maxS) {
+			$("#q_index").html(currentS + 1);
+		} else {
+			$("#q_number").html("");
 		}
 	});
 	$("body").bind("copy paste cut drag drop", function(e) {

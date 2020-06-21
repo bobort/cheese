@@ -22,5 +22,8 @@ class Question(models.Model):
     q = HTMLField()
     a = HTMLField()
 
+    class Meta:
+        ordering = ('id', )
+
     def __str__(self):
         return f"{self.q[:100]}"
