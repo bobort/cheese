@@ -44,10 +44,17 @@ snoitseuq = [
 	{% endfor %}
 ];
 $(document).ready( function() {
+	function updateID(id) {
+		{% if user.is_staff or user.is_superuser %}
+			$("#q_number").html("ID: <a href='/admin/drill/question/" + id + "/change/'>" + id + "</a>");
+		{% else %}
+			$("#q_number").html("ID: " + id);
+		{% endif %}
+	}
 	var currentS = 0;
 	var maxS = snoitseuq.length - 1;
+	updateID(snoitseuq[currentS].i.decrypt());
 	$("#question").html(snoitseuq[currentS].q.decrypt());
-	$("#q_number").html("ID: " + snoitseuq[currentS].i.decrypt());
 	$("#prev").click( function(event) {
 		currentS = currentS - 1;
 		if (currentS <= 0) {
@@ -60,7 +67,7 @@ $(document).ready( function() {
 			$("#next").removeClass("disabled");
 		}
 		$("#question").html(snoitseuq[currentS].q.decrypt());
-		$("#q_number").html("ID: " + snoitseuq[currentS].i.decrypt());
+		updateID(snoitseuq[currentS].i.decrypt());
 		$("#q_index").html(currentS + 1);
 		$("#answer").html("");
 	});
@@ -79,7 +86,7 @@ $(document).ready( function() {
 		} else {
 			currentS = currentS + 1;
 			$("#question").html(snoitseuq[currentS].q.decrypt());
-			$("#q_number").html("ID: " + snoitseuq[currentS].i.decrypt());
+			updateID(snoitseuq[currentS].i.decrypt());
 			$("#answer").html("");
 		}
 		if (currentS < maxS) {
