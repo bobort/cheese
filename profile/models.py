@@ -44,7 +44,7 @@ class Student(AbstractUser):
     is_superuser = models.BooleanField(default=False)
     date_joined = models.DateField()
     last_login = models.DateTimeField()
-    institution = models.CharField(max_length=255, blank=True, null=True)
+    institution = models.CharField(max_length=255, blank=True, null=True, verbose_name="School Name")
     graduation_year = models.IntegerField(
         blank=False,
         null=True,
