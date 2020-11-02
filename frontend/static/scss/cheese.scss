@@ -9,6 +9,22 @@ section a:hover, .footer a:hover {
     border-bottom: 2px solid black
 }
 
+.carousel a {
+    border-bottom: none;
+    &:hover {
+        border-bottom: none;
+    }
+}
+
+section .carousel-control {
+    filter: invert(100%);
+}
+
+section .carousel-item {
+    padding-left: 15%;
+    padding-right: 15%
+}
+
 .page-section {
     margin-top: 1rem;
     margin-bottom: 1rem
