@@ -8,6 +8,7 @@
             <div class="card-body">
                 <ul>
                     <li>Student: {{ order.student }}</li>
+                    <li>Student email: <a href="mailto:{{ order.student.email }}">{{ order.student.email }}</a></li>
                     <li>Order Date: {{ order.date_paid|date:"m/d/Y H:i:s" }}</li>
                     {% if order.total %} {# change in the future when these fields are converted to OrderLineItem #}
                         <li>Total Paid: {{ order.total|currency }}</li>
