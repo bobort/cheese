@@ -1,7 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import FieldError, PermissionDenied
 from django.db.models import Case, When, Max, F, Q, IntegerField
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
 
@@ -111,6 +111,7 @@ class SignTerms(PermissionRequiredMixin, CreateView):
     model = ElectronicSignature
     template_name = 'staff/sign_terms.html'
     fields = ['document', 'staff_member', 'date', 'initials']
+    success_url = reverse_lazy('frontend:index')
 
     def has_permission(self):
         # you must have a staff account and the student must be a subscriber
