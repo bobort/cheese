@@ -1,3 +1,6 @@
 from django.contrib import admin
 
-# Register your models here.
+from staff.models import ElectronicSignature, IndependentContractorTerms
+
+admin.site.register(ElectronicSignature)
+admin.site.register(IndependentContractorTerms)

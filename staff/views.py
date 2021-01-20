@@ -6,6 +6,7 @@ from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
 
 from profile.models import Student, Appointment, OrderLineItem
+from staff.models import ElectronicSignature, IndependentContractorTerms
 from utils import divide_chunks
 
 
@@ -104,3 +105,23 @@ class ThrowError(LoginRequiredMixin, UserPassesTestMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         raise ValueError("Error purposefully generated.")
+
+
+class SignTerms(PermissionRequiredMixin, CreateView):
+    model = ElectronicSignature
+    template_name = 'staff/sign_terms.html'
+    fields = ['document', 'staff_member', 'date', 'initials']
+
+    def has_permission(self):
+        # you must have a staff account and the student must be a subscriber
+        # to the Ocean Courage package
+        return self.request.user.groups.filter(name="oceancouragegroup").exists() or self.request.user.is_superuser
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['document'] = IndependentContractorTerms.objects.first()
+        context['signature'] = not ElectronicSignature.objects.filter(
+            staff_member=self.request.user, document=context['document']
+        ).exists()
+        return context
+

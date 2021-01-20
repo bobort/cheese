@@ -10,4 +10,5 @@ urlpatterns = [
     path('orders', views.OrderLineItemListView.as_view(), name='orderlineitem-list'),
     path('ocean-courage', views.OceanCourageSubscribersView.as_view(), name='ocean-courage-list'),
     path('err', views.ThrowError.as_view(), name='throw-error'),
+    path('contract', views.SignTerms.as_view(), name='contract'),
 ]

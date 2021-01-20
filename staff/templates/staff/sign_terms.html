@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load static crispy_forms_tags %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="card">
+            <h1 class="card-header">Independent Contractor Terms</h1>
+            <h5 class="card-header">(last updated {{ document.date|date:"SHORT_DATE_FORMAT" }})</h5>
+            <div class="card-body">
+                {{ document.document|safe }}
+            </div>
+            <h5 class="card-header">Electronic Signature</h5>
+            <div class="card-body">
+                {% if signature.exists %}
+                    You already signed this document on {{ signature.date|date:"SHORT_DATE_FORMAT" }}.
+                {% else %}
+                    <form method="post">
+                        {% csrf_token %}
+                        <input type="hidden" name="document" value="{{ document.pk }}" />
+                        <input type="hidden" name="staff_member" value="{{ request.user.pk }}" />
+                        <div class="form-group">
+                            <div class="help-block mb-2">
+                                {{ request.user.first_name }} {{ request.user.last_name }}, by adding your initials,
+                                you agree that your initials will be the
+                                electronic representation of your signature whenever you use it.
+                                You also understand that recipients of this electronic
+                                document will be able to see your initials and email address.
+                            </div>
+                            <input class="form-control" type="text" name="initials"/>
+                        </div>
+                        <div class="form-group">
+                            <label>Date *</label>
+                            <input class="form-control" type="date" name="date" value="{% now 'Y-m-d' %}"/>
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control btn btn-success col-3" type="submit"/>
+                        </div>
+                    </form>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}
+
