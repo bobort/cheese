@@ -50,7 +50,7 @@ def process_payment(request):
                     "Thank you for your payment.", message, [order.student.email], "matthew.pava@gmail.com"
                 )
                 products = ', '.join(order.orderlineitem_set.values_list('product__name', flat=True))
-                send_sms.send(f"{order.student} bought ${order.grand_total}: {products}")
+                # send_sms.send(f"{order.student} bought ${order.grand_total}: {products}")
                 return redirect(reverse('profile:receipt', kwargs={'pk': order.pk}))
         except stripe.error.CardError as e:
             # Since it's a decline, stripe.error.CardError will be caught
