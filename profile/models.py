@@ -126,6 +126,9 @@ class Testimonial(models.Model):
     testimonial = HTMLField()
     citation = models.CharField(max_length=255)
 
+    class Meta:
+        ordering = ('-pk', )
+
 
 class ExamScore(models.Model):
     FAIL, PASS = range(0, 2)
