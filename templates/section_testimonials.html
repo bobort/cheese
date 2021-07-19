@@ -4,10 +4,9 @@
         <div class="carousel-inner">
             {% for t in testimonial_list %}
                 <blockquote class="blockquote carousel-item active">
-                    {{ t.testimonial }}
+                    {{ t.testimonial|safe }}
                     <footer class="blockquote-footer">
                         {{ t.citation }}
-                        GG, MD, USMLE Step 2CK
                     </footer>
                 </blockquote>
             {% endfor %}
