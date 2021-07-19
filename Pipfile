@@ -19,6 +19,7 @@ django-report-builder = "*"
 intuit-oauth = "*"
 python-quickbooks = "*"
 twilio = "*"
+django-adminactions = "*"
 
 [dev-packages]
 coverage = "*"

@@ -2,6 +2,16 @@
     <div class="container bg-faded rounded pb-5">
         <h1 class="text-center py-5">Testimonials</h1>
         <div class="carousel-inner">
+            {% for t in testimonial_list %}
+                <blockquote class="blockquote carousel-item active">
+                    {{ t.testimonial }}
+                    <footer class="blockquote-footer">
+                        {{ t.citation }}
+                        GG, MD, USMLE Step 2CK
+                    </footer>
+                </blockquote>
+            {% endfor %}
+            <!--
             <blockquote class="blockquote carousel-item active">
                 <p>
                     "Dr. Le Pava is truly a God-send for me. I have been with her since my Step comprehensive
@@ -193,7 +203,7 @@
                 <footer class="blockquote-footer">
                     PS, DO, COMLEX Level 2
                 </footer>
-            </blockquote>
+            </blockquote> -->
             <a class="carousel-control carousel-control-prev" href="#testimonials" role="button" data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>

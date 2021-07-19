@@ -7,6 +7,7 @@ from django.db.models import Sum, F
 from django.urls import reverse
 from django.utils import timezone
 from schedule.models import Event
+from tinymce.models import HTMLField
 
 from profile.managers import StudentManager, OrderLineItemQuerySet, AvailableProductsManager
 
@@ -119,6 +120,11 @@ class Student(AbstractUser):
 
     def get_absolute_url(self):
         return reverse('profile:view', kwargs={'pk': self.pk})
+
+
+class Testimonial(models.Model):
+    testimonial = HTMLField()
+    citation = models.CharField(max_length=255)
 
 
 class ExamScore(models.Model):

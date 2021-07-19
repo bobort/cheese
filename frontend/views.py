@@ -1,9 +1,15 @@
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
+
+from profile.models import Testimonial
 
 
 class IndexView(TemplateView):
     template_name = "index.html"
 
+    def get_context_data(self, *args, **kwargs):
+        context = super(IndexView, self).get_context_data(*args, **kwargs)
+        context['testimonial_list'] = Testimonial.objects.all()
+        return context
 
 class ResourcesView(TemplateView):
     template_name = "resources.html"
@@ -13,8 +19,9 @@ class AboutView(TemplateView):
     template_name = "about.html"
 
 
-class TestimonialsView(TemplateView):
+class TestimonialsView(ListView):
     template_name = "section_testimonials.html"
+    model = Testimonial
 
 
 class ServicesView(TemplateView):
