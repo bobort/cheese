@@ -327,11 +327,11 @@
         },
         "intuit-oauth": {
             "hashes": [
-                "sha256:004a83d9904ed5e4ef0582ce39717108351b59f5a26e20283405ba4881738dbf",
-                "sha256:f245c550f7601174eb55f8bdec50b0e64072fa6b017e2aebb4951e41e5f78b21"
+                "sha256:14a1a8ed73f24369ba209f0e581eb30698571fd7bcbe05ca5bed65d2ff9df8b1",
+                "sha256:dd09ef833a26e12e0fbe96d0e7694cdae2c9179776f763ea00e328f8cbd4464e"
             ],
             "index": "pypi",
-            "version": "==1.2.3"
+            "version": "==1.2.4"
         },
         "multidict": {
             "hashes": [
@@ -478,10 +478,10 @@
         },
         "python-quickbooks": {
             "hashes": [
-                "sha256:61fb3acce6037060e466f80885ca3341e95fcfa7fbd7f51865a89a88b6a03f0d"
+                "sha256:8fb6130b68cea985dee876c1c7f18c45aaa4d4f335108453e4fd9cc74bff0bf8"
             ],
             "index": "pypi",
-            "version": "==0.8.4"
+            "version": "==0.9.0"
         },
         "python3-openid": {
             "hashes": [

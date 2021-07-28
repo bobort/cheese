@@ -62,7 +62,11 @@ admin.site.register(OrderLineItem, OrderLineItemAdmin)
 
 class ProductAdmin(admin.ModelAdmin):
     filter_horizontal = ('owners', )
-    search_fields = ('name', 'notes')
+    search_fields = ('name', 'notes', )
+    list_display_links = ('name',)
+    list_display = ('charge', 'name', 'qty_ordered', 'removed',)
+    list_editable = ('charge', 'removed',)
+    list_filter = ('removed', )
 
 
 admin.site.register(Product, ProductAdmin)

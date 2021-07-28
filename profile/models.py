@@ -1,5 +1,6 @@
 from decimal import Decimal
 
+from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
@@ -23,7 +24,6 @@ EXAM_CHOICES = (
     (SPECIALTY, "Specialty Board Certification"),
     (USMLE_STEP1, "USMLE Step 1"),
     (USMLE_STEP2CK, "USMLE Step 2CK"),
-    (USMLE_STEP2CS, "USMLE Step 2CS"),
     (USMLE_STEP3, "USMLE Step 3"),
     (OTHER, "Other"),
     (ALL, "All"),
@@ -223,7 +223,11 @@ class Product(models.Model):
     available = AvailableProductsManager()
 
     def __str__(self):
-        return f"<strong>{self.name}</strong>\r\n{self.notes}"
+        return self.name
+
+    @admin.display()
+    def qty_ordered(self):
+        return OrderLineItem.objects.filter(product=self.pk).count()
 
 
 class Course(models.Model):

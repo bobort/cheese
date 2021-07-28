@@ -1,0 +1,6 @@
+<div class="form-group">
+	<label class="requiredField">Product
+		{% include "django/forms/widgets/input.html" %}
+		<div><strong>{{ product.name }}</strong>{{ product.notes|safe }}</div>
+	</label>
+</div>

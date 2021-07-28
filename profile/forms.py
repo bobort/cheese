@@ -1,13 +1,11 @@
 from crispy_forms.layout import Layout, Field, Div, HTML
 from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django import forms
-from django.core.mail import send_mail
-from django.db.models import Q
-from django.template.loader import render_to_string
+from django.forms import HiddenInput
 from django.utils.encoding import force_str
+from django.utils.safestring import mark_safe
 
 from profile.models import Student, Order, Product, OrderLineItem
-from utils import send_html_email
 from utils.views import CrispyFormMixin
 
 
@@ -115,7 +113,8 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
         initial_data = []
         for product in Product.available.all():
             owners_list = list(product.owners.all())
-            if len(owners_list) == 0 or (len(owners_list) > 0 and self.user in owners_list) or self.user.is_superuser:
+            if len(owners_list) == 0 or (len(owners_list) > 0 and self.user in owners_list) \
+                    or (self.user.is_superuser and not product.removed):
                 initial_data.append({
                     'product': product,
                     'qty': 0,
@@ -160,17 +159,28 @@ class OrderForm(CrispyFormMixin, forms.ModelForm):
         return instance
 
 
+class ProductInput(HiddenInput):
+    template_name = "product.html"
+
+    def get_context(self, name, value, attrs):
+        context = super(ProductInput, self).get_context(name, value, attrs)
+        context['product'] = Product.objects.get(pk=value)
+        return context
+
+
 class OrderLineItemForm(CrispyFormMixin, forms.ModelForm):
     owners = forms.CharField(required=False)
 
     class Meta:
         model = OrderLineItem
         fields = ('product', 'qty', 'charge')
+        widgets = {'product': ProductInput()}
 
     layout = Layout(
         Div(
             Div(
-                Field('product', readonly=True, css_class="d-none"),  # javascript takes care of product rendering
+                Field('product', readonly=True, css_class="d-none"),
+                # javascript takes care of product rendering
                 css_class="col-xs-12 col-6 field-product"
             ),
             Div(Field('qty'), css_class="col-xs-6 col-3 field-qty"),
@@ -217,4 +227,3 @@ class OrderLineItemFormSet(forms.BaseInlineFormSet):
         if qty_0 == len(self.forms):
             raise forms.ValidationError("You must have a quantity of at least one on this page.")
         return result
-

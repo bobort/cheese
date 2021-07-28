@@ -11,6 +11,7 @@ class IndexView(TemplateView):
         context['testimonial_list'] = Testimonial.objects.all()
         return context
 
+
 class ResourcesView(TemplateView):
     template_name = "resources.html"
 

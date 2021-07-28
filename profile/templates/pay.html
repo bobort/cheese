@@ -145,8 +145,6 @@
         // correct form components
         var products = $(".field-product");
         for(var i = 0, len = products.length; i < len; ++i) {
-            var name = $(products[i]).find("select option:selected").text().replace("\n", "<br>");
-            $(products[i]).append("<p>" + name + "</p>");
             // remove headings for row > 0
             if(i > 0) {
                 $(products[i]).parent().find("label").remove();
