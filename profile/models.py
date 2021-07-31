@@ -97,7 +97,7 @@ class Student(AbstractUser):
 
             @property
             def is_expired(s):
-                return s.expiration < timezone.now()
+                return s.expiration < timezone.now().date()
 
         lis = OrderLineItem.objects.filter(order__student=self)
         sis = lis.with_ocean_courage_subscription_information()
