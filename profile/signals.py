@@ -40,7 +40,7 @@ def post_save_orderlineitem(sender, instance, created, **kwargs):
             if lis:
                 # if the latest expiration is before today, send out a message since it is a renewal
                 latest_expiration = max([li.expiration_date for li in lis])
-                if timezone.now() > latest_expiration:
+                if timezone.now().date() > latest_expiration:
                     renewal = True
                 else:
                     send_message = False
