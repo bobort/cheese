@@ -2,6 +2,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin, LoginRequiredMix
 from django.core.exceptions import FieldError, PermissionDenied
 from django.db.models import Case, When, Max, F, Q, IntegerField
 from django.urls import reverse, reverse_lazy
+from django.utils import timezone
 from django.views.generic import ListView, CreateView
 from django.views.generic.base import TemplateView, RedirectView
 
@@ -76,8 +77,8 @@ class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
     def get_queryset(self):
         order_by = self.request.GET.get('ordering')
         q = super().get_queryset().filter(
-            Q(order__orderlineitem__product__name="Ocean Courage Group Sessions") |
-            Q(order__orderlineitem__product__name__icontains="USMLE STEP2CK/3 & COMLEX LEVEL 2/3 Course")
+            productuser__product_end_date__gte=timezone.now().date(),
+            productuser__product__name="Ocean Courage Group Sessions"
         ).annotate(
             last_purchase_date=Max('order__date_paid')
         )
@@ -125,4 +126,3 @@ class SignTerms(PermissionRequiredMixin, CreateView):
             staff_member=self.request.user, document=context['document']
         ).exists()
         return context
-

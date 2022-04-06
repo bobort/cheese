@@ -99,10 +99,9 @@ class Student(AbstractUser):
             def is_expired(s):
                 return s.expiration < timezone.now().date()
 
-        lis = OrderLineItem.objects.filter(order__student=self)
-        sis = lis.with_ocean_courage_subscription_information()
-        if lis and sis:
-            si = SubscriptionInformation(max([li.expiration_date for li in sis]))
+        ocs = self.productuser_set.filter(product__name="Ocean Courage Group Sessions")
+        if ocs:
+            si = SubscriptionInformation(max([oc.product_end_date for oc in ocs]))
             return si
         return None
 
@@ -262,3 +261,54 @@ class AgendaItem(models.Model):
 class Staff(Student):
     description = models.TextField()
     image_path = models.CharField(max_length=255)
+
+
+class Quotation(models.Model):
+    customer = models.ForeignKey(Student, on_delete=models.CASCADE)
+    number = models.CharField(max_length=50)
+    quotation_date = models.DateField(auto_now_add=True)
+
+    @classmethod
+    def get_next_number(cls):
+        current_year = timezone.now().year
+        orders_this_year = cls.objects.filter(quotation_date__year=current_year).count() or 0
+        return f"{str(current_year)[2:]}-{(orders_this_year + 1):04d}"
+
+    @property
+    def grand_total(self):
+        return self.quotationlineitem_set.aggregate(
+            s=Sum(F('price') * F('qty'), output_field=models.FloatField())
+        )['s'] or 0
+
+    def save(self, *args, **kwargs):
+        if not self.number:
+            self.number = Quotation.get_next_number()
+        result = super().save(*args, **kwargs)
+        return result
+
+
+class QuotationLineItem(models.Model):
+    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    product_start_date = models.DateField(blank=True, null=True)
+    product_end_date = models.DateField(blank=True, null=True)
+    qty = models.SmallIntegerField(verbose_name="Quantity", default=1)
+    price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Price (USD)")
+
+    @property
+    def total_price(self):
+        return Decimal(self.qty) * self.price
+
+    def __str__(self):
+        return f"{self.product.name} x {self.qty} @ ${self.price};" \
+               f" {self.quotation.student} {self.quotation.quotation_date}"
+
+
+class ProductUser(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    customer = models.ForeignKey(Student, on_delete=models.CASCADE)
+    product_start_date = models.DateField(blank=True, null=True)
+    product_end_date = models.DateField(blank=True, null=True)
+
+    def __str__(self):
+        return f"{self.product.name} {self.customer} {self.product_end_date}"

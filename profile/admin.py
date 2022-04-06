@@ -4,7 +4,7 @@ from django.utils.translation import gettext_lazy as _
 
 from profile.forms import StudentCreationForm, StudentChangeForm
 from profile.models import Student, ExamScore, Order, Appointment, Product, OrderLineItem, Staff, AgendaItem, Course, \
-    Testimonial
+    Testimonial, ProductUser
 
 
 class StudentAdmin(UserAdmin):
@@ -72,7 +72,16 @@ class ProductAdmin(admin.ModelAdmin):
 admin.site.register(Product, ProductAdmin)
 
 
+class ProductUserAdmin(admin.ModelAdmin):
+    search_fields = ('customer__name', )
+    list_display_links = ('product',)
+    list_display = ('product', 'customer', 'product_start_date', 'product_end_date',)
+    list_editable = ('customer', 'product_start_date', 'product_end_date',)
+    list_filter = ('product__name',)
+
+
 admin.site.register(Course)
 admin.site.register(AgendaItem)
 admin.site.register(Staff)
 admin.site.register(Testimonial)
+admin.site.register(ProductUser, ProductUserAdmin)

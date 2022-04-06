@@ -17,7 +17,10 @@
                     {% else %}
                         <li>Total Paid: {{ order.grand_total|currency }}</li>
                         {% for li in order.orderlineitem_set.all %}
-                            <li>{{ li.product.name }}: {{ li.qty }} ({{ li.charge|currency }} ea)</li>
+                            <li>{{ li.product.name }}: {{ li.qty }} ({{ li.charge|currency }} ea)<br>
+                                <strong>Product Notes:</strong>
+                                <ul><li>{{ li.product.notes|safe }}</li></ul>
+                            </li>
                         {% endfor %}
                     {% endif %}
                 </ul>
