@@ -97,7 +97,7 @@ class Student(AbstractUser):
 
             @property
             def is_expired(s):
-                return s.expiration < timezone.now().date()
+                return s.expiration < timezone.now().date() if s.expiration else False
 
         ocs = self.productuser_set.filter(product__name="Ocean Courage Group Sessions")
         if ocs:
