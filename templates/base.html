@@ -105,6 +105,13 @@
                   </a>
                 </li>
               {% endif %}
+              {% if user.can_access_drills %}
+              <li class="nav-item{% if request.resolver_match.url_name == 'topics' %} active{% endif %} px-lg-4">
+                <a class="nav-link text-uppercase text-expanded" href="{% url 'drills:topics' %}">Drills
+                  {% if request.resolver_match.url_name == 'topics' %}<span class="sr-only">(current)</span>{% endif %}
+                </a>
+              </li>
+              {% endif %}
             {% else %}
               <li class="nav-item{% if request.resolver_match.url_name == 'account_login' %} active{% endif %} px-lg-4">
                 <a class="nav-link text-uppercase text-expanded" href="{% url 'account_login' %}">Sign In

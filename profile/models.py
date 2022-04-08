@@ -4,7 +4,7 @@ from django.contrib import admin
 from django.contrib.auth.models import AbstractUser
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
-from django.db.models import Sum, F
+from django.db.models import Sum, F, Q
 from django.urls import reverse
 from django.utils import timezone
 from schedule.models import Event
@@ -104,6 +104,13 @@ class Student(AbstractUser):
             si = SubscriptionInformation(max([oc.product_end_date for oc in ocs]))
             return si
         return None
+
+    @property
+    def can_access_drills(self):
+        return self.productuser_set.filter(
+            Q(product_end_date__gte=timezone.now().date()) | Q(product_end_date__isnull=True),
+            product__name="Ocean Courage Group Sessions",
+        ).exists()
 
     def __str__(self):
         return self.get_full_name()

@@ -10,20 +10,14 @@ class TopicDetail(UserPassesTestMixin, DetailView):
     model = DrillTopic
 
     def test_func(self):
-        return self.request.user.productuser_set.filter(
-            product_end_date__gte=timezone.now().date(),
-            product__name="Ocean Courage Group Sessions"
-        ).exists()
+        return self.request.user.can_access_drills
 
 
 class TopicList(UserPassesTestMixin, ListView):
     model = DrillTopic
 
     def test_func(self):
-        return self.request.user.productuser_set.filter(
-            product_end_date__gte=timezone.now().date(),
-            product__name="Ocean Courage Group Sessions"
-        ).exists()
+        return self.request.user.can_access_drills
 
 
 class ConvertDrill(CreateView):
