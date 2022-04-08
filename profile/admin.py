@@ -77,7 +77,6 @@ class ProductUserAdmin(admin.ModelAdmin):
     list_display_links = ('product',)
     list_display = ('product', 'customer', 'product_start_date', 'product_end_date',)
     list_editable = ('customer', 'product_start_date', 'product_end_date',)
-    list_filter = ('product__name',)
 
 
 admin.site.register(Course)
