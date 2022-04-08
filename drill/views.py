@@ -10,14 +10,18 @@ class TopicDetail(UserPassesTestMixin, DetailView):
     model = DrillTopic
 
     def test_func(self):
-        return self.request.user.can_access_drills
+        if self.request.user:
+            return self.request.user.can_access_drills
+        return self.request.user.is_superuser
 
 
 class TopicList(UserPassesTestMixin, ListView):
     model = DrillTopic
 
     def test_func(self):
-        return self.request.user.can_access_drills
+        if self.request.user:
+            return self.request.user.can_access_drills
+        return self.request.user.is_superuser
 
 
 class ConvertDrill(CreateView):
