@@ -1,12 +1,11 @@
-from django.contrib.auth.mixins import UserPassesTestMixin
-from django.utils import timezone
+from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 from django.views.generic import DetailView, ListView, CreateView
 
 from drill.forms import ConvertDrillForm
 from drill.models import DrillTopic
 
 
-class TopicDetail(UserPassesTestMixin, DetailView):
+class TopicDetail(LoginRequiredMixin, UserPassesTestMixin, DetailView):
     model = DrillTopic
 
     def test_func(self):
@@ -15,7 +14,7 @@ class TopicDetail(UserPassesTestMixin, DetailView):
         return self.request.user.is_superuser
 
 
-class TopicList(UserPassesTestMixin, ListView):
+class TopicList(LoginRequiredMixin, UserPassesTestMixin, ListView):
     model = DrillTopic
 
     def test_func(self):
