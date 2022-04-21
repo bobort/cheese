@@ -70,6 +70,7 @@ $(document).ready( function() {
 		updateID(snoitseuq[currentS].i.decrypt());
 		$("#q_index").html(currentS + 1);
 		$("#answer").html("");
+		$.post("/drills/track/" + snoitseuq[currentS].i.decrypt(), {csrfmiddlewaretoken: "{{ csrf_token }}"});
 	});
 	$("#next").click( function(event) {
 		if (currentS >= maxS) {
@@ -94,6 +95,7 @@ $(document).ready( function() {
 		} else {
 			$("#q_number").html("");
 		}
+		$.post("/drills/track/" + snoitseuq[currentS].i.decrypt(), {csrfmiddlewaretoken: "{{ csrf_token }}"});
 	});
 	$("body").bind("copy paste cut drag drop", function(e) {
 		e.preventDefault();

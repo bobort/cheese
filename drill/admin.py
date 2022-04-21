@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django import forms
 
-from drill.models import DrillTopic, Question
+from drill.models import DrillTopic, Question, DrillTracking
 
 
 def process_qa(topic, qas):
@@ -56,3 +56,4 @@ class DrillAdmin(admin.ModelAdmin):
 
 admin.site.register(DrillTopic, DrillAdmin)
 admin.site.register(Question)
+admin.site.register(DrillTracking)
