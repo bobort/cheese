@@ -14,7 +14,7 @@ class DrillTopic(models.Model):
 
 
 def get_last_drill_topic():
-    return DrillTopic.objects.last().id
+    return Question.objects.last().topic or DrillTopic.objects.last().id
 
 
 class Question(models.Model):
