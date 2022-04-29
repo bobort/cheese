@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 
@@ -22,9 +21,8 @@ import utils
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
-    url(r'^api-auth/', include('rest_framework.urls', namespace="rest_framework_auth")),
-    url(r'^report_builder/', include('report_builder.urls')),
-    url(r'^tinymce/', include('tinymce.urls')),
+    path('api-auth/', include('rest_framework.urls', namespace="rest_framework_auth")),
+    path('tinymce/', include('tinymce.urls')),
     path('', include('frontend.urls')),
     path('accounts/', include('allauth.urls')),
     path('profile/', include('profile.urls')),
