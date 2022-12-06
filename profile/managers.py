@@ -53,7 +53,7 @@ class AvailableProductsManager(models.Manager):
 class OrderLineItemQuerySet(models.QuerySet):
     def with_ocean_courage_subscription_information(self):
         minimum_date = datetime.date(month=6, day=2, year=2019)
-        # lis = list(self.filter(product__name="Ocean Courage Group Sessions").select_related('order'))
+        # lis = list(self.filter(product__name="Ocean Courage Drill Sessions").select_related('order'))
         # different scenarios:
         #   order qty n on one receipt
         #   order qty n on one receipt and qty m on one receipt before the first receipt subscription expires
@@ -65,7 +65,7 @@ class OrderLineItemQuerySet(models.QuerySet):
         # TODO incorporate product_end_date into expiration
         # TODO    Set product_start_date when order is placed
         # TODO    Set product_end_date when order is placed by adding the product_duration field
-        # TODO    Add Ocean Courage Group Sessions to Course product name
+        # TODO    Add Ocean Courage Drill Sessions to Course product name
         product_criteria_1 = [Q(product__name__icontains=s) for s in OCEAN_COURAGE_PRODUCTS]
         product_criteria = Q()
         for c in product_criteria_1:
@@ -74,7 +74,7 @@ class OrderLineItemQuerySet(models.QuerySet):
         lis = list(self.filter(product_criteria).select_related('order').annotate(
             interval_unit=Case(
                 When(
-                    product__name="Ocean Courage Group Sessions",
+                    product__name="Ocean Courage Drill Sessions",
                     then=Value("1 month")
                 ),
                 default=Value("6 weeks"),

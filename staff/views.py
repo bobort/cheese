@@ -78,7 +78,7 @@ class OceanCourageSubscribersView(PermissionRequiredMixin, ListView):
         order_by = self.request.GET.get('ordering')
         q = super().get_queryset().filter(
             productuser__product_end_date__gte=timezone.now().date(),
-            productuser__product__name="Ocean Courage Group Sessions"
+            productuser__product__name="Ocean Courage Drill Sessions"
         ).annotate(
             last_purchase_date=Max('order__date_paid')
         )

@@ -99,7 +99,7 @@ class Student(AbstractUser):
             def is_expired(s):
                 return s.expiration < timezone.now().date() if s.expiration else False
 
-        ocs = self.productuser_set.filter(product__name="Ocean Courage Group Sessions")
+        ocs = self.productuser_set.filter(product__name="Ocean Courage Drill Sessions")
         if ocs:
             si = SubscriptionInformation(max([oc.product_end_date for oc in ocs]))
             return si
@@ -109,7 +109,7 @@ class Student(AbstractUser):
     def can_access_drills(self):
         return self.productuser_set.filter(
             Q(product_end_date__gte=timezone.now().date()) | Q(product_end_date__isnull=True),
-            product__name="Ocean Courage Group Sessions",
+            product__name="Ocean Courage Drill Sessions",
         ).exists()
 
     def __str__(self):
