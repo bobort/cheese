@@ -28,5 +28,6 @@ urlpatterns = [
     path('profile/', include('profile.urls')),
     path('staff/', include('staff.urls')),
     path('drills/', include('drill.urls')),
+    path('finances/', include('finances.urls')),
     path('bingo', utils.views.BingoView.as_view(), name='bingo'),
 ]

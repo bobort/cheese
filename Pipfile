@@ -18,11 +18,10 @@ django-scheduler = "*"
 django-report-builder = "*"
 intuit-oauth = "*"
 python-quickbooks = "*"
-twilio = "*"
 django-adminactions = "*"
+python-dateutil = "*"
 
 [dev-packages]
-coverage = "*"
 
 [requires]
 python_version = "3.8"
