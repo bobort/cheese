@@ -96,6 +96,22 @@ class StudentChangeForm(CrispyFormMixin, UserChangeForm):
                   'degree', 'exam', 'test_date', 'marketing_subscription')
         field_classes = {'email': forms.EmailField}
 
+    def __init__(self, user, *args, **kwargs):
+        super(StudentChangeForm, self).__init__(*args, **kwargs)
+        if user.is_superuser:
+            self.fields["balance_paid"] = forms.BooleanField(required=False)
+            if self.instance:
+                self.fields["balance_paid"].initial = self.instance.balance_paid
+            if not self.helper["balance_paid"].slice:
+                self.layout.append(Div(Div(Field("balance_paid"), css_class="col"), css_class="row"))
+
+    def save(self, commit=True):
+        result = super(StudentChangeForm, self).save(commit=False)
+        result.balance_paid = self.cleaned_data.get("balance_paid")
+        result.save()
+        self.save_m2m()
+        return result
+
 
 class OrderForm(CrispyFormMixin, forms.ModelForm):
     _formset = None

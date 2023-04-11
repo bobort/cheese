@@ -108,7 +108,7 @@ def save_invoice(order):
             l.SalesItemLineDetail.ServiceDate = order.date_paid
             l.SalesItemLineDetail.Qty = orderlineitem_set[i].qty
             l.SalesItemLineDetail.UnitPrice = orderlineitem_set[i].charge
-            l.save(qb=client)
+            l.save()
         except IndexError:  # the order has been updated to remove a line item
             l.delete(qb=client)
 

@@ -46,6 +46,7 @@ class Student(AbstractUser):
     date_joined = models.DateField()
     last_login = models.DateTimeField()
     institution = models.CharField(max_length=255, blank=True, null=True, verbose_name="School Name")
+    balance_paid = models.BooleanField(default=False, blank=True, null=True)
     graduation_year = models.IntegerField(
         blank=False,
         null=True,
@@ -189,6 +190,9 @@ class Order(models.Model):
     def save(self, *args, **kwargs):
         if not self.number:
             self.number = Order.get_next_number()
+        if self.student:
+            self.student.balanced_paid = False
+            self.student.save()
         result = super().save(*args, **kwargs)
         return result
 

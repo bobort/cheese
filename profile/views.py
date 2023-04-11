@@ -109,3 +109,13 @@ class ProfileUpdate(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     def test_func(self):
         user = self.request.user
         return user.is_superuser or user == self.get_object()
+
+    def get_form_kwargs(self):
+        result = super(ProfileUpdate, self).get_form_kwargs()
+        result['user'] = self.request.user
+        return result
+
+    def get_success_url(self):
+        if self.request.user.is_superuser:
+            return reverse("staff:student-list")
+        return super(ProfileUpdate, self).get_success_url()

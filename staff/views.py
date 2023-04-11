@@ -27,12 +27,15 @@ class StudentListView(PermissionRequiredMixin, ListView):
 
     def get_queryset(self):
         order_by = self.request.GET.get('ordering')
+        with_balance = self.request.GET.get("with_balance")
         q = super().get_queryset().filter(is_staff=False)
         if order_by:
             try:
                 q = q.order_by(order_by)
             except FieldError:  # if ordering isn't an actual field
                 pass
+        if (with_balance and with_balance.lower() == "true") or with_balance is None:
+            q = q.filter(balance_paid=False)
         return q
 
     def get_context_data(self, *args, **kwargs):

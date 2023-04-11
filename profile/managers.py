@@ -22,7 +22,7 @@ class StudentManager(UserManager):
         extra_fields['last_login'] = extra_fields['date_joined']
         student = self.model(email=self.normalize_email(email), **extra_fields)
         student.set_password(password)
-        student.save(using=self._db)
+        student.save()
         return student
 
     def create_superuser(self, email, password, **extra_fields):
@@ -33,7 +33,7 @@ class StudentManager(UserManager):
         student = self.create_user(email, password, **extra_fields)
         student.is_superuser = True
         student.is_staff = True
-        student.save(using=self._db)
+        student.save()
         return student
 
 
