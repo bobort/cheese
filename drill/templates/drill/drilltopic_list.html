@@ -15,7 +15,7 @@
 				<tbody>
 					{% for topic in object_list %}
 						<tr>
-							<td><a href="{{ topic.get_absolute_url }}">{{ topic }}</a></td>
+							<td><a href="{{ topic.get_absolute_url() }}">{{ topic }}</a></td>
 						</tr>
 					{% endfor %}
 				</tbody>

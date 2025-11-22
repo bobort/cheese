@@ -1,0 +1,191 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="row mb-4">
+            <div class="col-12 d-flex justify-content-between align-items-center">
+                <h1 class="mb-0">Staff Dashboard</h1>
+                <div>
+                    <a href="{{ url('staff:proposal-list') }}" class="btn btn-primary mr-2">Proposals</a>
+                    <a href="{{ url('staff:student-list') }}" class="btn btn-secondary">Students</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Statistics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Students</h5>
+                        <h2 class="text-primary">{{ total_students }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">With Balance</h5>
+                        <h2 class="text-warning">{{ students_with_balance }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Outstanding Balance</h5>
+                        <h2 class="text-danger">${{ total_outstanding_balance|round(2) }}</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Subscriptions</h5>
+                        <h2 class="text-success">{{ active_subscriptions }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="row mb-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Quick Actions</h5>
+                    </div>
+                    <div class="card-body">
+                        <a href="{{ url('staff:proposal-list') }}" class="btn btn-primary mr-2">View Proposals</a>
+                        <a href="{{ url('staff:proposal-create') }}" class="btn btn-success mr-2">Create Proposal</a>
+                        <a href="{{ url('staff:student-list') }}" class="btn btn-secondary mr-2">View All Students</a>
+                        <a href="{{ url('staff:student-list') }}?balance_filter=with_balance" class="btn btn-warning mr-2">Students with Balance</a>
+                        <a href="{{ url('staff:orderlineitem-list') }}" class="btn btn-info">View Orders</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- High Balance Students -->
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Highest Balances</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Balance</th>
+                                        <th>Subscription</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for student in high_balance_students %}
+                                    <tr>
+                                        <td><a href="{{ url('staff:student-detail', pk=student.pk) }}">{{ student.get_full_name() }}</a></td>
+                                        <td class="{% if student.account_balance > 0 %}text-danger{% else %}text-success{% endif %}">
+                                            ${{ student.account_balance|round(2) }}
+                                        </td>
+                                        <td>
+                                            {% if student.subscription_active %}
+                                                <span class="badge badge-success">Active</span>
+                                            {% else %}
+                                                <span class="badge badge-secondary">Inactive</span>
+                                            {% endif %}
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center">No students with outstanding balance</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Students -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Recent Registrations</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Student</th>
+                                        <th>Date Joined</th>
+                                        <th>Balance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for student in recent_students %}
+                                    <tr>
+                                        <td><a href="{{ url('staff:student-detail', pk=student.pk) }}">{{ student.get_full_name() }}</a></td>
+                                        <td>{{ student.date_joined|date("M d, Y") }}</td>
+                                        <td class="{% if student.account_balance > 0 %}text-danger{% else %}text-success{% endif %}">
+                                            ${{ student.account_balance|round(2) }}
+                                        </td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="3" class="text-center">No recent registrations</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Orders -->
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Recent Orders</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Order #</th>
+                                        <th>Student</th>
+                                        <th>Date</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for order in recent_orders %}
+                                    <tr>
+                                        <td>{{ order.number }}</td>
+                                        <td><a href="{{ url('staff:student-detail', pk=order.student.pk) }}">{{ order.student.get_full_name() }}</a></td>
+                                        <td>{{ order.date_paid|date("M d, Y") }}</td>
+                                        <td>${{ order.grand_total|round(2) }}</td>
+                                    </tr>
+                                    {% else %}
+                                    <tr>
+                                        <td colspan="4" class="text-center">No recent orders</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock content %}

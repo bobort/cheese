@@ -1,6 +1,4 @@
 {% extends "account/base.html" %}
-{% load i18n %}
-{% load account %}
 {% block title %}{% trans "Confirm Email Address" %}{% endblock %}
 {% block content %}
 <section class="page-section clearfix">
@@ -9,14 +7,14 @@
             <div class="card-body">
                 <h1>{% trans "Confirm Email Address" %}</h1>
                 {% if confirmation %}
-                    {% user_display confirmation.email_address.user as user_display %}
-                    <p>{% blocktrans with confirmation.email_address.email as email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an email address for user {{ user_display }}.{% endblocktrans %}</p>
-                    <form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
-                        {% csrf_token %}
+                    {% set user_display = confirmation.email_address.user.get_full_name() or confirmation.email_address.user.username %}
+                    <p>{% blocktrans with email=confirmation.email_address.email %}Please confirm that <a href="mailto:{{ email }}">{{ email }}</a> is an email address for user {{ user_display }}.{% endblocktrans %}</p>
+                    <form method="post" action="{{ url('account_confirm_email', key=confirmation.key) }}">
+                        {{ csrf_input }}
                         <button type="submit">{% trans 'Confirm' %}</button>
                     </form>
                 {% else %}
-                    {% url 'account_email' as email_url %}
+                    {% set email_url = url('account_email') %}
                     <p>{% blocktrans %}This email confirmation link expired or is invalid. Please <a href="{{ email_url }}">issue a new email confirmation request</a>.{% endblocktrans %}</p>
                 {% endif %}
             </div>

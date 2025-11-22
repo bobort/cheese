@@ -7,7 +7,6 @@ from django.db import models
 from django.db.models import Sum, F, Q
 from django.urls import reverse
 from django.utils import timezone
-from schedule.models import Event
 from tinymce.models import HTMLField
 
 from profile.managers import StudentManager, OrderLineItemQuerySet, AvailableProductsManager
@@ -70,6 +69,18 @@ class Student(AbstractUser):
     )
     phone_number = models.CharField(max_length=31, blank=False, null=True)
     marketing_subscription = models.BooleanField(default=True, verbose_name="Agree to receive marketing emails")
+    # Account balance tracking
+    account_balance = models.DecimalField(
+        max_digits=10, 
+        decimal_places=2, 
+        default=0.00,
+        help_text="Current outstanding balance on account"
+    )
+    # Stripe subscription fields
+    stripe_customer_id = models.CharField(max_length=255, blank=True, null=True, help_text="Stripe Customer ID")
+    stripe_subscription_id = models.CharField(max_length=255, blank=True, null=True, help_text="Stripe Subscription ID for balance payments")
+    stripe_payment_method_id = models.CharField(max_length=255, blank=True, null=True, help_text="Stripe Payment Method ID")
+    subscription_active = models.BooleanField(default=False, help_text="Whether subscription is currently active")
     USERNAME_FIELD = 'email'
     EMAIL_FIELD = 'email'
     REQUIRED_FIELDS = ['first_name', 'last_name']
@@ -79,14 +90,31 @@ class Student(AbstractUser):
         verbose_name = "Student"
         ordering = ('last_name', )
 
-    @property
-    def exam_count(self):
-        return self.examscore_set.filter(exam=self.exam).count()
 
     @property
     def current_balance(self):
-        return self.payment_set.all().aggregate(sum=Sum('total'))['sum'] -\
-               self.appointment_set.all().aggregate(sum=Sum('charge'))['sum']
+        """Calculate current balance from orders"""
+        # Sum of all order totals (what student owes)
+        total_owed = self.order_set.all().aggregate(
+            sum=Sum('grand_total')
+        )['sum'] or Decimal('0.00')
+        
+        # Sum of all payments made (orders with date_paid)
+        total_paid = self.order_set.filter(
+            date_paid__isnull=False
+        ).aggregate(
+            sum=Sum('grand_total')
+        )['sum'] or Decimal('0.00')
+        
+        # Balance = what's owed - what's been paid
+        # Positive balance means student owes money
+        return total_owed - total_paid
+    
+    def update_account_balance(self):
+        """Update the account_balance field from calculated balance"""
+        self.account_balance = self.current_balance
+        self.balance_paid = (self.account_balance <= 0)
+        self.save(update_fields=['account_balance', 'balance_paid'])
 
     @property
     def ocean_courage_subscription(self):
@@ -135,30 +163,6 @@ class Testimonial(models.Model):
 
     class Meta:
         ordering = ('-pk', )
-
-
-class ExamScore(models.Model):
-    FAIL, PASS = range(0, 2)
-    PASS_CHOICES = (
-        (PASS, "Pass"),
-        (FAIL, "Fail"),
-    )
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    exam = models.IntegerField(choices=EXAM_CHOICES)
-    date = models.DateField(default=timezone.now)
-    score = models.IntegerField(choices=PASS_CHOICES)
-
-    def __str__(self):
-        return f"{self.student} {self.get_exam_display()} ({self.date}): {self.get_score_display()}"
-
-
-class Appointment(models.Model):
-    event = models.OneToOneField(Event, on_delete=models.CASCADE)
-    student = models.ForeignKey(Student, blank=True, null=True, on_delete=models.CASCADE)
-    zoom_id = models.CharField(max_length=10,  blank=True, null=True, help_text="Just enter the numbers, not the hyphens.")
-
-    def __str__(self):
-        return f"{self.event}: {self.zoom_id}; {self.student}"
 
 
 class Order(models.Model):
@@ -240,79 +244,9 @@ class Product(models.Model):
         return OrderLineItem.objects.filter(product=self.pk).count()
 
 
-class Course(models.Model):
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    date_start = models.DateField()
-    duration = models.DurationField()
-    duration_access = models.DurationField()
-
-    def __str__(self):
-        return str(self.product)
-
-
-class ContentItem(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    date = models.DateField()
-    description = models.TextField()
-
-    def __str__(self):
-        return f"{self.course[:15]} {self.date}: {self.description}"
-
-
-class AgendaItem(models.Model):
-    course = models.ForeignKey(Course, on_delete=models.CASCADE)
-    time_start = models.TimeField()
-    time_duration = models.DurationField()
-    description = models.TextField()
-
-    def __str__(self):
-        return f"{self.course[:15]} {self.time_start} for {self.time_duration}: {self.description}"
-
-
 class Staff(Student):
     description = models.TextField()
     image_path = models.CharField(max_length=255)
-
-
-class Quotation(models.Model):
-    customer = models.ForeignKey(Student, on_delete=models.CASCADE)
-    number = models.CharField(max_length=50)
-    quotation_date = models.DateField(auto_now_add=True)
-
-    @classmethod
-    def get_next_number(cls):
-        current_year = timezone.now().year
-        orders_this_year = cls.objects.filter(quotation_date__year=current_year).count() or 0
-        return f"{str(current_year)[2:]}-{(orders_this_year + 1):04d}"
-
-    @property
-    def grand_total(self):
-        return self.quotationlineitem_set.aggregate(
-            s=Sum(F('price') * F('qty'), output_field=models.FloatField())
-        )['s'] or 0
-
-    def save(self, *args, **kwargs):
-        if not self.number:
-            self.number = Quotation.get_next_number()
-        result = super().save(*args, **kwargs)
-        return result
-
-
-class QuotationLineItem(models.Model):
-    quotation = models.ForeignKey(Quotation, on_delete=models.CASCADE)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE)
-    product_start_date = models.DateField(blank=True, null=True)
-    product_end_date = models.DateField(blank=True, null=True)
-    qty = models.SmallIntegerField(verbose_name="Quantity", default=1)
-    price = models.DecimalField(max_digits=6, decimal_places=2, blank=True, null=True, verbose_name="Price (USD)")
-
-    @property
-    def total_price(self):
-        return Decimal(self.qty) * self.price
-
-    def __str__(self):
-        return f"{self.product.name} x {self.qty} @ ${self.price};" \
-               f" {self.quotation.student} {self.quotation.quotation_date}"
 
 
 class ProductUser(models.Model):
@@ -323,3 +257,30 @@ class ProductUser(models.Model):
 
     def __str__(self):
         return f"{self.product.name} {self.customer} {self.product_end_date}"
+
+
+class StripePayment(models.Model):
+    """Track Stripe subscription payments for account balance"""
+    student = models.ForeignKey(Student, on_delete=models.CASCADE, related_name='stripe_payments')
+    stripe_payment_intent_id = models.CharField(max_length=255, unique=True, help_text="Stripe Payment Intent ID")
+    stripe_invoice_id = models.CharField(max_length=255, blank=True, null=True, help_text="Stripe Invoice ID")
+    amount = models.DecimalField(max_digits=10, decimal_places=2, help_text="Amount paid in USD")
+    status = models.CharField(
+        max_length=50,
+        choices=[
+            ('pending', 'Pending'),
+            ('succeeded', 'Succeeded'),
+            ('failed', 'Failed'),
+            ('canceled', 'Canceled'),
+        ],
+        default='pending'
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    paid_at = models.DateTimeField(blank=True, null=True)
+    metadata = models.JSONField(default=dict, blank=True, help_text="Additional Stripe metadata")
+
+    class Meta:
+        ordering = ('-created_at',)
+
+    def __str__(self):
+        return f"{self.student} - ${self.amount} - {self.status} ({self.created_at})"

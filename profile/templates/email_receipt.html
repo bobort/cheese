@@ -1,4 +1,3 @@
-{% load utility_tags %}
 <section class="page-section cta">
     <div class="container">
         <div class="card">
@@ -9,14 +8,14 @@
                 <ul>
                     <li>Student: {{ order.student }}</li>
                     <li>Student email: <a href="mailto:{{ order.student.email }}">{{ order.student.email }}</a></li>
-                    <li>Order Date: {{ order.date_paid|date:"m/d/Y H:i:s" }}</li>
-                    {% if order.total %} {# change in the future when these fields are converted to OrderLineItem #}
+                    <li>Order Date: {{ order.date_paid|date("m/d/Y H:i:s") if order.date_paid else "" }}</li>
+                    {% if order.total %}
                         <li>Total Paid: {{ order.total|currency }}</li>
                         <li>In Person Appointments: {{ order.in_person_appt_qty }}</li>
                         <li>Online Appointments: {{ order.remote_appt_qty }}</li>
                     {% else %}
                         <li>Total Paid: {{ order.grand_total|currency }}</li>
-                        {% for li in order.orderlineitem_set.all %}
+                        {% for li in order.orderlineitem_set.all() %}
                             <li>{{ li.product.name }}: {{ li.qty }} ({{ li.charge|currency }} ea)<br>
                                 <strong>Product Notes:</strong>
                                 <ul><li>{{ li.product.notes|safe }}</li></ul>

@@ -1,4 +1,3 @@
-{% load utility_tags %}
 <section class="page-section cta">
     <div class="container">
         <div class="card">
@@ -7,9 +6,10 @@
             </h2>
             <div class="card-body">
                 <ul>
-                    <li>Order Date: {{ order.date_paid|date:"SHORT_DATE_FORMAT" }}</li>
+                    <li>Order Date: {{ order.date_paid|date("SHORT_DATE_FORMAT") if order.date_paid else "" }}</li>
                     <li>Student: {{ order.student }}</li>
-                    {% include 'basic.html' with student=order.student %}
+                    {% set student = order.student %}
+                    {% include 'basic.html' %}
                 </ul>
             </div>
         </div>

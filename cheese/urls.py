@@ -1,7 +1,8 @@
-"""mk URL Configuration
+"""
+URL configuration for cheese project.
 
 The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/2.1/topics/http/urls/
+    https://docs.djangoproject.com/en/5.2/topics/http/urls/
 Examples:
 Function views
     1. Add an import:  from my_app import views
@@ -22,12 +23,10 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('tinymce/', include('tinymce.urls')),
     path('api-auth/', include('rest_framework.urls', namespace="rest_framework_auth")),
-    path('tinymce/', include('tinymce.urls')),
     path('', include('frontend.urls')),
-    path('accounts/', include('allauth.urls')),
+    path('accounts/', include('django.contrib.auth.urls')),
     path('profile/', include('profile.urls')),
     path('staff/', include('staff.urls')),
     path('drills/', include('drill.urls')),
-    path('finances/', include('finances.urls')),
     path('bingo', utils.views.BingoView.as_view(), name='bingo'),
 ]

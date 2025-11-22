@@ -1,50 +1,170 @@
 {% extends 'base.html' %}
-{% load static crispy_forms_tags %}
 {% block content %}
 <section class="page-section">
     <div class="container">
         <div class="card">
-            <h1 class="card-header"><a href="{% url 'staff:ocean-courage-list' %}" class="btn btn-default">View Ocean Courage Subscribers</a> <a href="{% url 'staff:orderlineitem-list' %}" class="btn btn-default">View Orders</a></h1>
-            <h1 class="card-header">Student List</h1>
-            <div><a href="{% url 'staff:student-list' %}?with_balance=False">Show All Students</a></div>
-            <div class="table-responsive">
-                <table class="table table-bordered">
-                    <thead>
-                        <tr class="d-flex">
-                            <th class="col-1">ID <a href="{% url 'staff:student-list' %}?ordering=-pk">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=pk">&uarr;</a></th>
-                            <th class="col-2">Student <a href="{% url 'staff:student-list' %}?ordering=-last_name">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=last_name">&uarr;</a></th>
-                            <th class="col-1">Degree <a href="{% url 'staff:student-list' %}?ordering=-degree">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=degree">&uarr;</a></th>
-                            <th class="col-1">Exam <a href="{% url 'staff:student-list' %}?ordering=-exam">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=exam">&uarr;</a></th>
-                            <th class="col-2">Exam Date <a href="{% url 'staff:student-list' %}?ordering=-test_date">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=test_date">&uarr;</a></th>
-                            <th class="col-2">Phone <a href="{% url 'staff:student-list' %}?ordering=-phone_number">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=phone_number">&uarr;</a></th>
-                            <th class="col-3">Email <a href="{% url 'staff:student-list' %}?ordering=-email">&darr;</a> <a href="{% url 'staff:student-list' %}?ordering=email">&uarr;</a></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for student in student_list %}
-                            <tr class="d-flex">
-                                <td class="col-1">{% if user.is_superuser %}<a href="{% url 'profile:update' pk=student.pk %}">{% endif %}{{ student.pk }}{% if user.is_superuser %}</a>{% endif %}</td>
-                                <td class="col-2">{% if user.is_superuser %}<a href="{{ student.get_absolute_url }}">{% endif %}{{ student }}{% if user.is_superuser %}</a>{% endif %}{% if student.institution %}<br>{{ student.institution }}{% endif %}</td>
-                                <td class="col-1">{{ student.get_degree_display }}</td>
-                                <td class="col-1">{% if student.get_exam_display|slice:":6" == "USMLE " or student.get_exam_display|slice:":7" == "COMLEX " %}{{ student.get_exam_display.split|slice:"1:"|join:" " }}{% else %}{{ student.get_exam_display }}{% endif %}</td>
-                                <td class="col-2">{{ student.test_date|default_if_none:"" }}</td>
-                                <td class="col-2">{{ student.phone_number }}</td>
-                                <td class="col-3"><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
+            <div class="card-header d-flex justify-content-between align-items-center">
+                <h1>Student List</h1>
+                <div>
+                    <a href="{{ url('staff:dashboard') }}" class="btn btn-secondary">Dashboard</a>
+                    <a href="{{ url('staff:orderlineitem-list') }}" class="btn btn-secondary">Orders</a>
+                </div>
             </div>
-            <h5 class="card-header">Marketing Emails list</h5>
+            
+            <!-- Filters -->
+            <div class="card-body">
+                <form method="get" class="mb-3" hx-get="{{ url('staff:student-list') }}" hx-target="#student-table" hx-swap="innerHTML">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <input type="text" name="search" class="form-control" placeholder="Search by name, email, or phone..." 
+                                   value="{{ search_query }}" 
+                                   hx-trigger="keyup changed delay:500ms">
+                        </div>
+                        <div class="col-md-3">
+                            <select name="balance_filter" class="form-control" 
+                                    hx-get="{{ url('staff:student-list') }}" 
+                                    hx-target="#student-table" 
+                                    hx-include="[name='search']">
+                                <option value="all" {% if balance_filter == "all" %}selected{% endif %}>All Students</option>
+                                <option value="with_balance" {% if balance_filter == "with_balance" %}selected{% endif %}>With Balance</option>
+                                <option value="paid" {% if balance_filter == "paid" %}selected{% endif %}>Balance Paid</option>
+                                <option value="subscription" {% if balance_filter == "subscription" %}selected{% endif %}>Active Subscription</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <select name="ordering" class="form-control" 
+                                    hx-get="{{ url('staff:student-list') }}" 
+                                    hx-target="#student-table" 
+                                    hx-include="[name='search'],[name='balance_filter']">
+                                <option value="-date_joined">Newest First</option>
+                                <option value="date_joined">Oldest First</option>
+                                <option value="last_name">Last Name A-Z</option>
+                                <option value="-last_name">Last Name Z-A</option>
+                                <option value="-account_balance">Balance High to Low</option>
+                                <option value="account_balance">Balance Low to High</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary w-100">Filter</button>
+                        </div>
+                    </div>
+                </form>
+
+                <!-- Student Table -->
+                <div id="student-table">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Student</th>
+                                    <th>Degree</th>
+                                    <th>Exam</th>
+                                    <th>Exam Date</th>
+                                    <th>Phone</th>
+                                    <th>Email</th>
+                                    <th>Balance</th>
+                                    <th>Subscription</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for student in student_list %}
+                                <tr>
+                                    <td>
+                                        {% if user.is_superuser %}
+                                            <a href="{{ url('profile:update', pk=student.pk) }}">{{ student.pk }}</a>
+                                        {% else %}
+                                            {{ student.pk }}
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.is_superuser %}
+                                            <a href="{{ url('staff:student-detail', pk=student.pk) }}">{{ student.get_full_name() }}</a>
+                                        {% else %}
+                                            {{ student.get_full_name() }}
+                                        {% endif %}
+                                        {% if student.institution %}<br><small class="text-muted">{{ student.institution }}</small>{% endif %}
+                                    </td>
+                                    <td>{{ student.get_degree_display()|default("—") }}</td>
+                                    <td>
+                                        {% set exam_display = student.get_exam_display() %}
+                                        {% if "USMLE" in exam_display or "COMLEX" in exam_display %}
+                                            {{ exam_display[6:]|default(exam_display) }}
+                                        {% else %}
+                                            {{ exam_display|default("—") }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ student.test_date|date("M d, Y")|default("—") if student.test_date else "—" }}</td>
+                                    <td>{{ student.phone_number|default("—") }}</td>
+                                    <td><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                                    <td class="{% if student.account_balance > 0 %}text-danger font-weight-bold{% elif student.account_balance < 0 %}text-success{% endif %}">
+                                        ${{ student.account_balance|round(2) }}
+                                        <span hx-get="{{ url('staff:student-balance-partial', pk=student.pk) }}" 
+                                              hx-trigger="load, every 30s" 
+                                              hx-swap="none"
+                                              class="spinner-border spinner-border-sm d-none" 
+                                              role="status"></span>
+                                    </td>
+                                    <td>
+                                        {% if student.subscription_active %}
+                                            <span class="badge badge-success">Active</span>
+                                        {% else %}
+                                            <span class="badge badge-secondary">Inactive</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        <a href="{{ url('staff:student-detail', pk=student.pk) }}" class="btn btn-sm btn-info">View</a>
+                                    </td>
+                                </tr>
+                                {% else %}
+                                <tr>
+                                    <td colspan="10" class="text-center">No students found</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Pagination -->
+                    {% if is_paginated %}
+                    <nav aria-label="Page navigation">
+                        <ul class="pagination justify-content-center">
+                            {% if page_obj.has_previous() %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.previous_page_number() }}{% if search_query %}&search={{ search_query }}{% endif %}{% if balance_filter %}&balance_filter={{ balance_filter }}{% endif %}">Previous</a>
+                            </li>
+                            {% endif %}
+                            
+                            <li class="page-item active">
+                                <span class="page-link">Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+                            </li>
+                            
+                            {% if page_obj.has_next() %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ page_obj.next_page_number() }}{% if search_query %}&search={{ search_query }}{% endif %}{% if balance_filter %}&balance_filter={{ balance_filter }}{% endif %}">Next</a>
+                            </li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Marketing Emails -->
+            {% if marketing_list_chunks %}
+            <div class="card-footer">
+                <h5>Marketing Email List</h5>
                 {% for chunk in marketing_list_chunks %}
-                    <p class="card-body">
-                        {% for student in chunk %}
-                            {{ student.email }}{% if not forloop.last %}; {% endif %}
-                        {% endfor %}
-                    </p>
+                <p class="mb-1">
+                    {% for student in chunk %}
+                        {{ student.email }}{% if not loop.last %}; {% endif %}
+                    {% endfor %}
+                </p>
                 {% endfor %}
+            </div>
+            {% endif %}
         </div>
     </div>
 </section>
 {% endblock content %}
-

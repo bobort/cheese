@@ -9,8 +9,7 @@ from django.views.generic import DetailView, UpdateView
 
 from profile.forms import OrderForm, StudentChangeForm
 from profile.models import Order, Student
-# from profile.quickbooks import save_invoice
-from utils import send_html_email, send_sms
+from utils import send_html_email
 
 
 @login_required
@@ -35,11 +34,6 @@ def process_payment(request):
                         source=token,
                         metadata={'student_id': request.user.pk},
                     )
-                try:
-                    # save_invoice(order)
-                    pass
-                except:
-                    pass
                 # send email message after everything is saved
                 order = form.save()
                 message = render_to_string('email_receipt.html', {'order': order})

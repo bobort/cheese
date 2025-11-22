@@ -1,0 +1,279 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="page-section">
+    <div class="container">
+        <div class="card">
+            <div class="card-header">
+                <h1>{% if object %}Edit{% else %}Create{% endif %} Proposal</h1>
+            </div>
+            
+            <div class="card-body">
+                <form method="post" id="proposal-form">
+                    {{ csrf_input }}
+                    
+                    <!-- Proposal Details -->
+                    <fieldset class="mb-4">
+                        <legend>Proposal Details</legend>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.student.id_for_label }}">Student *</label>
+                                    {{ form.student }}
+                                    {% if form.student.errors %}
+                                    <div class="text-danger">{{ form.student.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.title.id_for_label }}">Title</label>
+                                    {{ form.title }}
+                                    {% if form.title.errors %}
+                                    <div class="text-danger">{{ form.title.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.introduction.id_for_label }}">Introduction</label>
+                            {{ form.introduction }}
+                            {% if form.introduction.errors %}
+                            <div class="text-danger">{{ form.introduction.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="{{ form.terms_and_conditions.id_for_label }}">Terms and Conditions</label>
+                            {{ form.terms_and_conditions }}
+                            {% if form.terms_and_conditions.errors %}
+                            <div class="text-danger">{{ form.terms_and_conditions.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.expires_at.id_for_label }}">Expires At</label>
+                                    {{ form.expires_at }}
+                                    {% if form.expires_at.errors %}
+                                    <div class="text-danger">{{ form.expires_at.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="{{ form.notes.id_for_label }}">Internal Notes</label>
+                                    {{ form.notes }}
+                                    {% if form.notes.errors %}
+                                    <div class="text-danger">{{ form.notes.errors }}</div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- Payment Plan -->
+                    <fieldset class="mb-4">
+                        <legend>Payment Plan</legend>
+                        <div class="form-check mb-3">
+                            {{ form.has_payment_plan }}
+                            <label class="form-check-label" for="{{ form.has_payment_plan.id_for_label }}">
+                                Enable Payment Plan
+                            </label>
+                        </div>
+                        
+                        <div id="payment-plan-fields" style="display: none;">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.payment_plan_months.id_for_label }}">Number of Months</label>
+                                        {{ form.payment_plan_months }}
+                                        {% if form.payment_plan_months.errors %}
+                                        <div class="text-danger">{{ form.payment_plan_months.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label for="{{ form.payment_plan_start_date.id_for_label }}">Start Date</label>
+                                        {{ form.payment_plan_start_date }}
+                                        {% if form.payment_plan_start_date.errors %}
+                                        <div class="text-danger">{{ form.payment_plan_start_date.errors }}</div>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+                    
+                    <!-- Line Items -->
+                    <fieldset class="mb-4">
+                        <legend>Line Items</legend>
+                        {{ lineitems.management_form }}
+                        <div id="lineitems-container">
+                            {% for form in lineitems %}
+                            <div class="lineitem-form border p-3 mb-3">
+                                {% if form.DELETE %}
+                                <div class="form-check mb-2">
+                                    {{ form.DELETE }}
+                                    <label class="form-check-label" for="{{ form.DELETE.id_for_label }}">
+                                        Delete this item
+                                    </label>
+                                </div>
+                                {% endif %}
+                                
+                                {{ form.id }}
+                                
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Product</label>
+                                            {{ form.product }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Description *</label>
+                                            {{ form.description }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Quantity</label>
+                                            {{ form.quantity }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Price per Unit</label>
+                                            {{ form.price }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Start Date</label>
+                                            {{ form.start_date }}
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>End Date</label>
+                                            {{ form.end_date }}
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label>Notes</label>
+                                    {{ form.notes }}
+                                </div>
+                                
+                                {% for error in form.non_field_errors %}
+                                <div class="text-danger">{{ error }}</div>
+                                {% endfor %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        
+                        <button type="button" class="btn btn-secondary" id="add-lineitem">Add Item</button>
+                    </fieldset>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Save Proposal</button>
+                        {% if object %}
+                        <a href="{{ url('staff:proposal-detail', pk=object.pk) }}" class="btn btn-secondary">Cancel</a>
+                        {% else %}
+                        <a href="{{ url('staff:proposal-list') }}" class="btn btn-secondary">Cancel</a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Toggle payment plan fields
+    const paymentPlanCheckbox = document.getElementById('{{ form.has_payment_plan.id_for_label }}');
+    const paymentPlanFields = document.getElementById('payment-plan-fields');
+    
+    if (paymentPlanCheckbox) {
+        paymentPlanCheckbox.addEventListener('change', function() {
+            paymentPlanFields.style.display = this.checked ? 'block' : 'none';
+        });
+        
+        // Set initial state
+        paymentPlanFields.style.display = paymentPlanCheckbox.checked ? 'block' : 'none';
+    }
+    
+    // Add line item functionality
+    const addLineItemBtn = document.getElementById('add-lineitem');
+    const lineItemsContainer = document.getElementById('lineitems-container');
+    const totalFormsInput = document.getElementById('id_proposallineitem_set-TOTAL_FORMS');
+    
+    if (addLineItemBtn && totalFormsInput) {
+        addLineItemBtn.addEventListener('click', function() {
+            const formCount = parseInt(totalFormsInput.value);
+            const newFormHtml = `
+                <div class="lineitem-form border p-3 mb-3">
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label>Product</label>
+                                <select name="proposallineitem_set-${formCount}-product" class="form-control" id="id_proposallineitem_set-${formCount}-product">
+                                    <option value="">---------</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label>Description *</label>
+                                <input type="text" name="proposallineitem_set-${formCount}-description" class="form-control" id="id_proposallineitem_set-${formCount}-description" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Quantity</label>
+                                <input type="number" name="proposallineitem_set-${formCount}-quantity" class="form-control" value="1" min="1" id="id_proposallineitem_set-${formCount}-quantity">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Price per Unit</label>
+                                <input type="number" name="proposallineitem_set-${formCount}-price" class="form-control" step="0.01" min="0" id="id_proposallineitem_set-${formCount}-price">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>Start Date</label>
+                                <input type="date" name="proposallineitem_set-${formCount}-start_date" class="form-control" id="id_proposallineitem_set-${formCount}-start_date">
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label>End Date</label>
+                                <input type="date" name="proposallineitem_set-${formCount}-end_date" class="form-control" id="id_proposallineitem_set-${formCount}-end_date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Notes</label>
+                        <textarea name="proposallineitem_set-${formCount}-notes" class="form-control" rows="2" id="id_proposallineitem_set-${formCount}-notes"></textarea>
+                    </div>
+                </div>
+            `;
+            lineItemsContainer.insertAdjacentHTML('beforeend', newFormHtml);
+            totalFormsInput.value = formCount + 1;
+        });
+    }
+});
+</script>
+{% endblock content %}
+

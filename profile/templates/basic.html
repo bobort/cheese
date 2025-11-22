@@ -3,7 +3,7 @@
         {% if student.ocean_courage_subscription %}
             <tr>
                 <th class="col-2">Ocean Courage Expiration Date:</th>
-                <td>{{ student.ocean_courage_subscription.expiration|date:"SHORT_DATE_FORMAT" }}{% if student.ocean_courage_subscription.is_expired %} (Expired){% endif %}</td>
+                <td>{{ student.ocean_courage_subscription.expiration|date("SHORT_DATE_FORMAT") }}{% if student.ocean_courage_subscription.is_expired %} (Expired){% endif %}</td>
             </tr>
         {% endif %}
         <tr>
@@ -20,11 +20,11 @@
         </tr>
         <tr>
             <th>Date joined:</th>
-            <td>{{ student.date_joined|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ student.date_joined|date("SHORT_DATE_FORMAT") }}</td>
         </tr>
         <tr>
             <th>Last login:</th>
-            <td>{{ student.last_login|date:"m/d/Y H:i:s" }}</td>
+            <td>{{ student.last_login|date("m/d/Y H:i:s") }}</td>
         </tr>
         <tr>
             <th>Graduation year:</th>
@@ -32,15 +32,15 @@
         </tr>
         <tr>
             <th>Degree:</th>
-            <td>{{ student.get_degree_display }}</td>
+            <td>{{ student.get_degree_display() }}</td>
         </tr>
         <tr>
             <th>Exam:</th>
-            <td>{{ student.get_exam_display }}</td>
+            <td>{{ student.get_exam_display() }}</td>
         </tr>
         <tr>
             <th>Test date:</th>
-            <td>{{ student.test_date|date:"SHORT_DATE_FORMAT" }}</td>
+            <td>{{ student.test_date|date("SHORT_DATE_FORMAT") if student.test_date else "" }}</td>
         </tr>
     </tbody>
 </table>

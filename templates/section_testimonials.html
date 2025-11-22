@@ -3,7 +3,7 @@
         <h1 class="text-center py-5">Testimonials</h1>
         <div class="carousel-inner">
             {% for t in testimonial_list %}
-                <blockquote class="blockquote carousel-item{% if forloop.first %} active{% endif %}">
+                <blockquote class="blockquote carousel-item{% if loop.first %} active{% endif %}">
                     {{ t.testimonial|safe }}
                     <footer class="blockquote-footer">
                         {{ t.citation }}

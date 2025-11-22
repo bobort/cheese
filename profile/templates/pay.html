@@ -1,5 +1,4 @@
 {% extends 'base.html' %}
-{% load static crispy_forms_tags %}
 {% block content %}
 <section class="page-section">
     <div class="container">
@@ -13,14 +12,14 @@
                     We may refuse service to you at any time. You may have different tutors for your sessions.
                 </p>
                 <form method="post" id="payment-form" novalidate class="card-text">
-                    {% crispy form %}
+                    {{ crispy(form) }}
                     {% if form.formset.non_form_errors %}
                         {{ form.formset|as_crispy_errors }}
                     {% endif %}
                     {{ form.card_errors|as_crispy_errors }}
-                    {{ form.formset.management_form|crispy }}
+                    {{ form.formset.management_form|crispy_filter }}
                     {% for f in form.formset %}
-                        {% crispy f %}
+                        {{ crispy(f) }}
                     {% endfor %}
                     <div class="row">
                         <div class="col">

@@ -37,11 +37,6 @@ class StudentManager(UserManager):
         return student
 
 
-class AppointmentManager(models.Manager):
-    def upcoming(self):
-        return self.filter(dt__gte=Now())
-
-
 class AvailableProductsManager(models.Manager):
     def get_queryset(self):
         return super().get_queryset().filter(
