@@ -2,8 +2,10 @@
 /static/
 /.idea/
 __pycache__/
-/cheese/settings.py
+/main/settings.py
 /logs/
 *.log
 /logs/*
 Pipfile.lock
+cheese.txt
+.env

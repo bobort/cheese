@@ -9,7 +9,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('profile', '0036_remove_appointment_product_and_more'),
+        ('accounts', '0005_migrate_from_profile'),
         ('staff', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
@@ -98,7 +98,7 @@ class Migration(migrations.Migration):
                 ('notes', models.TextField(blank=True, help_text='Additional notes about this item', null=True)),
                 ('start_date', models.DateField(blank=True, null=True)),
                 ('end_date', models.DateField(blank=True, null=True)),
-                ('product', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='profile.product')),
+                ('product', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='accounts.product')),
                 ('proposal', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='proposallineitem_set', to='staff.proposal')),
             ],
             options={

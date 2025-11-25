@@ -15,7 +15,7 @@ from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required, permission_required
 from django.shortcuts import get_object_or_404, redirect
 
-from profile.models import Student, OrderLineItem, Order, StripePayment
+from accounts.models import Student, OrderLineItem, Order, StripePayment
 from staff.models import ElectronicSignature, IndependentContractorTerms, Proposal, ProposalLineItem, ProposalComment, ProposalRevision, ProposalPaymentPlan
 from staff.forms import ProposalForm, ProposalLineItemFormSet, ProposalCommentForm, ProposalPaymentPlanForm, ProposalRevisionForm
 from utils import divide_chunks
@@ -40,7 +40,7 @@ class IndexView(RedirectView):
 class StaffDashboardView(PermissionRequiredMixin, TemplateView):
     """Main staff dashboard with account balance overview"""
     template_name = "staff/dashboard.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -89,7 +89,7 @@ class StudentListView(PermissionRequiredMixin, ListView):
     """List all students with balance information and HTMX filtering"""
     model = Student
     template_name = "staff/student_list.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
     paginate_by = 50
 
     def get_queryset(self):
@@ -144,7 +144,7 @@ class StudentDetailView(PermissionRequiredMixin, DetailView):
     """Detailed view of a student with balance and payment history"""
     model = Student
     template_name = "staff/student_detail.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
     context_object_name = 'student'
 
     def get_context_data(self, **kwargs):
@@ -211,7 +211,7 @@ class OrderLineItemListView(PermissionRequiredMixin, ListView):
     """List all order line items"""
     model = OrderLineItem
     template_name = "staff/orderlineitem_list.html"
-    permission_required = ['profile.view_orderlineitem']
+    permission_required = ['accounts.view_orderlineitem']
     ordering = ('-order__date_paid',)
     paginate_by = 50
 
@@ -271,7 +271,7 @@ class SignTerms(PermissionRequiredMixin, CreateView):
     model = ElectronicSignature
     template_name = 'staff/sign_terms.html'
     fields = ['document', 'staff_member', 'date', 'initials']
-    success_url = reverse_lazy('frontend:index')
+    success_url = reverse_lazy('public:index')
 
     def has_permission(self):
         return self.request.user.groups.filter(name="oceancouragegroup").exists() or self.request.user.is_superuser
@@ -287,7 +287,7 @@ class SignTerms(PermissionRequiredMixin, CreateView):
 
 # HTMX partial views for dynamic updates
 @login_required
-@permission_required('profile.view_student', raise_exception=True)
+@permission_required('accounts.view_student', raise_exception=True)
 @require_http_methods(["GET"])
 def student_balance_partial(request, pk):
     """HTMX partial for student balance information"""
@@ -307,7 +307,7 @@ class ProposalListView(PermissionRequiredMixin, ListView):
     """List all proposals"""
     model = Proposal
     template_name = "staff/proposal_list.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
     context_object_name = 'proposals'
     paginate_by = 20
     
@@ -348,7 +348,7 @@ class ProposalCreateView(PermissionRequiredMixin, CreateView):
     model = Proposal
     form_class = ProposalForm
     template_name = "staff/proposal_form.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
     
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -391,7 +391,7 @@ class ProposalDetailView(PermissionRequiredMixin, DetailView):
     """View proposal details with HTMX interactions"""
     model = Proposal
     template_name = "staff/proposal_detail.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
     context_object_name = 'proposal'
     
     def get_context_data(self, **kwargs):
@@ -415,7 +415,7 @@ class ProposalUpdateView(PermissionRequiredMixin, UpdateView):
     model = Proposal
     form_class = ProposalForm
     template_name = "staff/proposal_form.html"
-    permission_required = ['profile.view_student']
+    permission_required = ['accounts.view_student']
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -445,7 +445,7 @@ class ProposalUpdateView(PermissionRequiredMixin, UpdateView):
 
 
 @login_required
-@permission_required('profile.view_student', raise_exception=True)
+@permission_required('accounts.view_student', raise_exception=True)
 @require_http_methods(["POST"])
 def send_proposal_email(request, pk):
     """Send proposal email to student"""
@@ -480,7 +480,7 @@ def send_proposal_email(request, pk):
 
 
 @login_required
-@permission_required('profile.view_student', raise_exception=True)
+@permission_required('accounts.view_student', raise_exception=True)
 @require_http_methods(["POST"])
 def add_proposal_comment(request, pk):
     """Add a comment to a proposal (HTMX)"""
@@ -509,7 +509,7 @@ def add_proposal_comment(request, pk):
 
 
 @login_required
-@permission_required('profile.view_student', raise_exception=True)
+@permission_required('accounts.view_student', raise_exception=True)
 @require_http_methods(["POST"])
 def create_proposal_revision(request, pk):
     """Create a revision of a proposal"""
@@ -539,7 +539,7 @@ def create_proposal_revision(request, pk):
 
 
 @login_required
-@permission_required('profile.view_student', raise_exception=True)
+@permission_required('accounts.view_student', raise_exception=True)
 @require_http_methods(["POST"])
 def accept_proposal(request, pk):
     """Accept a proposal (student action)"""
@@ -577,7 +577,7 @@ def accept_proposal(request, pk):
 
 
 @login_required
-@permission_required('profile.view_student', raise_exception=True)
+@permission_required('accounts.view_student', raise_exception=True)
 @require_http_methods(["POST"])
 def create_payment_plan(request, pk):
     """Create Stripe payment plan for proposal"""

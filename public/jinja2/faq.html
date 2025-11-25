@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block main %}
+<div class="container py-3">
+	<header>
+		<div class="p-3 pb-md-4 mx-auto text-center">
+			<h1 class="display-4 fw-normal">FAQ</h1>
+			<p class="fs-5 text-muted">
+				Review answers to frequently asked questions to understand our program better for you.
+			</p>
+		</div>
+	</header>
+	<main>
+		<div class="accordion" id="faq">
+			{% for faq in faq_list %}
+				<div class="accordion-item">
+					<h2 class="accordion-header">
+						<button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#{{ faq.slug }}" aria-expanded="false" aria-controls="{{ faq.slug }}">
+							{{ faq }}
+						</button>
+					</h2>
+					<div id="{{ faq.slug }}" class="accordion-collapse collapse" data-bs-parent="#faq">
+						<div class="accordion-body">
+							{{ faq.answer|safe }}
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		</div>
+	</main>
+</div>
+{% endblock main %}

@@ -3,7 +3,7 @@ from django import forms
 from django.forms import inlineformset_factory, formset_factory
 from tinymce.widgets import TinyMCE
 
-from profile.models import Student, Product
+from accounts.models import Student, Product
 from staff.models import Proposal, ProposalLineItem, ProposalComment, ProposalPaymentPlan, ProposalRevision
 
 

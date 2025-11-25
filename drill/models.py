@@ -31,7 +31,7 @@ class Question(models.Model):
 
 class DrillTracking(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
-    student = models.ForeignKey('profile.Student', on_delete=models.CASCADE)
+    student = models.ForeignKey('accounts.Student', on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
     def __str__(self):

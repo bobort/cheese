@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% macro search_field(label, name) -%}
+    <input type="text" form="search" name="{{ name }}" class="form-control" placeholder="Search {{ label }}" value="{{ request.GET.get(name, '') }}">
+{% endmacro -%}
+{% block main %}
+<div class="container py-3">
+	<header>
+		<div class="p-3 pb-md-4 mx-auto text-center">
+			<h1 class="display-4 fw-normal">Student List</h1>
+			<p class="fs-5 text-muted">
+				Review the students that have registered with us.
+			</p>
+		</div>
+	</header>
+    <form id="search" method="get"><input type="submit" class="invisible"></form>
+	<main>
+        <table id="students" class="table table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        Name
+                        {{ search_field("Name", "name") }}
+                    </th>
+                    <th>
+                        Institution
+                        {{ search_field("Institution", "institution") }}
+                    </th>
+                    <th>
+                        Graduation Year
+                        {{ search_field("Year", "graduation_year") }}
+                    </th>
+                    <th>
+                        Exam
+                        {{ search_field("Exam", "exam") }}
+                    </th>
+                    <th>
+                        Phone
+                        {{ search_field("Phone", "phone_number") }}
+                    </th>
+                    <th>
+                        Email
+                        {{ search_field("Email", "email") }}
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in student_list %}
+                    <tr>
+                        <td>{{ student.get_full_name() }}</td>
+                        <td>{{ student.institution|default_if_none("") }}</td>
+                        <td>{{ student.graduation_year }}</td>
+                        <td>{{ student.exam }}<br>{{ student.test_date|date("SHORT_DATE_FORMAT") }}</td>
+                        <td><a href="tel:{{ student.phone_number }}">{{ student.phone_number }}</a></td>
+                        <td><a href="mailto:{{ student.email }}">{{ student.email }}</a></td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+	</main>
+</div>
+{% endblock main %}

@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.utils import timezone
 from tinymce.models import HTMLField
 
-from profile.models import Student, Product
+from accounts.models import Student, Product
 
 
 class IndependentContractorTerms(models.Model):

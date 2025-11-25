@@ -12,10 +12,11 @@ django-compressor = "*"
 stripe = "*"
 django-debug-permissions = "*"
 python-dateutil = "*"
-jinja2 = "*"
 django-jinja = "*"
 asgiref = "*"
 psycopg = {extras = ["binary"], version = "*"}
+jinja2 = "*"
+django-allauth = "*"
 
 [dev-packages]
 

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+  <section class="page-section clearfix">
+    <div class="container">
+        <div class="row">
+      <div class="intro col-9">
+        <img class="intro-img img-fluid mb-3 mb-lg-0 rounded" src="{{ static('img/intro.jpg') }}" alt="">
+        <div class="intro-text left-0 text-center bg-faded p-5 rounded">
+          <h2 class="section-heading mb-4">
+            <span class="section-heading-upper">Ocean Ink USMLE/COMLEX Resources</span>
+            <span class="section-heading-lower">We Help You Study</span>
+          </h2>
+          <p class="mb-3">
+            We will work with you to help you develop a study plan and provide one-on-one tutoring.
+          </p>
+          <div class="intro-button mx-auto">
+            <a class="btn btn-primary btn-xl" href="{% if user.is_authenticated %}{{ url('public:schedule') }}{% else %}{{ url('account_signup') }}{% endif %}">Work With Us Today!</a>
+          </div>
+        </div>
+      </div>
+        <div class="intro col-3">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Foceanink1&tabs=timeline&width=340&height=500&small_header=true&adapt_container_width=true&hide_cover=true&show_facepile=false&appId=806336309714344" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allow="encrypted-media"></iframe>        </div>
+      </div>
+    </div>
+  </section>
+  <section class="page-section cta">
+    <div class="container">
+      <div class="row">
+        <div class="col-xl-9 mx-auto">
+          <div class="cta-inner text-center rounded">
+            <h2 class="section-heading mb-4">
+              <span class="section-heading-upper">Our Promise</span>
+              <span class="section-heading-lower">To You</span>
+            </h2>
+            <p class="mb-0">
+              We are dedicated to helping you succeed in your endeavors to pass your board exams.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% include 'section_testimonials.html' %}
+{% endblock content %}
